@@ -289,12 +289,14 @@ class SegmentInfo implements TermsStreamInterface
         for ($count=0; $count < $fieldsCount; $count++) {
             $fieldName = $fnmFile->readString();
             $fieldBits = $fnmFile->readByte();
-            $this->_fields[$count] = new FieldInfo($fieldName,
-                                                   $fieldBits & 0x01 /* field is indexed */,
-                                                   $count,
-                                                   $fieldBits & 0x02 /* termvectors are stored */,
-                                                   $fieldBits & 0x10 /* norms are omitted */,
-                                                   $fieldBits & 0x20 /* payloads are stored */);
+            $this->_fields[$count] = new FieldInfo(
+                $fieldName,
+                $fieldBits & 0x01 /* field is indexed */,
+                $count,
+                $fieldBits & 0x02 /* termvectors are stored */,
+                $fieldBits & 0x10 /* norms are omitted */,
+                $fieldBits & 0x20 /* payloads are stored */
+            );
             if ($fieldBits & 0x10) {
                 // norms are omitted for the indexed field
                 $this->_norms[$count] = str_repeat(chr(AbstractSimilarity::encodeNorm(1.0)), $docCount);
@@ -378,7 +380,7 @@ class SegmentInfo implements TermsStreamInterface
 
                 return $deletions;
             }
-        } catch(ExceptionInterface $e) {
+        } catch (ExceptionInterface $e) {
             if (strpos($e->getMessage(), 'is not readable') === false) {
                 throw new RuntimeException($e->getMessage(), $e->getCode(), $e);
             }
@@ -437,7 +439,6 @@ class SegmentInfo implements TermsStreamInterface
                     }
                     return (count($deletions) > 0) ? $deletions : null;
                 }
-
             } while ($delFile->tell() < $delFileSize);
         } else {
             // $format is actually byte count
@@ -500,13 +501,13 @@ class SegmentInfo implements TermsStreamInterface
                 }
             }
 
-            if( !isset($this->_sharedDocStoreOptions['files'][$fdxFName]) ) {
+            if (!isset($this->_sharedDocStoreOptions['files'][$fdxFName])) {
                 throw new InvalidFileFormatException('Shared doc storage segment compound file doesn\'t contain '
-                                       . $fdxFName . ' file.' );
+                                       . $fdxFName . ' file.');
             }
-            if( !isset($this->_sharedDocStoreOptions['files'][$fdtFName]) ) {
+            if (!isset($this->_sharedDocStoreOptions['files'][$fdtFName])) {
                 throw new InvalidFileFormatException('Shared doc storage segment compound file doesn\'t contain '
-                                       . $fdtFName . ' file.' );
+                                       . $fdtFName . ' file.');
             }
 
             // Open shared docstore segment file
@@ -538,9 +539,9 @@ class SegmentInfo implements TermsStreamInterface
             return $this->_directory->getFileObject($filename, $shareHandler);
         }
 
-        if( !isset($this->_segFiles[$filename]) ) {
+        if (!isset($this->_segFiles[$filename])) {
             throw new InvalidFileFormatException('Segment compound file doesn\'t contain '
-                                       . $filename . ' file.' );
+                                       . $filename . ' file.');
         }
 
         $file = $this->_directory->getFileObject($this->_name . '.cfs', $shareHandler);
@@ -564,9 +565,9 @@ class SegmentInfo implements TermsStreamInterface
                 return $this->_directory->fileLength($filename);
             }
 
-            if( !isset($this->_sharedDocStoreOptions['fileSizes'][$filename]) ) {
+            if (!isset($this->_sharedDocStoreOptions['fileSizes'][$filename])) {
                 throw new InvalidFileFormatException('Shared doc store compound file doesn\'t contain '
-                                           . $filename . ' file.' );
+                                           . $filename . ' file.');
             }
 
             return $this->_sharedDocStoreOptions['fileSizes'][$filename];
@@ -580,9 +581,9 @@ class SegmentInfo implements TermsStreamInterface
             return $this->_directory->fileLength($filename);
         }
 
-        if( !isset($this->_segFileSizes[$filename]) ) {
+        if (!isset($this->_segFileSizes[$filename])) {
             throw new InvalidFileFormatException('Index compound file doesn\'t contain '
-                                       . $filename . ' file.' );
+                                       . $filename . ' file.');
         }
 
         return $this->_segFileSizes[$filename];
@@ -596,8 +597,8 @@ class SegmentInfo implements TermsStreamInterface
      */
     public function getFieldNum($fieldName)
     {
-        foreach( $this->_fields as $field ) {
-            if( $field->name == $fieldName ) {
+        foreach ($this->_fields as $field) {
+            if ($field->name == $fieldName) {
                 return $field->number;
             }
         }
@@ -626,8 +627,8 @@ class SegmentInfo implements TermsStreamInterface
     public function getFields($indexed = false)
     {
         $result = array();
-        foreach( $this->_fields as $field ) {
-            if( (!$indexed) || $field->isIndexed ) {
+        foreach ($this->_fields as $field) {
+            if ((!$indexed) || $field->isIndexed) {
                 $result[ $field->name ] = $field->name;
             }
         }
@@ -869,12 +870,10 @@ class SegmentInfo implements TermsStreamInterface
         $termFieldNum = $prevTerm[0] /* field */;
         $freqPointer = $prevTermInfo[1] /* freqPointer */;
         $proxPointer = $prevTermInfo[2] /* proxPointer */;
-        for ($count = $prevPosition*$indexInterval + 1;
-             $count <= $termCount &&
+        for ($count = $prevPosition*$indexInterval + 1; $count <= $termCount &&
              ( $this->_getFieldPosition($termFieldNum) < $searchDicField ||
               ($this->_getFieldPosition($termFieldNum) == $searchDicField &&
-               strcmp($termValue, $term->text) < 0) );
-             $count++) {
+               strcmp($termValue, $term->text) < 0) ); $count++) {
             $termPrefixLength = $tisFile->readVInt();
             $termSuffix       = $tisFile->readString();
             $termFieldNum     = $tisFile->readVInt();
@@ -883,7 +882,7 @@ class SegmentInfo implements TermsStreamInterface
             $docFreq      = $tisFile->readVInt();
             $freqPointer += $tisFile->readVInt();
             $proxPointer += $tisFile->readVInt();
-            if( $docFreq >= $skipInterval ) {
+            if ($docFreq >= $skipInterval) {
                 $skipOffset = $tisFile->readVInt();
             } else {
                 $skipOffset = 0;
@@ -927,7 +926,7 @@ class SegmentInfo implements TermsStreamInterface
         }
 
         $frqFile = $this->openCompoundFile('.frq');
-        $frqFile->seek($termInfo->freqPointer,SEEK_CUR);
+        $frqFile->seek($termInfo->freqPointer, SEEK_CUR);
         $docId  = 0;
         $result = array();
 
@@ -948,9 +947,9 @@ class SegmentInfo implements TermsStreamInterface
 // ---------------------------------------------------------------
                     $updatedFilterData = array();
 
-                    for( $count=0; $count < $termInfo->docFreq; $count++ ) {
+                    for ($count=0; $count < $termInfo->docFreq; $count++) {
                         $docDelta = $frqFile->readVInt();
-                        if( $docDelta % 2 == 1 ) {
+                        if ($docDelta % 2 == 1) {
                             $docId += ($docDelta-1)/2;
                         } else {
                             $docId += $docDelta/2;
@@ -959,8 +958,8 @@ class SegmentInfo implements TermsStreamInterface
                         }
 
                         if (isset($filter[$docId])) {
-                           $result[] = $shift + $docId;
-                           $updatedFilterData[$docId] = 1; // 1 is just a some constant value, so we don't need additional var dereference here
+                            $result[] = $shift + $docId;
+                            $updatedFilterData[$docId] = 1; // 1 is just a some constant value, so we don't need additional var dereference here
                         }
                     }
                     $docsFilter->segmentFilters[$this->_name] = $updatedFilterData;
@@ -969,9 +968,9 @@ class SegmentInfo implements TermsStreamInterface
                     // Perform full scan
                     $updatedFilterData = array();
 
-                    for( $count=0; $count < $termInfo->docFreq; $count++ ) {
+                    for ($count=0; $count < $termInfo->docFreq; $count++) {
                         $docDelta = $frqFile->readVInt();
-                        if( $docDelta % 2 == 1 ) {
+                        if ($docDelta % 2 == 1) {
                             $docId += ($docDelta-1)/2;
                         } else {
                             $docId += $docDelta/2;
@@ -980,8 +979,8 @@ class SegmentInfo implements TermsStreamInterface
                         }
 
                         if (isset($filter[$docId])) {
-                           $result[] = $shift + $docId;
-                           $updatedFilterData[$docId] = 1; // 1 is just a some constant value, so we don't need additional var dereference here
+                            $result[] = $shift + $docId;
+                            $updatedFilterData[$docId] = 1; // 1 is just a some constant value, so we don't need additional var dereference here
                         }
                     }
                     $docsFilter->segmentFilters[$this->_name] = $updatedFilterData;
@@ -989,9 +988,9 @@ class SegmentInfo implements TermsStreamInterface
             } else {
                 // Filter is present, but doesn't has data for the current segment yet
                 $filterData = array();
-                for( $count=0; $count < $termInfo->docFreq; $count++ ) {
+                for ($count=0; $count < $termInfo->docFreq; $count++) {
                     $docDelta = $frqFile->readVInt();
-                    if( $docDelta % 2 == 1 ) {
+                    if ($docDelta % 2 == 1) {
                         $docId += ($docDelta-1)/2;
                     } else {
                         $docId += $docDelta/2;
@@ -1005,9 +1004,9 @@ class SegmentInfo implements TermsStreamInterface
                 $docsFilter->segmentFilters[$this->_name] = $filterData;
             }
         } else {
-            for( $count=0; $count < $termInfo->docFreq; $count++ ) {
+            for ($count=0; $count < $termInfo->docFreq; $count++) {
                 $docDelta = $frqFile->readVInt();
-                if( $docDelta % 2 == 1 ) {
+                if ($docDelta % 2 == 1) {
                     $docId += ($docDelta-1)/2;
                 } else {
                     $docId += $docDelta/2;
@@ -1043,7 +1042,7 @@ class SegmentInfo implements TermsStreamInterface
         }
 
         $frqFile = $this->openCompoundFile('.frq');
-        $frqFile->seek($termInfo->freqPointer,SEEK_CUR);
+        $frqFile->seek($termInfo->freqPointer, SEEK_CUR);
         $result = array();
         $docId = 0;
 
@@ -1163,7 +1162,7 @@ class SegmentInfo implements TermsStreamInterface
         }
 
         $frqFile = $this->openCompoundFile('.frq');
-        $frqFile->seek($termInfo->freqPointer,SEEK_CUR);
+        $frqFile->seek($termInfo->freqPointer, SEEK_CUR);
 
         $docId = 0;
         $freqs = array();
@@ -1205,7 +1204,7 @@ class SegmentInfo implements TermsStreamInterface
 
                         // we have to read .prx file to get right position for next doc
                         // even filter doesn't match current document
-                        for ($count = 0; $count < $freq; $count++ ) {
+                        for ($count = 0; $count < $freq; $count++) {
                             $termPosition += $prxFile->readVInt();
                             $positions[] = $termPosition;
                         }
@@ -1242,7 +1241,7 @@ class SegmentInfo implements TermsStreamInterface
 
                         // we have to read .prx file to get right position for next doc
                         // even filter doesn't match current document
-                        for ($count = 0; $count < $freq; $count++ ) {
+                        for ($count = 0; $count < $freq; $count++) {
                             $termPosition += $prxFile->readVInt();
                             $positions[] = $termPosition;
                         }
@@ -1279,7 +1278,7 @@ class SegmentInfo implements TermsStreamInterface
                     $termPosition = 0;
                     $positions = array();
 
-                    for ($count = 0; $count < $freq; $count++ ) {
+                    for ($count = 0; $count < $freq; $count++) {
                         $termPosition += $prxFile->readVInt();
                         $positions[] = $termPosition;
                     }
@@ -1308,7 +1307,7 @@ class SegmentInfo implements TermsStreamInterface
                 $termPosition = 0;
                 $positions = array();
 
-                for ($count = 0; $count < $freq; $count++ ) {
+                for ($count = 0; $count < $freq; $count++) {
                     $termPosition += $prxFile->readVInt();
                     $positions[] = $termPosition;
                 }
@@ -1360,7 +1359,7 @@ class SegmentInfo implements TermsStreamInterface
     {
         $fieldNum = $this->getFieldNum($fieldName);
 
-        if ( !($this->_fields[$fieldNum]->isIndexed) ) {
+        if (!($this->_fields[$fieldNum]->isIndexed)) {
             return null;
         }
 
@@ -1368,7 +1367,7 @@ class SegmentInfo implements TermsStreamInterface
             $this->_loadNorm($fieldNum);
         }
 
-        return AbstractSimilarity::decodeNorm( ord($this->_norms[$fieldNum][$id]) );
+        return AbstractSimilarity::decodeNorm(ord($this->_norms[$fieldNum][$id]));
     }
 
     /**
@@ -1384,8 +1383,10 @@ class SegmentInfo implements TermsStreamInterface
         if ($fieldNum == -1  ||  !($this->_fields[$fieldNum]->isIndexed)) {
             $similarity = AbstractSimilarity::getDefault();
 
-            return str_repeat(chr($similarity->encodeNorm( $similarity->lengthNorm($fieldName, 0) )),
-                              $this->_docCount);
+            return str_repeat(
+                chr($similarity->encodeNorm($similarity->lengthNorm($fieldName, 0))),
+                $this->_docCount
+            );
         }
 
         if (!isset($this->_norms[$fieldNum])) {
@@ -1900,12 +1901,16 @@ class SegmentInfo implements TermsStreamInterface
         }
         $this->_tisFile->seek($this->_tisFileOffset + $prevTermInfo[4], SEEK_SET);
 
-        $this->_lastTerm     = new Term($prevTerm[1] /* text */,
-                                        ($prevTerm[0] == -1) ? '' : $this->_fields[$prevTerm[0] /* field */]->name);
-        $this->_lastTermInfo = new TermInfo($prevTermInfo[0] /* docFreq */,
-                                            $prevTermInfo[1] /* freqPointer */,
-                                            $prevTermInfo[2] /* proxPointer */,
-                                            $prevTermInfo[3] /* skipOffset */);
+        $this->_lastTerm     = new Term(
+            $prevTerm[1] /* text */,
+            ($prevTerm[0] == -1) ? '' : $this->_fields[$prevTerm[0] /* field */]->name
+        );
+        $this->_lastTermInfo = new TermInfo(
+            $prevTermInfo[0] /* docFreq */,
+            $prevTermInfo[1] /* freqPointer */,
+            $prevTermInfo[2] /* proxPointer */,
+            $prevTermInfo[3] /* skipOffset */
+        );
         $this->_termCount  =  $this->_termNum - $prevPosition*$this->_indexInterval;
 
         if ($highIndex == 0) {
@@ -1918,10 +1923,11 @@ class SegmentInfo implements TermsStreamInterface
                 $this->_lastTermPositions = array();
 
                 $this->_frqFile->seek($this->_lastTermInfo->freqPointer + $this->_frqFileOffset, SEEK_SET);
-                $freqs = array();   $docId = 0;
-                for( $count = 0; $count < $this->_lastTermInfo->docFreq; $count++ ) {
+                $freqs = array();
+                $docId = 0;
+                for ($count = 0; $count < $this->_lastTermInfo->docFreq; $count++) {
                     $docDelta = $this->_frqFile->readVInt();
-                    if( $docDelta % 2 == 1 ) {
+                    if ($docDelta % 2 == 1) {
                         $docId += ($docDelta-1)/2;
                         $freqs[ $docId ] = 1;
                     } else {
@@ -1932,9 +1938,10 @@ class SegmentInfo implements TermsStreamInterface
 
                 $this->_prxFile->seek($this->_lastTermInfo->proxPointer + $this->_prxFileOffset, SEEK_SET);
                 foreach ($freqs as $docId => $freq) {
-                    $termPosition = 0;  $positions = array();
+                    $termPosition = 0;
+                    $positions = array();
 
-                    for ($count = 0; $count < $freq; $count++ ) {
+                    for ($count = 0; $count < $freq; $count++) {
                         $termPosition += $this->_prxFile->readVInt();
                         $positions[] = $termPosition;
                     }
@@ -1950,7 +1957,7 @@ class SegmentInfo implements TermsStreamInterface
 
         // Search term matching specified prefix
         while ($this->_lastTerm !== null) {
-            if ( strcmp($this->_lastTerm->field, $prefix->field) > 0  ||
+            if (strcmp($this->_lastTerm->field, $prefix->field) > 0  ||
                  ($prefix->field == $this->_lastTerm->field  &&  strcmp($this->_lastTerm->text, $prefix->text) >= 0) ) {
                     // Current term matches or greate than the pattern
                     return;
@@ -2005,10 +2012,11 @@ class SegmentInfo implements TermsStreamInterface
             $this->_lastTermPositions = array();
 
             $this->_frqFile->seek($this->_lastTermInfo->freqPointer + $this->_frqFileOffset, SEEK_SET);
-            $freqs = array();   $docId = 0;
-            for( $count = 0; $count < $this->_lastTermInfo->docFreq; $count++ ) {
+            $freqs = array();
+            $docId = 0;
+            for ($count = 0; $count < $this->_lastTermInfo->docFreq; $count++) {
                 $docDelta = $this->_frqFile->readVInt();
-                if( $docDelta % 2 == 1 ) {
+                if ($docDelta % 2 == 1) {
                     $docId += ($docDelta-1)/2;
                     $freqs[ $docId ] = 1;
                 } else {
@@ -2019,9 +2027,10 @@ class SegmentInfo implements TermsStreamInterface
 
             $this->_prxFile->seek($this->_lastTermInfo->proxPointer + $this->_prxFileOffset, SEEK_SET);
             foreach ($freqs as $docId => $freq) {
-                $termPosition = 0;  $positions = array();
+                $termPosition = 0;
+                $positions = array();
 
-                for ($count = 0; $count < $freq; $count++ ) {
+                for ($count = 0; $count < $freq; $count++) {
                     $termPosition += $this->_prxFile->readVInt();
                     $positions[] = $termPosition;
                 }

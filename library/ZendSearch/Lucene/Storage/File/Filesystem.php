@@ -36,7 +36,7 @@ class Filesystem extends AbstractFile
      * @throws \ZendSearch\Lucene\Exception\InvalidArgumentException
      * @throws \ZendSearch\Lucene\Exception\RuntimeException
      */
-    public function __construct($filename, $mode='r+b')
+    public function __construct($filename, $mode = 'r+b')
     {
         global $php_errormsg;
 
@@ -76,7 +76,7 @@ class Filesystem extends AbstractFile
      * @param integer $whence
      * @return integer
      */
-    public function seek($offset, $whence=SEEK_SET)
+    public function seek($offset, $whence = SEEK_SET)
     {
         return fseek($this->_fileHandle, $offset, $whence);
     }
@@ -109,7 +109,7 @@ class Filesystem extends AbstractFile
      */
     public function close()
     {
-        if ($this->_fileHandle !== null ) {
+        if ($this->_fileHandle !== null) {
             ErrorHandler::start(E_WARNING);
             fclose($this->_fileHandle);
             ErrorHandler::stop();
@@ -127,7 +127,7 @@ class Filesystem extends AbstractFile
         $position = ftell($this->_fileHandle);
         fseek($this->_fileHandle, 0, SEEK_END);
         $size = ftell($this->_fileHandle);
-        fseek($this->_fileHandle,$position);
+        fseek($this->_fileHandle, $position);
 
         return $size;
     }
@@ -138,7 +138,7 @@ class Filesystem extends AbstractFile
      * @param integer $length
      * @return string
      */
-    protected function _fread($length=1)
+    protected function _fread($length = 1)
     {
         if ($length == 0) {
             return '';
@@ -149,7 +149,7 @@ class Filesystem extends AbstractFile
         }
 
         $data = '';
-        while ( $length > 0 && ($nextBlock = fread($this->_fileHandle, $length)) != false ) {
+        while ($length > 0 && ($nextBlock = fread($this->_fileHandle, $length)) != false) {
             $data .= $nextBlock;
             $length -= strlen($nextBlock);
         }
@@ -164,9 +164,9 @@ class Filesystem extends AbstractFile
      * @param string $data
      * @param integer $length
      */
-    protected function _fwrite($data, $length=null)
+    protected function _fwrite($data, $length = null)
     {
-        if ($length === null ) {
+        if ($length === null) {
             fwrite($this->_fileHandle, $data);
         } else {
             fwrite($this->_fileHandle, $data, $length);
@@ -200,7 +200,7 @@ class Filesystem extends AbstractFile
      */
     public function unlock()
     {
-        if ($this->_fileHandle !== null ) {
+        if ($this->_fileHandle !== null) {
             return flock($this->_fileHandle, LOCK_UN);
         } else {
             return true;

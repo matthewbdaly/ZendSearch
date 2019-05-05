@@ -64,4 +64,3 @@ class TermInfo
         $this->indexPointer = $indexPointer;
     }
 }
-

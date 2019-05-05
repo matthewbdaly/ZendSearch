@@ -132,9 +132,11 @@ class Phrase extends AbstractPreprocessing
             }
 
             foreach ($searchFields as $fieldName) {
-                $subquery = new Phrase($this->_phrase,
-                                       $this->_phraseEncoding,
-                                       $fieldName);
+                $subquery = new Phrase(
+                    $this->_phrase,
+                    $this->_phraseEncoding,
+                    $fieldName
+                );
                 $subquery->setSlop($this->getSlop());
 
                 $query->addSubquery($subquery->rewrite($index));

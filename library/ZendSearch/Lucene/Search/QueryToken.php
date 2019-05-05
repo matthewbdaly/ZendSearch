@@ -120,7 +120,7 @@ class QueryToken
 
         switch ($tokenCategory) {
             case self::TC_WORD:
-                if (  strtolower($tokenText) == 'and') {
+                if (strtolower($tokenText) == 'and') {
                     $this->type = self::TT_AND_LEXEME;
                 } elseif (strtolower($tokenText) == 'or') {
                     $this->type = self::TT_OR_LEXEME;

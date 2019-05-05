@@ -100,14 +100,16 @@ class Fuzzy extends AbstractPreprocessing
             }
 
             foreach ($searchFields as $fieldName) {
-                $subquery = new self($this->_word,
-                                     $this->_encoding,
-                                     $fieldName,
-                                     $this->_minimumSimilarity);
+                $subquery = new self(
+                    $this->_word,
+                    $this->_encoding,
+                    $fieldName,
+                    $this->_minimumSimilarity
+                );
 
                 $rewrittenSubquery = $subquery->rewrite($index);
 
-                if ( !($rewrittenSubquery instanceof Query\Insignificant  ||
+                if (!($rewrittenSubquery instanceof Query\Insignificant  ||
                        $rewrittenSubquery instanceof Query\EmptyResult) ) {
                     $query->addSubquery($rewrittenSubquery);
                 }
@@ -157,8 +159,8 @@ class Fuzzy extends AbstractPreprocessing
         // -------------------------------------
         // Recognize wildcard queries
 
-        /** 
-         * @todo check for PCRE unicode support may be performed through Zend_Environment in some future 
+        /**
+         * @todo check for PCRE unicode support may be performed through Zend_Environment in some future
          */
         ErrorHandler::start(E_WARNING);
         $result = preg_match('/\pL/u', 'a');
@@ -212,8 +214,8 @@ class Fuzzy extends AbstractPreprocessing
         // -------------------------------------
         // Recognize wildcard queries
 
-        /** 
-         * @todo check for PCRE unicode support may be performed through Zend_Environment in some future 
+        /**
+         * @todo check for PCRE unicode support may be performed through Zend_Environment in some future
          */
         ErrorHandler::start(E_WARNING);
         $result = preg_match('/\pL/u', 'a');

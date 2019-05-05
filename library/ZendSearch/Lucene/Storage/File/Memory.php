@@ -75,7 +75,7 @@ class Memory extends AbstractFile
      * @param integer $whence
      * @return integer
      */
-    public function seek($offset, $whence=SEEK_SET)
+    public function seek($offset, $whence = SEEK_SET)
     {
         switch ($whence) {
             case SEEK_SET:
@@ -127,7 +127,7 @@ class Memory extends AbstractFile
      * @param string $data
      * @param integer $length
      */
-    protected function _fwrite($data, $length=null)
+    protected function _fwrite($data, $length = null)
     {
         // We do not need to check if file position points to the end of "file".
         // Only append operation is supported now
@@ -215,7 +215,7 @@ class Memory extends AbstractFile
      * @param string $data
      * @param integer $num
      */
-    public function writeBytes($data, $num=null)
+    public function writeBytes($data, $num = null)
     {
         // We do not need to check if file position points to the end of "file".
         // Only append operation is supported now
@@ -350,7 +350,6 @@ class Memory extends AbstractFile
                     'Long integers lower than -2147483648 (0x80000000) are not supported on 32-bit platforms.'
                 );
             }
-
         }
 
         if ($wordLow < 0) {
@@ -430,7 +429,7 @@ class Memory extends AbstractFile
 
         settype($value, 'integer');
         while ($value > 0x7F) {
-            $this->_data .= chr( ($value & 0x7F)|0x80 );
+            $this->_data .= chr(($value & 0x7F)|0x80);
             $value >>= 7;
         }
         $this->_data .= chr($value);
@@ -467,14 +466,14 @@ class Memory extends AbstractFile
             $str_val = substr($this->_data, $this->_position, $strlen);
             $this->_position += $strlen;
 
-            for ($count = 0; $count < $strlen; $count++ ) {
+            for ($count = 0; $count < $strlen; $count++) {
                 if (( ord($str_val[$count]) & 0xC0 ) == 0xC0) {
                     $addBytes = 1;
-                    if (ord($str_val[$count]) & 0x20 ) {
+                    if (ord($str_val[$count]) & 0x20) {
                         $addBytes++;
 
                         // Never used. Java2 doesn't encode strings in four bytes
-                        if (ord($str_val[$count]) & 0x10 ) {
+                        if (ord($str_val[$count]) & 0x10) {
                             $addBytes++;
                         }
                     }
@@ -487,8 +486,8 @@ class Memory extends AbstractFile
                     if (ord($str_val[$count])   == 0xC0 &&
                         ord($str_val[$count+1]) == 0x80   ) {
                         $str_val[$count] = 0;
-                        $str_val = substr($str_val,0,$count+1)
-                                 . substr($str_val,$count+2);
+                        $str_val = substr($str_val, 0, $count+1)
+                                 . substr($str_val, $count+2);
                     }
                     $count += $addBytes;
                 }
@@ -528,7 +527,7 @@ class Memory extends AbstractFile
         $chars = $strlen = strlen($str);
         $containNullChars = false;
 
-        for ($count = 0; $count < $strlen; $count++ ) {
+        for ($count = 0; $count < $strlen; $count++) {
             /**
              * String is already in Java 2 representation.
              * We should only calculate actual string length and replace
@@ -536,18 +535,18 @@ class Memory extends AbstractFile
              */
             if ((ord($str[$count]) & 0xC0) == 0xC0) {
                 $addBytes = 1;
-                if (ord($str[$count]) & 0x20 ) {
+                if (ord($str[$count]) & 0x20) {
                     $addBytes++;
 
                     // Never used. Java2 doesn't encode strings in four bytes
                     // and we dont't support non-BMP characters
-                    if (ord($str[$count]) & 0x10 ) {
+                    if (ord($str[$count]) & 0x10) {
                         $addBytes++;
                     }
                 }
                 $chars -= $addBytes;
 
-                if (ord($str[$count]) == 0 ) {
+                if (ord($str[$count]) == 0) {
                     $containNullChars = true;
                 }
                 $count += $addBytes;
@@ -561,7 +560,6 @@ class Memory extends AbstractFile
         $this->writeVInt($chars);
         if ($containNullChars) {
             $this->_data .= str_replace($str, "\x00", "\xC0\x80");
-
         } else {
             $this->_data .= $str;
         }

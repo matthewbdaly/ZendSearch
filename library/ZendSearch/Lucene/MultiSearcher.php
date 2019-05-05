@@ -171,7 +171,7 @@ class MultiSearcher implements SearchIndexInterface
      *
      * @param integer $id
      * @return boolean
-     * @throws \ZendSearch\Lucene\Exception\OutOfRangeException	is thrown if $id is out of the range
+     * @throws \ZendSearch\Lucene\Exception\OutOfRangeException is thrown if $id is out of the range
      */
     public function isDeleted($id)
     {
@@ -399,7 +399,7 @@ class MultiSearcher implements SearchIndexInterface
      *
      * @param integer|\ZendSearch\Lucene\Search\QueryHit $id
      * @return \ZendSearch\Lucene\Document
-     * @throws \ZendSearch\Lucene\Exception\OutOfRangeException	is thrown if $id is out of the range
+     * @throws \ZendSearch\Lucene\Exception\OutOfRangeException is thrown if $id is out of the range
      */
     public function getDocument($id)
     {

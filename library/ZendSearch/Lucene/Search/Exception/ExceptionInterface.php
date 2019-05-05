@@ -10,6 +10,7 @@
 
 namespace ZendSearch\Lucene\Search\Exception;
 
-interface ExceptionInterface
-    extends \ZendSearch\Lucene\Exception\ExceptionInterface
-{}
+interface ExceptionInterface extends \ZendSearch\Lucene\Exception\ExceptionInterface
+{
+
+}

@@ -132,7 +132,7 @@ class Wildcard extends AbstractQuery
 
         $prefix          = self::_getPrefix($this->_pattern->text);
         $prefixLength    = strlen($prefix);
-        $matchExpression = '/^' . str_replace(array('\\?', '\\*'), array('.', '.*') , preg_quote($this->_pattern->text, '/')) . '$/';
+        $matchExpression = '/^' . str_replace(array('\\?', '\\*'), array('.', '.*'), preg_quote($this->_pattern->text, '/')) . '$/';
 
         if ($prefixLength < self::$_minPrefixLength) {
             throw new RuntimeException(
@@ -140,8 +140,8 @@ class Wildcard extends AbstractQuery
             );
         }
 
-        /** 
-         * @todo check for PCRE unicode support may be performed through Zend_Environment in some future 
+        /**
+         * @todo check for PCRE unicode support may be performed through Zend_Environment in some future
          */
         ErrorHandler::start(E_WARNING);
         $result = preg_match('/\pL/u', 'a');
@@ -309,7 +309,7 @@ class Wildcard extends AbstractQuery
     {
         $words = array();
 
-        $matchExpression = '/^' . str_replace(array('\\?', '\\*'), array('.', '.*') , preg_quote($this->_pattern->text, '/')) . '$/';
+        $matchExpression = '/^' . str_replace(array('\\?', '\\*'), array('.', '.*'), preg_quote($this->_pattern->text, '/')) . '$/';
         ErrorHandler::start(E_WARNING);
         $result = preg_match('/\pL/u', 'a');
         ErrorHandler::stop();

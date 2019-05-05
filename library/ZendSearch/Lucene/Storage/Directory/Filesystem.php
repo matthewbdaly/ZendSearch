@@ -144,11 +144,13 @@ class Filesystem implements DirectoryInterface
     {
         $result = array();
 
-        $dirContent = opendir( $this->_dirPath );
+        $dirContent = opendir($this->_dirPath);
         while (($file = readdir($dirContent)) !== false) {
-            if (($file == '..')||($file == '.'))   continue;
+            if (($file == '..')||($file == '.')) {
+                continue;
+            }
 
-            if( !is_dir($this->_dirPath . '/' . $file) ) {
+            if (!is_dir($this->_dirPath . '/' . $file)) {
                 $result[] = $file;
             }
         }
@@ -196,7 +198,8 @@ class Filesystem implements DirectoryInterface
         unset($this->_fileHandlers[$filename]);
 
         global $php_errormsg;
-        $trackErrors = ini_get('track_errors'); ini_set('track_errors', '1');
+        $trackErrors = ini_get('track_errors');
+        ini_set('track_errors', '1');
         if (!@unlink($this->_dirPath . '/' . $filename)) {
             ini_set('track_errors', $trackErrors);
             throw new Lucene\Exception\RuntimeException('Can\'t delete file: ' . $php_errormsg);
@@ -242,7 +245,7 @@ class Filesystem implements DirectoryInterface
      */
     public function fileLength($filename)
     {
-        if (isset( $this->_fileHandlers[$filename] )) {
+        if (isset($this->_fileHandlers[$filename])) {
             return $this->_fileHandlers[$filename]->size();
         }
         return filesize($this->_dirPath .'/'. $filename);
@@ -340,7 +343,7 @@ class Filesystem implements DirectoryInterface
             return new File\Filesystem($fullFilename);
         }
 
-        if (isset( $this->_fileHandlers[$filename] )) {
+        if (isset($this->_fileHandlers[$filename])) {
             $this->_fileHandlers[$filename]->seek(0);
             return $this->_fileHandlers[$filename];
         }

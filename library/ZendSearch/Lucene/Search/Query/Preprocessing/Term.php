@@ -87,9 +87,11 @@ class Term extends AbstractPreprocessing
             }
 
             foreach ($searchFields as $fieldName) {
-                $subquery = new Term($this->_word,
-                                     $this->_encoding,
-                                     $fieldName);
+                $subquery = new Term(
+                    $this->_word,
+                    $this->_encoding,
+                    $fieldName
+                );
                 $rewrittenSubquery = $subquery->rewrite($index);
                 foreach ($rewrittenSubquery->getQueryTerms() as $term) {
                     $query->addTerm($term);
@@ -129,8 +131,8 @@ class Term extends AbstractPreprocessing
         // -------------------------------------
         // Recognize wildcard queries
 
-        /** 
-         * @todo check for PCRE unicode support may be performed through Zend_Environment in some future 
+        /**
+         * @todo check for PCRE unicode support may be performed through Zend_Environment in some future
          */
         ErrorHandler::start(E_WARNING);
         $result = preg_match('/\pL/u', 'a');
@@ -229,8 +231,8 @@ class Term extends AbstractPreprocessing
 
         // -------------------------------------
         // Recognize wildcard queries
-        /** 
-         * @todo check for PCRE unicode support may be performed through Zend_Environment in some future 
+        /**
+         * @todo check for PCRE unicode support may be performed through Zend_Environment in some future
          */
         ErrorHandler::start(E_WARNING);
         $result = preg_match('/\pL/u', 'a');

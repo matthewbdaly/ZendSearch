@@ -247,9 +247,11 @@ class Index implements SearchIndexInterface
             $segSize = $segmentsFile->readInt();
             $this->_docCount += $segSize;
 
-            $this->_segmentInfos[$segName] = new Index\SegmentInfo($this->_directory,
-                                                                   $segName,
-                                                                   $segSize);
+            $this->_segmentInfos[$segName] = new Index\SegmentInfo(
+                $this->_directory,
+                $segName,
+                $segSize
+            );
         }
 
         // Use 2.1 as a target version. Index will be reorganized at update time.
@@ -340,13 +342,15 @@ class Index implements SearchIndexInterface
 
             $this->_docCount += $segSize;
 
-            $this->_segmentInfos[$segName] = new Index\SegmentInfo($this->_directory,
-                                                                   $segName,
-                                                                   $segSize,
-                                                                   $delGen,
-                                                                   $docStoreOptions,
-                                                                   $hasSingleNormFile,
-                                                                   $isCompound);
+            $this->_segmentInfos[$segName] = new Index\SegmentInfo(
+                $this->_directory,
+                $segName,
+                $segSize,
+                $delGen,
+                $docStoreOptions,
+                $hasSingleNormFile,
+                $isCompound
+            );
         }
     }
 
@@ -448,9 +452,11 @@ class Index implements SearchIndexInterface
     private function _getIndexWriter()
     {
         if ($this->_writer === null) {
-            $this->_writer = new Index\Writer($this->_directory,
-                                              $this->_segmentInfos,
-                                              $this->_formatVersion);
+            $this->_writer = new Index\Writer(
+                $this->_directory,
+                $this->_segmentInfos,
+                $this->_formatVersion
+            );
         }
 
         return $this->_writer;
@@ -511,7 +517,7 @@ class Index implements SearchIndexInterface
      *
      * @param integer $id
      * @return boolean
-     * @throws \ZendSearch\Lucene\Exception\OutOfRangeException	is thrown if $id is out of the range
+     * @throws \ZendSearch\Lucene\Exception\OutOfRangeException is thrown if $id is out of the range
      */
     public function isDeleted($id)
     {
@@ -675,7 +681,7 @@ class Index implements SearchIndexInterface
         $resultSetLimit = Lucene::getResultSetLimit();
         foreach ($query->matchedDocs() as $id => $num) {
             $docScore = $query->score($id, $this);
-            if( $docScore != 0 ) {
+            if ($docScore != 0) {
                 $hit = new Search\QueryHit($this);
                 $hit->document_id = $hit->id = $id;
                 $hit->score = $docScore;
@@ -707,9 +713,15 @@ class Index implements SearchIndexInterface
 
         if (func_num_args() == 1) {
             // sort by scores
-            array_multisort($scores, SORT_DESC, SORT_NUMERIC,
-                            $ids,    SORT_ASC,  SORT_NUMERIC,
-                            $hits);
+            array_multisort(
+                $scores,
+                SORT_DESC,
+                SORT_NUMERIC,
+                $ids,
+                SORT_ASC,
+                SORT_NUMERIC,
+                $hits
+            );
         } else {
             // sort by given field names
 
@@ -810,7 +822,7 @@ class Index implements SearchIndexInterface
     public function getFieldNames($indexed = false)
     {
         $result = array();
-        foreach( $this->_segmentInfos as $segmentInfo ) {
+        foreach ($this->_segmentInfos as $segmentInfo) {
             $result = array_merge($result, $segmentInfo->getFields($indexed));
         }
         return $result;
@@ -861,20 +873,24 @@ class Index implements SearchIndexInterface
             $fieldInfo = $segmentInfo->getField($fieldNum);
 
             if (!($bits & 2)) { // Text data
-                $field = new Document\Field($fieldInfo->name,
-                                            $fdtFile->readString(),
-                                            'UTF-8',
-                                            true,
-                                            $fieldInfo->isIndexed,
-                                            $bits & 1 );
+                $field = new Document\Field(
+                    $fieldInfo->name,
+                    $fdtFile->readString(),
+                    'UTF-8',
+                    true,
+                    $fieldInfo->isIndexed,
+                    $bits & 1
+                );
             } else {            // Binary data
-                $field = new Document\Field($fieldInfo->name,
-                                            $fdtFile->readBinary(),
-                                            '',
-                                            true,
-                                            $fieldInfo->isIndexed,
-                                            $bits & 1,
-                                            true );
+                $field = new Document\Field(
+                    $fieldInfo->name,
+                    $fdtFile->readBinary(),
+                    '',
+                    true,
+                    $fieldInfo->isIndexed,
+                    $bits & 1,
+                    true
+                );
             }
 
             $doc->addField($field);
@@ -1291,5 +1307,6 @@ class Index implements SearchIndexInterface
      * @todo Implementation
      */
     public function undeleteAll()
-    {}
+    {
+    }
 }

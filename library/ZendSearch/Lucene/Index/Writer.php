@@ -164,7 +164,7 @@ class Writer
                     isset(self::$_indexExtensions[ substr($file, strlen($file)-4)]) ||
                     preg_match('/\.f\d+$/i', $file) /* matches <segment_name>.f<decimal_nmber> file names */) {
                         $directory->deleteFile($file);
-                    }
+                }
             }
 
             $segmentsFile = $directory->createFile('segments');
@@ -360,8 +360,10 @@ class Writer
     {
         $newName = $this->_newSegmentName();
 
-        $merger = new SegmentMerger($this->_directory,
-                                                             $newName);
+        $merger = new SegmentMerger(
+            $this->_directory,
+            $newName
+        );
         foreach ($segments as $segmentInfo) {
             $merger->addSource($segmentInfo);
             $this->_segmentsToDelete[$segmentInfo->getName()] = $segmentInfo->getName();
@@ -504,13 +506,15 @@ class Writer
                         }
 
                         $this->_segmentInfos[$segName] =
-                                    new SegmentInfo($this->_directory,
-                                                                             $segName,
-                                                                             $segSize,
-                                                                             $delGen,
-                                                                             $docStoreOptions,
-                                                                             $hasSingleNormFile,
-                                                                             $isCompound);
+                                    new SegmentInfo(
+                                        $this->_directory,
+                                        $segName,
+                                        $segSize,
+                                        $delGen,
+                                        $docStoreOptions,
+                                        $hasSingleNormFile,
+                                        $isCompound
+                                    );
                     } else {
                         // Retrieve actual deletions file generation number
                         $delGen = $this->_segmentInfos[$segName]->getDelGen();
@@ -556,7 +560,8 @@ class Writer
                 $newSegmentFile->writeInt($segmentInfo->count());
 
                 // delete file generation: -1 (there is no delete file yet)
-                $newSegmentFile->writeInt((int)0xFFFFFFFF);$newSegmentFile->writeInt((int)0xFFFFFFFF);
+                $newSegmentFile->writeInt((int)0xFFFFFFFF);
+                $newSegmentFile->writeInt((int)0xFFFFFFFF);
                 if ($this->_targetFormatVersion == Lucene\Index::FORMAT_2_3) {
                     // docStoreOffset: -1 (segment doesn't use shared doc store)
                     $newSegmentFile->writeInt((int)0xFFFFFFFF);
@@ -581,7 +586,8 @@ class Writer
             $generation--;
             $genFile->seek(4, SEEK_SET);
             // Write generation number twice
-            $genFile->writeLong($generation); $genFile->writeLong($generation);
+            $genFile->writeLong($generation);
+            $genFile->writeLong($generation);
 
             // Release index write lock
             Lucene\LockManager::releaseWriteLock($this->_directory);
@@ -685,9 +691,17 @@ class Writer
             }
 
             // Reorder files for deleting
-            array_multisort($filesTypes,    SORT_ASC, SORT_NUMERIC,
-                            $filesNumbers,  SORT_ASC, SORT_NUMERIC,
-                            $filesToDelete, SORT_ASC, SORT_STRING);
+            array_multisort(
+                $filesTypes,
+                SORT_ASC,
+                SORT_NUMERIC,
+                $filesNumbers,
+                SORT_ASC,
+                SORT_NUMERIC,
+                $filesToDelete,
+                SORT_ASC,
+                SORT_STRING
+            );
 
             foreach ($filesToDelete as $file) {
                 try {

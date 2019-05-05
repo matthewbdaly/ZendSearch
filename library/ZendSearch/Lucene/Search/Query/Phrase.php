@@ -285,7 +285,7 @@ class Phrase extends AbstractQuery
                 count($this->_termsPositions[$termId][$docId]) <
                 count($this->_termsPositions[$lowCardTermId][$docId]) ) {
                     $lowCardTermId = $termId;
-                }
+            }
         }
 
         // Walk through positions of the term with lowest cardinality
@@ -333,7 +333,7 @@ class Phrase extends AbstractQuery
 
             // Walk through the term positions.
             // Each term position produces a set of phrases.
-            foreach ($this->_termsPositions[$termId][$docId] as $termPosition ) {
+            foreach ($this->_termsPositions[$termId][$docId] as $termPosition) {
                 if ($firstPass) {
                     for ($count = 0; $count < $queueSize; $count++) {
                         $phraseQueue[$count][$termId] = $termPosition;
@@ -341,7 +341,7 @@ class Phrase extends AbstractQuery
                 } else {
                     for ($count = 0; $count < $queueSize; $count++) {
                         if ($lastTerm !== null &&
-                            abs( $termPosition - $phraseQueue[$count][$lastTerm] -
+                            abs($termPosition - $phraseQueue[$count][$lastTerm] -
                                  ($this->_offsets[$termId] - $this->_offsets[$lastTerm])) > $this->_slop) {
                             continue;
                         }
@@ -350,7 +350,6 @@ class Phrase extends AbstractQuery
                         $phraseQueue[$newPhraseId]          = $phraseQueue[$count];
                         $phraseQueue[$newPhraseId][$termId] = $termPosition;
                     }
-
                 }
 
                 $firstPass = false;
@@ -369,7 +368,7 @@ class Phrase extends AbstractQuery
                 foreach ($this->_terms as $termId => $term) {
                     $distance += abs($phrasePos[$termId] - $this->_offsets[$termId] - $start);
 
-                    if($distance > $this->_slop) {
+                    if ($distance > $this->_slop) {
                         break;
                     }
                 }
@@ -413,12 +412,18 @@ class Phrase extends AbstractQuery
             $this->_termsPositions[$termId] = $reader->termPositions($term);
         }
         // sort resvectors in order of subquery cardinality increasing
-        array_multisort($resVectorsSizes, SORT_ASC, SORT_NUMERIC,
-                        $resVectorsIds,   SORT_ASC, SORT_NUMERIC,
-                        $resVectors);
+        array_multisort(
+            $resVectorsSizes,
+            SORT_ASC,
+            SORT_NUMERIC,
+            $resVectorsIds,
+            SORT_ASC,
+            SORT_NUMERIC,
+            $resVectors
+        );
 
         foreach ($resVectors as $nextResVector) {
-            if($this->_resVector === null) {
+            if ($this->_resVector === null) {
                 $this->_resVector = $nextResVector;
             } else {
                 //$this->_resVector = array_intersect_key($this->_resVector, $nextResVector);

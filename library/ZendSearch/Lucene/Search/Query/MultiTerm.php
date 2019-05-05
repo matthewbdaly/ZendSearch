@@ -104,7 +104,7 @@ class MultiTerm extends AbstractQuery
             $this->_signs = null;
             // Check if all terms are required
             if (is_array($signs)) {
-                foreach ($signs as $sign ) {
+                foreach ($signs as $sign) {
                     if ($sign !== true) {
                         $this->_signs = $signs;
                         break;
@@ -174,8 +174,10 @@ class MultiTerm extends AbstractQuery
             foreach ($this->_terms as $termId => $term) {
                 $subquery = new Term($term);
 
-                $query->addSubquery($subquery->rewrite($index),
-                                    ($this->_signs === null)?  true : $this->_signs[$termId]);
+                $query->addSubquery(
+                    $subquery->rewrite($index),
+                    ($this->_signs === null)?  true : $this->_signs[$termId]
+                );
             }
 
             return $query;
@@ -316,9 +318,15 @@ class MultiTerm extends AbstractQuery
             $docFreqs[] = $reader->docFreq($term);
             $ids[]      = $id; // Used to keep original order for terms with the same selectivity and omit terms comparison
         }
-        array_multisort($docFreqs, SORT_ASC, SORT_NUMERIC,
-                        $ids,      SORT_ASC, SORT_NUMERIC,
-                        $this->_terms);
+        array_multisort(
+            $docFreqs,
+            SORT_ASC,
+            SORT_NUMERIC,
+            $ids,
+            SORT_ASC,
+            SORT_NUMERIC,
+            $this->_terms
+        );
 
         $docsFilter = new Lucene\Index\DocsFilter();
         foreach ($this->_terms as $termId => $term) {
@@ -374,13 +382,19 @@ class MultiTerm extends AbstractQuery
         }
 
         // sort resvectors in order of subquery cardinality increasing
-        array_multisort($requiredVectorsSizes, SORT_ASC, SORT_NUMERIC,
-                        $requiredVectorsIds,   SORT_ASC, SORT_NUMERIC,
-                        $requiredVectors);
+        array_multisort(
+            $requiredVectorsSizes,
+            SORT_ASC,
+            SORT_NUMERIC,
+            $requiredVectorsIds,
+            SORT_ASC,
+            SORT_NUMERIC,
+            $requiredVectors
+        );
 
         $required = null;
         foreach ($requiredVectors as $nextResVector) {
-            if($required === null) {
+            if ($required === null) {
                 $required = $nextResVector;
             } else {
                 //$required = array_intersect_key($required, $nextResVector);
@@ -446,8 +460,10 @@ class MultiTerm extends AbstractQuery
     public function _conjunctionScore($docId, Lucene\SearchIndexInterface $reader)
     {
         if ($this->_coord === null) {
-            $this->_coord = $reader->getSimilarity()->coord(count($this->_terms),
-                                                            count($this->_terms) );
+            $this->_coord = $reader->getSimilarity()->coord(
+                count($this->_terms),
+                count($this->_terms)
+            );
         }
 
         $score = 0.0;
@@ -492,7 +508,7 @@ class MultiTerm extends AbstractQuery
 
         $score = 0.0;
         $matchedTerms = 0;
-        foreach ($this->_terms as $termId=>$term) {
+        foreach ($this->_terms as $termId => $term) {
             // Check if term is
             if ($this->_signs[$termId] !== false &&        // not prohibited
                 isset($this->_termsFreqs[$termId][$docId]) // matched

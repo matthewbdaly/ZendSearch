@@ -19,8 +19,6 @@ use ZendSearch\Lucene\Exception;
  *
  * Special exception type, which may be used to intercept wrong user input
  */
-class QueryParserException
-    extends Exception\UnexpectedValueException
-    implements ExceptionInterface
-{}
-
+class QueryParserException extends Exception\UnexpectedValueException implements ExceptionInterface
+{
+}

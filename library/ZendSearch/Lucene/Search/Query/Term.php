@@ -209,4 +209,3 @@ class Term extends AbstractQuery
         return $query;
     }
 }
-

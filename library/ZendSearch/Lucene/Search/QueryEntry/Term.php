@@ -85,24 +85,26 @@ class Term extends AbstractQueryEntry
     public function getQuery($encoding)
     {
         if ($this->_fuzzyQuery) {
-            $query = new \ZendSearch\Lucene\Search\Query\Preprocessing\Fuzzy($this->_term,
-                                                                             $encoding,
-                                                                             ($this->_field !== null)?
+            $query = new \ZendSearch\Lucene\Search\Query\Preprocessing\Fuzzy(
+                $this->_term,
+                $encoding,
+                ($this->_field !== null)?
                                                                                   iconv($encoding, 'UTF-8', $this->_field) :
                                                                                   null,
-                                                                             $this->_similarity
-                                                                             );
+                $this->_similarity
+            );
             $query->setBoost($this->_boost);
             return $query;
         }
 
 
-        $query = new \ZendSearch\Lucene\Search\Query\Preprocessing\Term($this->_term,
-                                                                        $encoding,
-                                                                        ($this->_field !== null)?
+        $query = new \ZendSearch\Lucene\Search\Query\Preprocessing\Term(
+            $this->_term,
+            $encoding,
+            ($this->_field !== null)?
                                                                               iconv($encoding, 'UTF-8', $this->_field) :
                                                                               null
-                                                                        );
+        );
         $query->setBoost($this->_boost);
         return $query;
     }

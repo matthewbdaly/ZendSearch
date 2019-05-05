@@ -325,7 +325,7 @@ class QueryParserContext
 
 
         $subqueries = array();
-        foreach ($conjuctions as  $conjuction) {
+        foreach ($conjuctions as $conjuction) {
             // Check, if it's a one term conjuction
             if (count($conjuction) == 1) {
                 $subqueries[] = $conjuction[0][0]->getQuery($this->_encoding);

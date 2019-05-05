@@ -216,7 +216,7 @@ class Fuzzy extends AbstractQuery
                         $similarity = (($prefixUtf8Length == 0)? 0 : 1 - strlen($target)/$prefixUtf8Length);
                     } elseif (strlen($target) == 0) {
                         $similarity = (($prefixUtf8Length == 0)? 0 : 1 - $termRestLength/$prefixUtf8Length);
-                    } elseif ($maxDistance < abs($termRestLength - strlen($target))){
+                    } elseif ($maxDistance < abs($termRestLength - strlen($target))) {
                         //just adding the characters of term to target or vice-versa results in too many edits
                         //for example "pre" length is 3 and "prefixes" length is 8.  We can see that
                         //given this optimal circumstance, the edit distance cannot be less than 5.
@@ -251,7 +251,7 @@ class Fuzzy extends AbstractQuery
                                        $this->_maxDistances[strlen($target)] :
                                        $this->_calculateMaxDistance(0, $termRestLength, strlen($target));
 
-                    if ($maxDistance < abs($termRestLength - strlen($target))){
+                    if ($maxDistance < abs($termRestLength - strlen($target))) {
                         //just adding the characters of term to target or vice-versa results in too many edits
                         //for example "pre" length is 3 and "prefixes" length is 8.  We can see that
                         //given this optimal circumstance, the edit distance cannot be less than 5.
@@ -287,9 +287,15 @@ class Fuzzy extends AbstractQuery
         } else {
             $rewrittenQuery = new Boolean();
 
-            array_multisort($this->_scores,   SORT_DESC, SORT_NUMERIC,
-                            $this->_termKeys, SORT_ASC,  SORT_STRING,
-                            $this->_matches);
+            array_multisort(
+                $this->_scores,
+                SORT_DESC,
+                SORT_NUMERIC,
+                $this->_termKeys,
+                SORT_ASC,
+                SORT_STRING,
+                $this->_matches
+            );
 
             $termCount = 0;
             foreach ($this->_matches as $id => $matchedTerm) {
@@ -435,7 +441,7 @@ class Fuzzy extends AbstractQuery
                     $similarity = (($prefixUtf8Length == 0)? 0 : 1 - strlen($target)/$prefixUtf8Length);
                 } elseif (strlen($target) == 0) {
                     $similarity = (($prefixUtf8Length == 0)? 0 : 1 - $termRestLength/$prefixUtf8Length);
-                } elseif ($maxDistance < abs($termRestLength - strlen($target))){
+                } elseif ($maxDistance < abs($termRestLength - strlen($target))) {
                     //just adding the characters of term to target or vice-versa results in too many edits
                     //for example "pre" length is 3 and "prefixes" length is 8.  We can see that
                     //given this optimal circumstance, the edit distance cannot be less than 5.

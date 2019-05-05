@@ -109,10 +109,12 @@ class DocumentWriter extends AbstractSegmentWriter
                         $field = clone($field);
                         $field->isIndexed = $field->isTokenized = false;
                     } else {
-                        $docNorms[$field->name] = chr($similarity->encodeNorm( $similarity->lengthNorm($field->name,
-                                                                                                       $tokenCounter)*
+                        $docNorms[$field->name] = chr($similarity->encodeNorm($similarity->lengthNorm(
+                            $field->name,
+                            $tokenCounter
+                        )*
                                                                                $document->boost*
-                                                                               $field->boost ));
+                                                                               $field->boost));
                     }
                 } elseif (($fieldUtf8Value = $field->getUtf8Value()) == '') {
                     // Field contains empty value. Treat it as non-indexed and non-tokenized
@@ -133,9 +135,9 @@ class DocumentWriter extends AbstractSegmentWriter
                     }
                     $this->_termDocs[$termKey][$this->_docCount][] = 0; // position
 
-                    $docNorms[$field->name] = chr($similarity->encodeNorm( $similarity->lengthNorm($field->name, 1)*
+                    $docNorms[$field->name] = chr($similarity->encodeNorm($similarity->lengthNorm($field->name, 1)*
                                                                            $document->boost*
-                                                                           $field->boost ));
+                                                                           $field->boost));
                 }
             }
 
@@ -152,14 +154,16 @@ class DocumentWriter extends AbstractSegmentWriter
             }
 
             if (!isset($this->_norms[$fieldName])) {
-                $this->_norms[$fieldName] = str_repeat(chr($similarity->encodeNorm( $similarity->lengthNorm($fieldName, 0) )),
-                                                       $this->_docCount);
+                $this->_norms[$fieldName] = str_repeat(
+                    chr($similarity->encodeNorm($similarity->lengthNorm($fieldName, 0))),
+                    $this->_docCount
+                );
             }
 
-            if (isset($docNorms[$fieldName])){
+            if (isset($docNorms[$fieldName])) {
                 $this->_norms[$fieldName] .= $docNorms[$fieldName];
             } else {
-                $this->_norms[$fieldName] .= chr($similarity->encodeNorm( $similarity->lengthNorm($fieldName, 0) ));
+                $this->_norms[$fieldName] .= chr($similarity->encodeNorm($similarity->lengthNorm($fieldName, 0)));
             }
         }
 
@@ -200,14 +204,14 @@ class DocumentWriter extends AbstractSegmentWriter
 
         $this->_generateCFS();
 
-        return new Index\SegmentInfo($this->_directory,
-                                     $this->_name,
-                                     $this->_docCount,
-                                     -1,
-                                     null,
-                                     true,
-                                     true);
+        return new Index\SegmentInfo(
+            $this->_directory,
+            $this->_name,
+            $this->_docCount,
+            -1,
+            null,
+            true,
+            true
+        );
     }
-
 }
-

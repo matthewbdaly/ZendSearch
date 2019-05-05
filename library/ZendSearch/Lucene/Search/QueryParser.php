@@ -150,7 +150,8 @@ class QueryParser extends Lucene\AbstractFSM
      */
     public function __construct()
     {
-        parent::__construct(array(self::ST_COMMON_QUERY_ELEMENT,
+        parent::__construct(
+            array(self::ST_COMMON_QUERY_ELEMENT,
                                   self::ST_CLOSEDINT_RQ_START,
                                   self::ST_CLOSEDINT_RQ_FIRST_TERM,
                                   self::ST_CLOSEDINT_RQ_TO_TERM,
@@ -162,10 +163,11 @@ class QueryParser extends Lucene\AbstractFSM
                                   self::ST_OPENEDINT_RQ_LAST_TERM,
                                   self::ST_OPENEDINT_RQ_END
                                  ),
-                            QueryToken::getTypes());
+            QueryToken::getTypes()
+        );
 
         $this->addRules(
-             array(array(self::ST_COMMON_QUERY_ELEMENT, QueryToken::TT_WORD,             self::ST_COMMON_QUERY_ELEMENT),
+            array(array(self::ST_COMMON_QUERY_ELEMENT, QueryToken::TT_WORD,             self::ST_COMMON_QUERY_ELEMENT),
                    array(self::ST_COMMON_QUERY_ELEMENT, QueryToken::TT_PHRASE,           self::ST_COMMON_QUERY_ELEMENT),
                    array(self::ST_COMMON_QUERY_ELEMENT, QueryToken::TT_FIELD,            self::ST_COMMON_QUERY_ELEMENT),
                    array(self::ST_COMMON_QUERY_ELEMENT, QueryToken::TT_REQUIRED,         self::ST_COMMON_QUERY_ELEMENT),
@@ -180,19 +182,22 @@ class QueryParser extends Lucene\AbstractFSM
                    array(self::ST_COMMON_QUERY_ELEMENT, QueryToken::TT_OR_LEXEME,        self::ST_COMMON_QUERY_ELEMENT),
                    array(self::ST_COMMON_QUERY_ELEMENT, QueryToken::TT_NOT_LEXEME,       self::ST_COMMON_QUERY_ELEMENT),
                    array(self::ST_COMMON_QUERY_ELEMENT, QueryToken::TT_NUMBER,           self::ST_COMMON_QUERY_ELEMENT)
-                  ));
+            )
+        );
         $this->addRules(
-             array(array(self::ST_CLOSEDINT_RQ_START,      QueryToken::TT_WORD,           self::ST_CLOSEDINT_RQ_FIRST_TERM),
+            array(array(self::ST_CLOSEDINT_RQ_START,      QueryToken::TT_WORD,           self::ST_CLOSEDINT_RQ_FIRST_TERM),
                    array(self::ST_CLOSEDINT_RQ_FIRST_TERM, QueryToken::TT_TO_LEXEME,      self::ST_CLOSEDINT_RQ_TO_TERM),
                    array(self::ST_CLOSEDINT_RQ_TO_TERM,    QueryToken::TT_WORD,           self::ST_CLOSEDINT_RQ_LAST_TERM),
                    array(self::ST_CLOSEDINT_RQ_LAST_TERM,  QueryToken::TT_RANGE_INCL_END, self::ST_COMMON_QUERY_ELEMENT)
-                  ));
+            )
+        );
         $this->addRules(
-             array(array(self::ST_OPENEDINT_RQ_START,      QueryToken::TT_WORD,           self::ST_OPENEDINT_RQ_FIRST_TERM),
+            array(array(self::ST_OPENEDINT_RQ_START,      QueryToken::TT_WORD,           self::ST_OPENEDINT_RQ_FIRST_TERM),
                    array(self::ST_OPENEDINT_RQ_FIRST_TERM, QueryToken::TT_TO_LEXEME,      self::ST_OPENEDINT_RQ_TO_TERM),
                    array(self::ST_OPENEDINT_RQ_TO_TERM,    QueryToken::TT_WORD,           self::ST_OPENEDINT_RQ_LAST_TERM),
                    array(self::ST_OPENEDINT_RQ_LAST_TERM,  QueryToken::TT_RANGE_EXCL_END, self::ST_COMMON_QUERY_ELEMENT)
-                  ));
+            )
+        );
 
 
 
@@ -211,23 +216,23 @@ class QueryParser extends Lucene\AbstractFSM
         $closedRQLastTermAction         = new Lucene\FSMAction($this, 'closedRQLastTerm');
 
 
-        $this->addInputAction(self::ST_COMMON_QUERY_ELEMENT, QueryToken::TT_WORD,            $addTermEntryAction);
-        $this->addInputAction(self::ST_COMMON_QUERY_ELEMENT, QueryToken::TT_PHRASE,          $addPhraseEntryAction);
-        $this->addInputAction(self::ST_COMMON_QUERY_ELEMENT, QueryToken::TT_FIELD,           $setFieldAction);
-        $this->addInputAction(self::ST_COMMON_QUERY_ELEMENT, QueryToken::TT_REQUIRED,        $setSignAction);
-        $this->addInputAction(self::ST_COMMON_QUERY_ELEMENT, QueryToken::TT_PROHIBITED,      $setSignAction);
+        $this->addInputAction(self::ST_COMMON_QUERY_ELEMENT, QueryToken::TT_WORD, $addTermEntryAction);
+        $this->addInputAction(self::ST_COMMON_QUERY_ELEMENT, QueryToken::TT_PHRASE, $addPhraseEntryAction);
+        $this->addInputAction(self::ST_COMMON_QUERY_ELEMENT, QueryToken::TT_FIELD, $setFieldAction);
+        $this->addInputAction(self::ST_COMMON_QUERY_ELEMENT, QueryToken::TT_REQUIRED, $setSignAction);
+        $this->addInputAction(self::ST_COMMON_QUERY_ELEMENT, QueryToken::TT_PROHIBITED, $setSignAction);
         $this->addInputAction(self::ST_COMMON_QUERY_ELEMENT, QueryToken::TT_FUZZY_PROX_MARK, $setFuzzyProxAction);
-        $this->addInputAction(self::ST_COMMON_QUERY_ELEMENT, QueryToken::TT_NUMBER,          $processModifierParameterAction);
-        $this->addInputAction(self::ST_COMMON_QUERY_ELEMENT, QueryToken::TT_SUBQUERY_START,  $subqueryStartAction);
-        $this->addInputAction(self::ST_COMMON_QUERY_ELEMENT, QueryToken::TT_SUBQUERY_END,    $subqueryEndAction);
-        $this->addInputAction(self::ST_COMMON_QUERY_ELEMENT, QueryToken::TT_AND_LEXEME,      $logicalOperatorAction);
-        $this->addInputAction(self::ST_COMMON_QUERY_ELEMENT, QueryToken::TT_OR_LEXEME,       $logicalOperatorAction);
-        $this->addInputAction(self::ST_COMMON_QUERY_ELEMENT, QueryToken::TT_NOT_LEXEME,      $logicalOperatorAction);
+        $this->addInputAction(self::ST_COMMON_QUERY_ELEMENT, QueryToken::TT_NUMBER, $processModifierParameterAction);
+        $this->addInputAction(self::ST_COMMON_QUERY_ELEMENT, QueryToken::TT_SUBQUERY_START, $subqueryStartAction);
+        $this->addInputAction(self::ST_COMMON_QUERY_ELEMENT, QueryToken::TT_SUBQUERY_END, $subqueryEndAction);
+        $this->addInputAction(self::ST_COMMON_QUERY_ELEMENT, QueryToken::TT_AND_LEXEME, $logicalOperatorAction);
+        $this->addInputAction(self::ST_COMMON_QUERY_ELEMENT, QueryToken::TT_OR_LEXEME, $logicalOperatorAction);
+        $this->addInputAction(self::ST_COMMON_QUERY_ELEMENT, QueryToken::TT_NOT_LEXEME, $logicalOperatorAction);
 
         $this->addEntryAction(self::ST_OPENEDINT_RQ_FIRST_TERM, $openedRQFirstTermAction);
-        $this->addEntryAction(self::ST_OPENEDINT_RQ_LAST_TERM,  $openedRQLastTermAction);
+        $this->addEntryAction(self::ST_OPENEDINT_RQ_LAST_TERM, $openedRQLastTermAction);
         $this->addEntryAction(self::ST_CLOSEDINT_RQ_FIRST_TERM, $closedRQFirstTermAction);
-        $this->addEntryAction(self::ST_CLOSEDINT_RQ_LAST_TERM,  $closedRQLastTermAction);
+        $this->addEntryAction(self::ST_CLOSEDINT_RQ_LAST_TERM, $closedRQLastTermAction);
 
 
         $this->_lexer = new QueryLexer();
@@ -263,7 +268,7 @@ class QueryParser extends Lucene\AbstractFSM
      */
     public static function getDefaultEncoding()
     {
-       return self::_getInstance()->_defaultEncoding;
+        return self::_getInstance()->_defaultEncoding;
     }
 
     /**
@@ -358,7 +363,7 @@ class QueryParser extends Lucene\AbstractFSM
                     self::$_instance->_lastToken = $token;
                 } catch (\Exception $e) {
                     if (strpos($e->getMessage(), 'There is no any rule for') !== false) {
-                        throw new QueryParserException( 'Syntax error at char position ' . $token->position . '.', 0, $e);
+                        throw new QueryParserException('Syntax error at char position ' . $token->position . '.', 0, $e);
                     }
 
                     throw new RuntimeException($e->getMessage(), $e->getCode(), $e);
@@ -366,7 +371,7 @@ class QueryParser extends Lucene\AbstractFSM
             }
 
             if (count(self::$_instance->_contextStack) != 0) {
-                throw new QueryParserException('Syntax Error: mismatched parentheses, every opening must have closing.' );
+                throw new QueryParserException('Syntax Error: mismatched parentheses, every opening must have closing.');
             }
 
             return self::$_instance->_context->getQuery();
@@ -448,7 +453,7 @@ class QueryParser extends Lucene\AbstractFSM
     public function processModifierParameter()
     {
         if ($this->_lastToken === null) {
-            throw new QueryParserException('Lexeme modifier parameter must follow lexeme modifier. Char position 0.' );
+            throw new QueryParserException('Lexeme modifier parameter must follow lexeme modifier. Char position 0.');
         }
 
         switch ($this->_lastToken->type) {
@@ -462,7 +467,7 @@ class QueryParser extends Lucene\AbstractFSM
 
             default:
                 // It's not a user input exception
-                throw new RuntimeException('Lexeme modifier parameter must follow lexeme modifier. Char position 0.' );
+                throw new RuntimeException('Lexeme modifier parameter must follow lexeme modifier. Char position 0.');
         }
     }
 
@@ -482,7 +487,7 @@ class QueryParser extends Lucene\AbstractFSM
     public function subqueryEnd()
     {
         if (count($this->_contextStack) == 0) {
-            throw new QueryParserException('Syntax Error: mismatched parentheses, every opening must have closing. Char position ' . $this->_currentToken->position . '.' );
+            throw new QueryParserException('Syntax Error: mismatched parentheses, every opening must have closing. Char position ' . $this->_currentToken->position . '.');
         }
 
         $query          = $this->_context->getQuery();

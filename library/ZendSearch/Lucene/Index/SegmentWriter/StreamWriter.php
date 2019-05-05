@@ -67,13 +67,14 @@ class StreamWriter extends AbstractSegmentWriter
         $this->_dumpFNM();
         $this->_generateCFS();
 
-        return new LuceneIndex\SegmentInfo($this->_directory,
-                                           $this->_name,
-                                           $this->_docCount,
-                                           -1,
-                                           null,
-                                           true,
-                                           true);
+        return new LuceneIndex\SegmentInfo(
+            $this->_directory,
+            $this->_name,
+            $this->_docCount,
+            -1,
+            null,
+            true,
+            true
+        );
     }
 }
-

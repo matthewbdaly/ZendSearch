@@ -43,4 +43,3 @@ class DocsFilter
      */
     public $segmentFilters = array();
 }
-

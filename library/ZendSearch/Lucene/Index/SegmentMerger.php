@@ -177,21 +177,25 @@ class SegmentMerger
 
                     if (!($bits & 2)) { // Text data
                         $storedFields[] =
-                                 new Document\Field($fieldInfo->name,
-                                                    $fdtFile->readString(),
-                                                    'UTF-8',
-                                                    true,
-                                                    $fieldInfo->isIndexed,
-                                                    $bits & 1 );
+                                 new Document\Field(
+                                     $fieldInfo->name,
+                                     $fdtFile->readString(),
+                                     'UTF-8',
+                                     true,
+                                     $fieldInfo->isIndexed,
+                                     $bits & 1
+                                 );
                     } else {            // Binary data
                         $storedFields[] =
-                                 new Document\Field($fieldInfo->name,
-                                                    $fdtFile->readBinary(),
-                                                    '',
-                                                    true,
-                                                    $fieldInfo->isIndexed,
-                                                    $bits & 1,
-                                                    true);
+                                 new Document\Field(
+                                     $fieldInfo->name,
+                                     $fdtFile->readBinary(),
+                                     '',
+                                     true,
+                                     $fieldInfo->isIndexed,
+                                     $bits & 1,
+                                     true
+                                 );
                     }
                 }
 

@@ -86,15 +86,17 @@ class BooleanExpressionRecognizer extends Lucene\AbstractFSM
      */
     public function __construct()
     {
-        parent::__construct( array(self::ST_START,
+        parent::__construct(
+            array(self::ST_START,
                                    self::ST_LITERAL,
                                    self::ST_NOT_OPERATOR,
                                    self::ST_AND_OPERATOR,
                                    self::ST_OR_OPERATOR),
-                             array(self::IN_LITERAL,
+            array(self::IN_LITERAL,
                                    self::IN_NOT_OPERATOR,
                                    self::IN_AND_OPERATOR,
-                                   self::IN_OR_OPERATOR));
+            self::IN_OR_OPERATOR)
+        );
 
         $emptyOperatorAction    = new Lucene\FSMAction($this, 'emptyOperatorAction');
         $emptyNotOperatorAction = new Lucene\FSMAction($this, 'emptyNotOperatorAction');
@@ -122,8 +124,8 @@ class BooleanExpressionRecognizer extends Lucene\AbstractFSM
 
 
         $this->addEntryAction(self::ST_NOT_OPERATOR, $notOperatorAction);
-        $this->addEntryAction(self::ST_OR_OPERATOR,  $orOperatorAction);
-        $this->addEntryAction(self::ST_LITERAL,      $literalAction);
+        $this->addEntryAction(self::ST_OR_OPERATOR, $orOperatorAction);
+        $this->addEntryAction(self::ST_LITERAL, $literalAction);
     }
 
 

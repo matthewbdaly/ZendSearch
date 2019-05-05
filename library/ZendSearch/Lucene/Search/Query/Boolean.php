@@ -79,7 +79,7 @@ class Boolean extends AbstractQuery
             $this->_signs = null;
             // Check if all subqueries are required
             if (is_array($signs)) {
-                foreach ($signs as $sign ) {
+                foreach ($signs as $sign) {
                     if ($sign !== true) {
                         $this->_signs = $signs;
                         break;
@@ -102,7 +102,7 @@ class Boolean extends AbstractQuery
      * @param  boolean|null $sign
      * @return void
      */
-    public function addSubquery(AbstractQuery $subquery, $sign=null)
+    public function addSubquery(AbstractQuery $subquery, $sign = null)
     {
         if ($sign !== true || $this->_signs !== null) {       // Skip, if all subqueries are required
             if ($this->_signs === null) {                     // Check, If all previous subqueries are required
@@ -129,8 +129,10 @@ class Boolean extends AbstractQuery
         $query->setBoost($this->getBoost());
 
         foreach ($this->_subqueries as $subqueryId => $subquery) {
-            $query->addSubquery($subquery->rewrite($index),
-                                ($this->_signs === null)?  true : $this->_signs[$subqueryId]);
+            $query->addSubquery(
+                $subquery->rewrite($index),
+                ($this->_signs === null)?  true : $this->_signs[$subqueryId]
+            );
         }
 
         return $query;
@@ -246,7 +248,7 @@ class Boolean extends AbstractQuery
                 // remove subquery from a subqueries list
                 unset($subqueries[$id]);
                 unset($signs[$id]);
-           } elseif ($subquery instanceof MultiTerm) {
+            } elseif ($subquery instanceof MultiTerm) {
                 $subTerms = $subquery->getTerms();
                 $subSigns = $subquery->getSigns();
 
@@ -288,7 +290,6 @@ class Boolean extends AbstractQuery
                     // remove subquery from a subqueries list
                     unset($subqueries[$id]);
                     unset($signs[$id]);
-
                 } else { // $signs[$id] === null  ||  $signs[$id] === false
                     // It's an optional or prohibited multi-term subquery.
                     // Something like '... (+term1 -term2 term3 ...) ...'
@@ -333,7 +334,7 @@ class Boolean extends AbstractQuery
 
 
         // Check, if there are no decomposed subqueries
-        if (count($terms) == 0 ) {
+        if (count($terms) == 0) {
             // return prepared candidate
             return $optimizedQuery;
         }
@@ -476,12 +477,18 @@ class Boolean extends AbstractQuery
             $resVectorsIds[]   = $subqueryId;
         }
         // sort resvectors in order of subquery cardinality increasing
-        array_multisort($resVectorsSizes, SORT_ASC, SORT_NUMERIC,
-                        $resVectorsIds,   SORT_ASC, SORT_NUMERIC,
-                        $resVectors);
+        array_multisort(
+            $resVectorsSizes,
+            SORT_ASC,
+            SORT_NUMERIC,
+            $resVectorsIds,
+            SORT_ASC,
+            SORT_NUMERIC,
+            $resVectors
+        );
 
         foreach ($resVectors as $nextResVector) {
-            if($this->_resVector === null) {
+            if ($this->_resVector === null) {
                 $this->_resVector = $nextResVector;
             } else {
                 //$this->_resVector = array_intersect_key($this->_resVector, $nextResVector);
@@ -540,13 +547,19 @@ class Boolean extends AbstractQuery
         }
 
         // sort resvectors in order of subquery cardinality increasing
-        array_multisort($requiredVectorsSizes, SORT_ASC, SORT_NUMERIC,
-                        $requiredVectorsIds,   SORT_ASC, SORT_NUMERIC,
-                        $requiredVectors);
+        array_multisort(
+            $requiredVectorsSizes,
+            SORT_ASC,
+            SORT_NUMERIC,
+            $requiredVectorsIds,
+            SORT_ASC,
+            SORT_NUMERIC,
+            $requiredVectors
+        );
 
         $required = null;
         foreach ($requiredVectors as $nextResVector) {
-            if($required === null) {
+            if ($required === null) {
                 $required = $nextResVector;
             } else {
                 //$required = array_intersect_key($required, $nextResVector);
@@ -590,8 +603,10 @@ class Boolean extends AbstractQuery
     public function _conjunctionScore($docId, Lucene\SearchIndexInterface $reader)
     {
         if ($this->_coord === null) {
-            $this->_coord = $reader->getSimilarity()->coord(count($this->_subqueries),
-                                                            count($this->_subqueries) );
+            $this->_coord = $reader->getSimilarity()->coord(
+                count($this->_subqueries),
+                count($this->_subqueries)
+            );
         }
 
         $score = 0;
@@ -789,4 +804,3 @@ class Boolean extends AbstractQuery
         return $query;
     }
 }
-

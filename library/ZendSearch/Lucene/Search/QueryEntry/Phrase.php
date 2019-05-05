@@ -82,11 +82,13 @@ class Phrase extends AbstractQueryEntry
      */
     public function getQuery($encoding)
     {
-        $query = new \ZendSearch\Lucene\Search\Query\Preprocessing\Phrase($this->_phrase,
-                                                                          $encoding,
-                                                                          ($this->_field !== null)?
+        $query = new \ZendSearch\Lucene\Search\Query\Preprocessing\Phrase(
+            $this->_phrase,
+            $encoding,
+            ($this->_field !== null)?
                                                                               iconv($encoding, 'UTF-8', $this->_field) :
-                                                                              null);
+            null
+        );
 
         if ($this->_proximityQuery) {
             $query->setSlop($this->_wordsDistance);

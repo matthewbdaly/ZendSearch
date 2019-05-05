@@ -35,7 +35,7 @@ interface FileInterface
      * @param integer $whence
      * @return integer
      */
-    public function seek($offset, $whence=SEEK_SET);
+    public function seek($offset, $whence = SEEK_SET);
 
     /**
      * Get file position.
@@ -99,7 +99,7 @@ interface FileInterface
      * @param string $data
      * @param integer $num
      */
-    public function writeBytes($data, $num=null);
+    public function writeBytes($data, $num = null);
 
     /**
      * Reads an integer from the current position in the file
