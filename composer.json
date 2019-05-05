@@ -1,6 +1,6 @@
 {
-    "name": "zendframework/zendsearch",
-    "description": "a general purpose text search engine written entirely in PHP 5",
+    "name": "matthewbdaly/zendsearch",
+    "description": "A fork of zendframework/zendsearch, with some tweaks to make it work in PHP 7",
     "type": "library",
     "license": "BSD-3-Clause",
     "keywords": [
