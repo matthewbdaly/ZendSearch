@@ -1,5 +1,7 @@
 # ZendSearch component
 
+[![Build Status](https://travis-ci.org/matthewbdaly/ZendSearch.svg?branch=master)](https://travis-ci.org/matthewbdaly/ZendSearch)
+
 Fork of `zendframework/zendsearch`.
 
 The goal of this project is primarily to maintain a version of the original package that will work on newer PHP versions. It's not to:
