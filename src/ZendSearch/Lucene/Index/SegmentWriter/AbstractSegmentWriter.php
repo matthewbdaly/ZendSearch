@@ -273,11 +273,8 @@ abstract class AbstractSegmentWriter
 
         foreach ($this->_fields as $field) {
             $fnmFile->writeString($field->name);
-            $fnmFile->writeByte(($field->isIndexed       ? 0x01 : 0x00) |
-                ($field->storeTermVector ? 0x02 : 0x00)
-                // not supported yet            0x04 /* term positions are stored with the term vectors */ |
-                // not supported yet            0x08 /* term offsets are stored with the term vectors */   |
-            );
+            $fnmFile->writeByte(($field->isIndexed ? 0x01 : 0x00) |
+                ($field->storeTermVector ? 0x02 : 0x00));
 
             if ($field->isIndexed) {
                 // pre-2.1 index mode (not used now)
