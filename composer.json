@@ -20,7 +20,8 @@
         "phpunit/phpunit": "^8.1",
         "squizlabs/php_codesniffer": "^3.4",
         "psy/psysh": "^0.9.9",
-        "php-coveralls/php-coveralls": "^2.1"
+        "php-coveralls/php-coveralls": "^2.1",
+        "vimeo/psalm": "^3.2"
     },
     "replace": {
         "zendframework/zendsearch": "2.*"
