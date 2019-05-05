@@ -77,7 +77,7 @@ class StopWords implements TokenFilterInterface
         if (! $fd) {
             throw new RuntimeException('Cannot open file ' . $filepath);
         }
-        while (!feof ($fd)) {
+        while (!feof($fd)) {
             $buffer = trim(fgets($fd));
             if (strlen($buffer) > 0 && $buffer[0] != '#') {
                 $this->_stopSet[$buffer] = 1;

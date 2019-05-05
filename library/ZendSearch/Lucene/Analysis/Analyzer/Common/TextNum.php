@@ -76,4 +76,3 @@ class TextNum extends AbstractCommon
         return $token;
     }
 }
-

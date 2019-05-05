@@ -43,13 +43,14 @@ class LowerCaseUtf8 implements TokenFilterInterface
      */
     public function normalize(Token $srcToken)
     {
-        $newToken = new Token(mb_strtolower($srcToken->getTermText(), 'UTF-8'),
-                                       $srcToken->getStartOffset(),
-                                       $srcToken->getEndOffset());
+        $newToken = new Token(
+            mb_strtolower($srcToken->getTermText(), 'UTF-8'),
+            $srcToken->getStartOffset(),
+            $srcToken->getEndOffset()
+        );
 
         $newToken->setPositionIncrement($srcToken->getPositionIncrement());
 
         return $newToken;
     }
 }
-

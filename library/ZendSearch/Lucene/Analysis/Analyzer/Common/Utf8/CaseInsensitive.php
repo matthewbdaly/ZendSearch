@@ -27,4 +27,3 @@ class CaseInsensitive extends Common\Utf8
         $this->addFilter(new TokenFilter\LowerCaseUtf8());
     }
 }
-

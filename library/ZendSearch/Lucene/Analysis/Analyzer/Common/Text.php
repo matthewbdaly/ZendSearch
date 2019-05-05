@@ -77,4 +77,3 @@ class Text extends AbstractCommon
         return $token;
     }
 }
-

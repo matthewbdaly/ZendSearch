@@ -25,4 +25,3 @@ class CaseInsensitive extends Common\TextNum
         $this->addFilter(new TokenFilter\LowerCase());
     }
 }
-

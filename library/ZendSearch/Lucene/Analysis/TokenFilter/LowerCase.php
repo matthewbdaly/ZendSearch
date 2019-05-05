@@ -29,13 +29,14 @@ class LowerCase implements TokenFilterInterface
      */
     public function normalize(Token $srcToken)
     {
-        $newToken = new Token(strtolower( $srcToken->getTermText() ),
-                                       $srcToken->getStartOffset(),
-                                       $srcToken->getEndOffset());
+        $newToken = new Token(
+            strtolower($srcToken->getTermText()),
+            $srcToken->getStartOffset(),
+            $srcToken->getEndOffset()
+        );
 
         $newToken->setPositionIncrement($srcToken->getPositionIncrement());
 
         return $newToken;
     }
 }
-

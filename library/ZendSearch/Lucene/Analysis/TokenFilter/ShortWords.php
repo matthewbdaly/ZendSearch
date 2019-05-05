@@ -52,4 +52,3 @@ class ShortWords implements TokenFilterInterface
         }
     }
 }
-

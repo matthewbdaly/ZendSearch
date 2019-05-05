@@ -25,4 +25,3 @@ class CaseInsensitive extends Common\Text
         $this->addFilter(new TokenFilter\LowerCase());
     }
 }
-
