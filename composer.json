@@ -13,8 +13,7 @@
         }
     },
     "require": {
-        "php": ">=5.3.3",
-        "zendframework/zend-stdlib": "2.*"
+        "php": ">=5.3.3"
     },
     "require-dev": {
         "rector/rector": "^0.4.12",
