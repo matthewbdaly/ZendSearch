@@ -10,7 +10,7 @@
 
 namespace ZendSearch\Lucene\Exception;
 
-class OutOfRangeException
-    extends \OutOfRangeException
-    implements ExceptionInterface
-{}
+class OutOfRangeException extends \OutOfRangeException implements ExceptionInterface
+{
+
+}

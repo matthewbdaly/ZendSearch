@@ -10,7 +10,7 @@
 
 namespace ZendSearch\Lucene\Exception;
 
-class ExtensionNotLoadedException
-    extends \RuntimeException
-    implements ExceptionInterface
-{}
+class ExtensionNotLoadedException extends \RuntimeException implements ExceptionInterface
+{
+
+}

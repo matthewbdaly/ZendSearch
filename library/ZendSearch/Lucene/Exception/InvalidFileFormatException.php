@@ -10,7 +10,7 @@
 
 namespace ZendSearch\Lucene\Exception;
 
-class InvalidFileFormatException
-    extends \RuntimeException
-    implements ExceptionInterface
-{}
+class InvalidFileFormatException extends \RuntimeException implements ExceptionInterface
+{
+
+}

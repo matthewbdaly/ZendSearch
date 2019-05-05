@@ -15,5 +15,5 @@ namespace ZendSearch\Lucene\Exception;
  * @package    Zend_Search_Lucene
  */
 interface ExceptionInterface extends \ZendSearch\Exception\ExceptionInterface
-{}
-
+{
+}

@@ -12,7 +12,7 @@ namespace ZendSearch\Lucene\Exception;
 
 use ZendSearch\Lucene\Exception\ExceptionInterface;
 
-class InvalidArgumentException
-    extends \InvalidArgumentException
-    implements ExceptionInterface
-{}
+class InvalidArgumentException extends \InvalidArgumentException implements ExceptionInterface
+{
+
+}

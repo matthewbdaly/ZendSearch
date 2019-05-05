@@ -10,7 +10,7 @@
 
 namespace ZendSearch\Lucene\Exception;
 
-class UnsupportedMethodCallException
-    extends \BadMethodCallException
-    implements ExceptionInterface
-{}
+class UnsupportedMethodCallException extends \BadMethodCallException implements ExceptionInterface
+{
+
+}
