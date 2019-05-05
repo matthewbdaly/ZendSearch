@@ -17,7 +17,7 @@ use ZendSearch\Lucene\Search;
 use ZendSearch\Lucene\Search\Exception\QueryParserException;
 use ZendSearch\Lucene\Search\Highlighter\HighlighterInterface as Highlighter;
 use ZendSearch\Lucene\Search\Query;
-use Zend\Stdlib\ErrorHandler;
+use ZendSearch\Lucene\ErrorHandler;
 
 /**
  * It's an internal abstract class intended to finalize ase a query processing after query parsing.

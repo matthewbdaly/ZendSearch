@@ -18,7 +18,7 @@ use ZendSearch\Lucene\Exception\RuntimeException;
 use ZendSearch\Lucene\Exception\UnsupportedMethodCallException;
 use ZendSearch\Lucene\Index;
 use ZendSearch\Lucene\Search\Highlighter\HighlighterInterface as Highlighter;
-use Zend\Stdlib\ErrorHandler;
+use ZendSearch\Lucene\ErrorHandler;
 
 /**
  * @category   Zend
