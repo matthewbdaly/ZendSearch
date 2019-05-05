@@ -149,10 +149,12 @@ abstract class AbstractSegmentWriter
     {
         if (!isset($this->_fields[$field->name])) {
             $fieldNumber = count($this->_fields);
-            $this->_fields[$field->name] = new Index\FieldInfo($field->name,
-                                                               $field->isIndexed,
-                                                               $fieldNumber,
-                                                               $field->storeTermVector);
+            $this->_fields[$field->name] = new Index\FieldInfo(
+                $field->name,
+                $field->isIndexed,
+                $fieldNumber,
+                $field->storeTermVector
+            );
 
             return $fieldNumber;
         } else {
@@ -175,10 +177,12 @@ abstract class AbstractSegmentWriter
     {
         if (!isset($this->_fields[$fieldInfo->name])) {
             $fieldNumber = count($this->_fields);
-            $this->_fields[$fieldInfo->name] = new Index\FieldInfo($fieldInfo->name,
-                                                                   $fieldInfo->isIndexed,
-                                                                   $fieldNumber,
-                                                                   $fieldInfo->storeTermVector);
+            $this->_fields[$fieldInfo->name] = new Index\FieldInfo(
+                $fieldInfo->name,
+                $fieldInfo->isIndexed,
+                $fieldNumber,
+                $fieldInfo->storeTermVector
+            );
 
             return $fieldNumber;
         } else {
@@ -219,8 +223,8 @@ abstract class AbstractSegmentWriter
         foreach ($storedFields as $field) {
             $this->_fdtFile->writeVInt($this->_fields[$field->name]->number);
             $fieldBits = ($field->isTokenized ? 0x01 : 0x00) |
-                         ($field->isBinary ?    0x02 : 0x00) |
-                         0x00; /* 0x04 - third bit, compressed (ZLIB) */
+                ($field->isBinary ?    0x02 : 0x00) |
+                0x00; /* 0x04 - third bit, compressed (ZLIB) */
             $this->_fdtFile->writeByte($fieldBits);
             if ($field->isBinary) {
                 $this->_fdtFile->writeVInt(strlen($field->value));
@@ -270,10 +274,10 @@ abstract class AbstractSegmentWriter
         foreach ($this->_fields as $field) {
             $fnmFile->writeString($field->name);
             $fnmFile->writeByte(($field->isIndexed       ? 0x01 : 0x00) |
-                                ($field->storeTermVector ? 0x02 : 0x00)
-// not supported yet            0x04 /* term positions are stored with the term vectors */ |
-// not supported yet            0x08 /* term offsets are stored with the term vectors */   |
-                               );
+                ($field->storeTermVector ? 0x02 : 0x00)
+                // not supported yet            0x04 /* term positions are stored with the term vectors */ |
+                // not supported yet            0x08 /* term offsets are stored with the term vectors */   |
+            );
 
             if ($field->isIndexed) {
                 // pre-2.1 index mode (not used now)
@@ -406,7 +410,6 @@ abstract class AbstractSegmentWriter
         $this->_prevIndexTermInfo = null;
         $this->_lastIndexPosition = 24;
         $this->_termCount         = 0;
-
     }
 
     /**
@@ -461,7 +464,6 @@ abstract class AbstractSegmentWriter
             $indexPosition = $this->_tisFile->tell();
             $this->_tiiFile->writeVInt($indexPosition - $this->_lastIndexPosition);
             $this->_lastIndexPosition = $indexPosition;
-
         }
         $this->_termCount++;
     }
@@ -490,15 +492,18 @@ abstract class AbstractSegmentWriter
      * @param \ZendSearch\Lucene\Index\TermInfo $prevTermInfo
      * @param \ZendSearch\Lucene\Index\TermInfo $termInfo
      */
-    protected function _dumpTermDictEntry(File\FileInterface $dicFile,
-                                          &$prevTerm,     Index\Term     $term,
-                                          &$prevTermInfo, Index\TermInfo $termInfo)
-    {
+    protected function _dumpTermDictEntry(
+        File\FileInterface $dicFile,
+        &$prevTerm,
+        Index\Term     $term,
+        &$prevTermInfo,
+        Index\TermInfo $termInfo
+    ) {
         if (isset($prevTerm) && $prevTerm->field == $term->field) {
             $matchedBytes = 0;
             $maxBytes = min(strlen($prevTerm->text), strlen($term->text));
             while ($matchedBytes < $maxBytes  &&
-                   $prevTerm->text[$matchedBytes] == $term->text[$matchedBytes]) {
+                $prevTerm->text[$matchedBytes] == $term->text[$matchedBytes]) {
                 $matchedBytes++;
             }
 
@@ -509,9 +514,9 @@ abstract class AbstractSegmentWriter
                 $charBytes = 1;
                 if ((ord($term->text[$prefixBytes]) & 0xC0) == 0xC0) {
                     $charBytes++;
-                    if (ord($term->text[$prefixBytes]) & 0x20 ) {
+                    if (ord($term->text[$prefixBytes]) & 0x20) {
                         $charBytes++;
-                        if (ord($term->text[$prefixBytes]) & 0x10 ) {
+                        if (ord($term->text[$prefixBytes]) & 0x10) {
                             $charBytes++;
                         }
                     }
@@ -610,4 +615,3 @@ abstract class AbstractSegmentWriter
      */
     abstract public function close();
 }
-
