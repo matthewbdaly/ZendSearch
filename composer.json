@@ -7,10 +7,9 @@
         "zf2",
         "lucene"
     ],
-    "homepage": "http://packages.zendframework.com/",
     "autoload": {
         "psr-0": {
-            "ZendSearch": "library/"
+            "ZendSearch": "src/"
         }
     },
     "require": {

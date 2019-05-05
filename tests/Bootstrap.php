@@ -25,7 +25,7 @@ unset($phpUnitVersion);
  * distribution.
  */
 $zfRoot        = realpath(dirname(__DIR__));
-$zfCoreLibrary = "$zfRoot/library";
+$zfCoreLibrary = "$zfRoot/src";
 $zfCoreTests   = "$zfRoot/tests";
 
 /*
