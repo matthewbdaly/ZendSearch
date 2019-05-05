@@ -290,12 +290,3 @@ class DocumentTest extends \PHPUnit\Framework\TestCase
         $this->assertTrue(strpos($xlsxDocument->getFieldValue('body'), 'ipsum') !== false);
     }
 }
-
-
-class DocHighlightingContainer
-{
-    public static function extendedHighlightingCallback($stringToHighlight, $param1, $param2)
-    {
-        return '<b ' . $param1 . '>' . $stringToHighlight . '</b>' . $param2;
-    }
-}

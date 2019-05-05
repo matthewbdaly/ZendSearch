@@ -208,6 +208,7 @@ class QueryToken
 
             case self::TC_NUMBER:
                 $this->type = self::TT_NUMBER;
+                // no-break
 
             default:
                 throw new Lucene\Exception\InvalidArgumentException(

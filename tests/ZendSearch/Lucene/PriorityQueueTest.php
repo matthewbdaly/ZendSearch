@@ -22,14 +22,14 @@ class PriorityQueueTest extends \PHPUnit\Framework\TestCase
 {
     public function testCreate()
     {
-        $queue = new testPriorityQueueClass();
+        $queue = new TestPriorityQueueClass();
 
         $this->assertTrue($queue instanceof Lucene\AbstractPriorityQueue);
     }
 
     public function testPut()
     {
-        $queue = new testPriorityQueueClass();
+        $queue = new TestPriorityQueueClass();
 
         $queue->put(1);
         $queue->put(100);
@@ -44,7 +44,7 @@ class PriorityQueueTest extends \PHPUnit\Framework\TestCase
 
     public function testPop()
     {
-        $queue = new testPriorityQueueClass();
+        $queue = new TestPriorityQueueClass();
 
         $queue->put(1);
         $queue->put(100);
@@ -83,7 +83,7 @@ class PriorityQueueTest extends \PHPUnit\Framework\TestCase
 
     public function testClear()
     {
-        $queue = new testPriorityQueueClass();
+        $queue = new TestPriorityQueueClass();
 
         $queue->put(1);
         $queue->put(100);
@@ -105,23 +105,5 @@ class PriorityQueueTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($queue->pop(), 15);
         $this->assertEquals($queue->pop(), 144);
         $this->assertEquals($queue->pop(), 546);
-    }
-}
-
-
-class testPriorityQueueClass extends Lucene\AbstractPriorityQueue
-{
-    /**
-     * Compare elements
-     *
-     * Returns true, if $el1 is less than $el2; else otherwise
-     *
-     * @param mixed $el1
-     * @param mixed $el2
-     * @return boolean
-     */
-    protected function _less($el1, $el2)
-    {
-        return ($el1 < $el2);
     }
 }
