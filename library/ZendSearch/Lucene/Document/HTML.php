@@ -117,7 +117,6 @@ class HTML extends Document
                                      . '</body></html>');
                 ErrorHandler::stop();
             }
-
         }
         /** @todo Add correction of wrong HTML encoding recognition processing
          * The case is:
@@ -137,9 +136,11 @@ class HTML extends Document
 
         $metaNodes = $xpath->query('/html/head/meta[@name]');
         foreach ($metaNodes as $metaNode) {
-            $this->addField(Field::Text($metaNode->getAttribute('name'),
-                                                           $metaNode->getAttribute('content'),
-                                                           'UTF-8'));
+            $this->addField(Field::Text(
+                $metaNode->getAttribute('name'),
+                $metaNode->getAttribute('content'),
+                'UTF-8'
+            ));
         }
 
         $docBody = '';
@@ -213,7 +214,7 @@ class HTML extends Document
     {
         if ($node->nodeType == XML_TEXT_NODE) {
             $text .= $node->nodeValue;
-            if(!in_array($node->parentNode->tagName, $this->_inlineTags)) {
+            if (!in_array($node->parentNode->tagName, $this->_inlineTags)) {
                 $text .= ' ';
             }
         } elseif ($node->nodeType == XML_ELEMENT_NODE  &&  $node->nodeName != 'script') {
@@ -327,8 +328,10 @@ class HTML extends Document
 
             for ($count = 0; $count < $highlightedWordNodeSet->length; $count++) {
                 $nodeToImport = $highlightedWordNodeSet->item($count);
-                $node->parentNode->insertBefore($this->_doc->importNode($nodeToImport, true /* deep copy */),
-                                                $matchedWordNode);
+                $node->parentNode->insertBefore(
+                    $this->_doc->importNode($nodeToImport, true /* deep copy */),
+                    $matchedWordNode
+                );
             }
 
             $node->parentNode->removeChild($matchedWordNode);
