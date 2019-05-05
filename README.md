@@ -22,3 +22,7 @@ However, in the long term I'd like to improve the quality of the package. As suc
 ## Why are you doing this?
 
 While the original package has been abandoned and they recommend using something like Elasticsearch instead, that is often overkill for many sites. There's `teamtnt/tntsearch`, but that lacks features such as the ability to index Powerpoint documents. The main project I work on professionally at time of writing is an example of a site that may benefit from this package, in that it's arguably too small to be worth bothering with Elasticsearch, but using relational databases to search it is inadequate.
+
+## How do I use this?
+
+Refer to the original [Zend documentation](https://framework.zend.com/manual/1.12/en/zend.search.lucene.html). I didn't write this code originally, and am maintaining this fork merely because I think it's potentially useful for me, so I can't offer any real support for it.
