@@ -39,6 +39,7 @@ class PriorityQueueTest extends \PHPUnit\Framework\TestCase
         $queue->put(125);
         $queue->put(-10);
         $queue->put(100);
+        $this->assertNotNull($queue);
     }
 
     public function testPop()
