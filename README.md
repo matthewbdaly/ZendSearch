@@ -1,6 +1,7 @@
 # ZendSearch component
 
 [![Build Status](https://travis-ci.org/matthewbdaly/ZendSearch.svg?branch=master)](https://travis-ci.org/matthewbdaly/ZendSearch)
+[![Coverage Status](https://coveralls.io/repos/github/matthewbdaly/ZendSearch/badge.svg?branch=master)](https://coveralls.io/github/matthewbdaly/ZendSearch?branch=master)
 
 Fork of `zendframework/zendsearch`.
 
