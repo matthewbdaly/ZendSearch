@@ -31,4 +31,3 @@ class FieldInfoTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($fieldInfo->storeTermVector, false);
     }
 }
-

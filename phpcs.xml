@@ -2,6 +2,7 @@
 <ruleset name="PHP_CodeSniffer">
 	<description>Coding standard.</description>
 	<file>library</file>
+	<file>tests</file>
 	<arg value="np"/>
 	<rule ref="PSR2"/>
 </ruleset>

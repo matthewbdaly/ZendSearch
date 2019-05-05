@@ -166,7 +166,7 @@ class SearchTest extends \PHPUnit\Framework\TestCase
 
         foreach ($hits as $resId => $hit) {
             $this->assertEquals($hit->id, $expectedResultset[$resId][0]);
-            $this->assertTrue( abs($hit->score - $expectedResultset[$resId][1]) < 0.000001 );
+            $this->assertTrue(abs($hit->score - $expectedResultset[$resId][1]) < 0.000001);
             $this->assertEquals($hit->path, $expectedResultset[$resId][2]);
         }
     }
@@ -180,7 +180,7 @@ class SearchTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals(count($hits), 1);
 
         $this->assertEquals($hits[0]->id, 8);
-        $this->assertTrue( abs($hits[0]->score - 0.141633) < 0.000001 );
+        $this->assertTrue(abs($hits[0]->score - 0.141633) < 0.000001);
         $this->assertEquals($hits[0]->path, 'IndexSource/contributing.html');
     }
 
@@ -198,7 +198,7 @@ class SearchTest extends \PHPUnit\Framework\TestCase
 
         foreach ($hits as $resId => $hit) {
             $this->assertEquals($hit->id, $expectedResultset[$resId][0]);
-            $this->assertTrue( abs($hit->score - $expectedResultset[$resId][1]) < 0.000001 );
+            $this->assertTrue(abs($hit->score - $expectedResultset[$resId][1]) < 0.000001);
             $this->assertEquals($hit->path, $expectedResultset[$resId][2]);
         }
     }
@@ -215,7 +215,7 @@ class SearchTest extends \PHPUnit\Framework\TestCase
 
         foreach ($hits as $resId => $hit) {
             $this->assertEquals($hit->id, $expectedResultset[$resId][0]);
-            $this->assertTrue( abs($hit->score - $expectedResultset[$resId][1]) < 0.000001 );
+            $this->assertTrue(abs($hit->score - $expectedResultset[$resId][1]) < 0.000001);
             $this->assertEquals($hit->path, $expectedResultset[$resId][2]);
         }
     }
@@ -231,7 +231,7 @@ class SearchTest extends \PHPUnit\Framework\TestCase
 
         foreach ($hits as $resId => $hit) {
             $this->assertEquals($hit->id, $expectedResultset[$resId][0]);
-            $this->assertTrue( abs($hit->score - $expectedResultset[$resId][1]) < 0.000001 );
+            $this->assertTrue(abs($hit->score - $expectedResultset[$resId][1]) < 0.000001);
             $this->assertEquals($hit->path, $expectedResultset[$resId][2]);
         }
     }
@@ -243,8 +243,10 @@ class SearchTest extends \PHPUnit\Framework\TestCase
         $query = Search\QueryParser::parse('"Non-existing phrase" AND Home');
 
         $this->assertEquals($query->__toString(), '+("Non-existing phrase") +(Home)');
-        $this->assertEquals($query->rewrite($index)->__toString(),
-                            '+((path:"non existing phrase") (modified:"non existing phrase") (contents:"non existing phrase")) +(path:home modified:home contents:home)');
+        $this->assertEquals(
+            $query->rewrite($index)->__toString(),
+            '+((path:"non existing phrase") (modified:"non existing phrase") (contents:"non existing phrase")) +(path:home modified:home contents:home)'
+        );
         $this->assertEquals($query->rewrite($index)->optimize($index)->__toString(), '<EmptyQuery>');
     }
 
@@ -262,7 +264,7 @@ class SearchTest extends \PHPUnit\Framework\TestCase
 
         foreach ($hits as $resId => $hit) {
             $this->assertEquals($hit->id, $expectedResultset[$resId][0]);
-            $this->assertTrue( abs($hit->score - $expectedResultset[$resId][1]) < 0.000001 );
+            $this->assertTrue(abs($hit->score - $expectedResultset[$resId][1]) < 0.000001);
             $this->assertEquals($hit->path, $expectedResultset[$resId][2]);
         }
     }
@@ -289,7 +291,7 @@ class SearchTest extends \PHPUnit\Framework\TestCase
 
         foreach ($hits as $resId => $hit) {
             $this->assertEquals($hit->id, $expectedResultset[$resId][0]);
-            $this->assertTrue( abs($hit->score - $expectedResultset[$resId][1]) < 0.000001 );
+            $this->assertTrue(abs($hit->score - $expectedResultset[$resId][1]) < 0.000001);
             $this->assertEquals($hit->path, $expectedResultset[$resId][2]);
         }
 
@@ -318,7 +320,7 @@ class SearchTest extends \PHPUnit\Framework\TestCase
 
         foreach ($hits as $resId => $hit) {
             $this->assertEquals($hit->id, $expectedResultset[$resId][0]);
-            $this->assertTrue( abs($hit->score - $expectedResultset[$resId][1]) < 0.000001 );
+            $this->assertTrue(abs($hit->score - $expectedResultset[$resId][1]) < 0.000001);
             $this->assertEquals($hit->path, $expectedResultset[$resId][2]);
         }
 
@@ -340,7 +342,7 @@ class SearchTest extends \PHPUnit\Framework\TestCase
 
         foreach ($hits as $resId => $hit) {
             $this->assertEquals($hit->id, $expectedResultset[$resId][0]);
-            $this->assertTrue( abs($hit->score - $expectedResultset[$resId][1]) < 0.000001 );
+            $this->assertTrue(abs($hit->score - $expectedResultset[$resId][1]) < 0.000001);
             $this->assertEquals($hit->path, $expectedResultset[$resId][2]);
         }
     }
@@ -360,7 +362,7 @@ class SearchTest extends \PHPUnit\Framework\TestCase
 
         foreach ($hits as $resId => $hit) {
             $this->assertEquals($hit->id, $expectedResultset[$resId][0]);
-            $this->assertTrue( abs($hit->score - $expectedResultset[$resId][1]) < 0.000001 );
+            $this->assertTrue(abs($hit->score - $expectedResultset[$resId][1]) < 0.000001);
             $this->assertEquals($hit->path, $expectedResultset[$resId][2]);
         }
     }
@@ -383,7 +385,7 @@ class SearchTest extends \PHPUnit\Framework\TestCase
 
         foreach ($hits as $resId => $hit) {
             $this->assertEquals($hit->id, $expectedResultset[$resId][0]);
-            $this->assertTrue( abs($hit->score - $expectedResultset[$resId][1]) < 0.000001 );
+            $this->assertTrue(abs($hit->score - $expectedResultset[$resId][1]) < 0.000001);
             $this->assertEquals($hit->path, $expectedResultset[$resId][2]);
         }
 
@@ -442,7 +444,7 @@ class SearchTest extends \PHPUnit\Framework\TestCase
 
         foreach ($hits as $resId => $hit) {
             $this->assertEquals($hit->id, $expectedResultset[$resId][0]);
-            $this->assertTrue( abs($hit->score - $expectedResultset[$resId][1]) < 0.000001 );
+            $this->assertTrue(abs($hit->score - $expectedResultset[$resId][1]) < 0.000001);
             $this->assertEquals($hit->path, $expectedResultset[$resId][2]);
         }
     }
@@ -464,7 +466,7 @@ class SearchTest extends \PHPUnit\Framework\TestCase
 
         foreach ($hits as $resId => $hit) {
             $this->assertEquals($hit->id, $expectedResultset[$resId][0]);
-            $this->assertTrue( abs($hit->score - $expectedResultset[$resId][1]) < 0.000001 );
+            $this->assertTrue(abs($hit->score - $expectedResultset[$resId][1]) < 0.000001);
             $this->assertEquals($hit->path, $expectedResultset[$resId][2]);
         }
 

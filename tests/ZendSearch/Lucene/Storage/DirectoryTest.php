@@ -97,4 +97,3 @@ class DirectoryTest extends \PHPUnit\Framework\TestCase
         rmdir(__DIR__ . '/_tempFiles/_files/dir1');
     }
 }
-

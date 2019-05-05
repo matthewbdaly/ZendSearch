@@ -29,7 +29,7 @@ class IndexTest extends \PHPUnit\Framework\TestCase
 
     private function _clearDirectory($dirName)
     {
-        if (!file_exists($dirName) || !is_dir($dirName))  {
+        if (!file_exists($dirName) || !is_dir($dirName)) {
             return;
         }
 
@@ -177,7 +177,7 @@ class IndexTest extends \PHPUnit\Framework\TestCase
     {
         $index = Lucene\Lucene::open(__DIR__ . '/_indexSample/_files');
 
-        $this->assertTrue(array_values( $index->termDocs(new Index\Term('packages', 'contents')) ) ==
+        $this->assertTrue(array_values($index->termDocs(new Index\Term('packages', 'contents'))) ==
                           array(0, 2, 6, 7, 8));
     }
 
@@ -273,13 +273,13 @@ class IndexTest extends \PHPUnit\Framework\TestCase
             // Create new Document from a file
             $doc = new Document();
             $doc->addField(Document\Field::Text('path', 'IndexSource/' . $file));
-            $doc->addField(Document\Field::Keyword( 'modified', filemtime($indexSourceDir . '/' . $file) ));
+            $doc->addField(Document\Field::Keyword('modified', filemtime($indexSourceDir . '/' . $file)));
 
-            $f = fopen($indexSourceDir . '/' . $file,'rb');
+            $f = fopen($indexSourceDir . '/' . $file, 'rb');
             $byteCount = filesize($indexSourceDir . '/' . $file);
 
             $data = '';
-            while ( $byteCount > 0 && ($nextBlock = fread($f, $byteCount)) != false ) {
+            while ($byteCount > 0 && ($nextBlock = fread($f, $byteCount)) != false) {
                 $data .= $nextBlock;
                 $byteCount -= strlen($nextBlock);
             }
@@ -317,13 +317,13 @@ class IndexTest extends \PHPUnit\Framework\TestCase
             // Create new Document from a file
             $doc = new Document();
             $doc->addField(Document\Field::Keyword('path', 'IndexSource/' . $file));
-            $doc->addField(Document\Field::Keyword( 'modified', filemtime($indexSourceDir . '/' . $file) ));
+            $doc->addField(Document\Field::Keyword('modified', filemtime($indexSourceDir . '/' . $file)));
 
-            $f = fopen($indexSourceDir . '/' . $file,'rb');
+            $f = fopen($indexSourceDir . '/' . $file, 'rb');
             $byteCount = filesize($indexSourceDir . '/' . $file);
 
             $data = '';
-            while ( $byteCount > 0 && ($nextBlock = fread($f, $byteCount)) != false ) {
+            while ($byteCount > 0 && ($nextBlock = fread($f, $byteCount)) != false) {
                 $data .= $nextBlock;
                 $byteCount -= strlen($nextBlock);
             }

@@ -41,4 +41,3 @@ class DictionaryLoaderTest extends \PHPUnit\Framework\TestCase
         $this->assertTrue($termDictionaryInfos == $loadedTermDictionaryInfos);
     }
 }
-

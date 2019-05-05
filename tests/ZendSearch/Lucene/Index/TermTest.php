@@ -25,12 +25,12 @@ class TermTest extends \PHPUnit\Framework\TestCase
         $term = new Index\Term('term_text');
         $this->assertTrue($term instanceof Index\Term);
 
-        $this->assertEquals($term->text,  'term_text');
+        $this->assertEquals($term->text, 'term_text');
         $this->assertEquals($term->field, null);
 
         $term = new Index\Term('term_text', 'field_name');
-        $this->assertEquals($term->text,   'term_text');
-        $this->assertEquals($term->field,  'field_name');
+        $this->assertEquals($term->text, 'term_text');
+        $this->assertEquals($term->field, 'field_name');
     }
 
     public function testKey()
@@ -40,11 +40,11 @@ class TermTest extends \PHPUnit\Framework\TestCase
         $term2_2    = new Index\Term('term_text2', 'field_name2');
         $term2_1Dup = new Index\Term('term_text2', 'field_name1');
 
-        $this->assertEquals($term1_1->text >  $term2_1->text,  $term1_1->key() >  $term2_1->key());
-        $this->assertEquals($term1_1->text >= $term2_1->text,  $term1_1->key() >= $term2_1->key());
+        $this->assertEquals($term1_1->text >  $term2_1->text, $term1_1->key() >  $term2_1->key());
+        $this->assertEquals($term1_1->text >= $term2_1->text, $term1_1->key() >= $term2_1->key());
 
-        $this->assertEquals($term1_1->field >  $term2_2->field,  $term1_1->key() >  $term2_2->key());
-        $this->assertEquals($term1_1->field >= $term2_2->field,  $term1_1->key() >= $term2_2->key());
+        $this->assertEquals($term1_1->field >  $term2_2->field, $term1_1->key() >  $term2_2->key());
+        $this->assertEquals($term1_1->field >= $term2_2->field, $term1_1->key() >= $term2_2->key());
 
         $this->assertEquals($term2_1->key(), $term2_1Dup->key());
     }
@@ -64,9 +64,5 @@ class TermTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals(Index\Term::getPrefix('абвгдеёжзийклмнопрстуфхцчшщьыъэюя', 33), 'абвгдеёжзийклмнопрстуфхцчшщьыъэюя');
         $this->assertEquals(Index\Term::getPrefix('абвгдеёжзийклмнопрстуфхцчшщьыъэюя', 4), 'абвг');
         $this->assertEquals(Index\Term::getPrefix('абвгдеёжзийклмнопрстуфхцчшщьыъэюя', 0), '');
-
-
-
     }
 }
-

@@ -48,4 +48,3 @@ class SegmentMergerTest extends \PHPUnit\Framework\TestCase
         $outputDirectory->deleteFile('mergedSegment.cfs');
     }
 }
-

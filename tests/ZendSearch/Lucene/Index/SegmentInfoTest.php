@@ -546,4 +546,3 @@ class SegmentInfoTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($segmentInfo1->resetTermsStream(6, Index\SegmentInfo::SM_MERGE_INFO), 7);
     }
 }
-

@@ -36,12 +36,12 @@ class AbstractFSMTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($doorFSM->getState(), testFSMClass::OPENED);
 
         $doorFSM->setState(testFSMClass::CLOSED_AND_LOCKED);
-        $this->assertEquals($doorFSM->getState(), testFSMClass::CLOSED_AND_LOCKED );
+        $this->assertEquals($doorFSM->getState(), testFSMClass::CLOSED_AND_LOCKED);
 
         $wrongStateExceptionCatched = false;
         try {
             $doorFSM->setState(testFSMClass::OPENED_AND_LOCKED);
-        } catch(\ZendSearch\Lucene\Exception\InvalidArgumentException $e) {
+        } catch (\ZendSearch\Lucene\Exception\InvalidArgumentException $e) {
             $wrongStateExceptionCatched = true;
         }
         $this->assertTrue($wrongStateExceptionCatched);
@@ -77,7 +77,7 @@ class AbstractFSMTest extends \PHPUnit\Framework\TestCase
         $wrongInputExceptionCatched = false;
         try {
             $doorFSM->process(testFSMClass::LOCK);
-        } catch(\ZendSearch\Lucene\Exception\ExceptionInterface $e) {
+        } catch (\ZendSearch\Lucene\Exception\ExceptionInterface $e) {
             $wrongInputExceptionCatched = true;
         }
         $this->assertTrue($wrongInputExceptionCatched);
@@ -121,14 +121,38 @@ class FSMData
     public $action7Passed = false;
     public $action8Passed = false;
 
-    public function action1()  { $this->action1Passed = true; }
-    public function action2()  { $this->action2Passed = true; }
-    public function action3()  { $this->action3Passed = true; }
-    public function action4()  { $this->action4Passed = true; }
-    public function action5()  { $this->action5Passed = true; }
-    public function action6()  { $this->action6Passed = true; }
-    public function action7()  { $this->action7Passed = true; }
-    public function action8()  { $this->action8Passed = true; }
+    public function action1()
+    {
+        $this->action1Passed = true;
+    }
+    public function action2()
+    {
+        $this->action2Passed = true;
+    }
+    public function action3()
+    {
+        $this->action3Passed = true;
+    }
+    public function action4()
+    {
+        $this->action4Passed = true;
+    }
+    public function action5()
+    {
+        $this->action5Passed = true;
+    }
+    public function action6()
+    {
+        $this->action6Passed = true;
+    }
+    public function action7()
+    {
+        $this->action7Passed = true;
+    }
+    public function action8()
+    {
+        $this->action8Passed = true;
+    }
 }
 
 /**

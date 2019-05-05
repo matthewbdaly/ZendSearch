@@ -666,4 +666,3 @@ class TermsPriorityQueueTest extends \PHPUnit\Framework\TestCase
                                ));
     }
 }
-

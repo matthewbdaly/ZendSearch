@@ -24,7 +24,7 @@ class DocumentTest extends \PHPUnit\Framework\TestCase
 
     private function _clearDirectory($dirName)
     {
-        if (!file_exists($dirName) || !is_dir($dirName))  {
+        if (!file_exists($dirName) || !is_dir($dirName)) {
             return;
         }
 
@@ -49,25 +49,25 @@ class DocumentTest extends \PHPUnit\Framework\TestCase
     {
         $document =  new Document();
 
-        $document->addField(Document\Field::Text('title',      'Title'));
+        $document->addField(Document\Field::Text('title', 'Title'));
         $document->addField(Document\Field::Text('annotation', 'Annotation'));
-        $document->addField(Document\Field::Text('body',       'Document body, document body, document body...'));
+        $document->addField(Document\Field::Text('body', 'Document body, document body, document body...'));
 
         $fieldnamesDiffArray = array_diff($document->getFieldNames(), array('title', 'annotation', 'body'));
         $this->assertTrue(is_array($fieldnamesDiffArray));
         $this->assertEquals(count($fieldnamesDiffArray), 0);
 
-        $this->assertEquals($document->title,      'Title');
+        $this->assertEquals($document->title, 'Title');
         $this->assertEquals($document->annotation, 'Annotation');
-        $this->assertEquals($document->body,       'Document body, document body, document body...');
+        $this->assertEquals($document->body, 'Document body, document body, document body...');
 
-        $this->assertEquals($document->getField('title')->value,      'Title');
+        $this->assertEquals($document->getField('title')->value, 'Title');
         $this->assertEquals($document->getField('annotation')->value, 'Annotation');
-        $this->assertEquals($document->getField('body')->value,       'Document body, document body, document body...');
+        $this->assertEquals($document->getField('body')->value, 'Document body, document body, document body...');
 
-        $this->assertEquals($document->getFieldValue('title'),      'Title');
+        $this->assertEquals($document->getFieldValue('title'), 'Title');
         $this->assertEquals($document->getFieldValue('annotation'), 'Annotation');
-        $this->assertEquals($document->getFieldValue('body'),       'Document body, document body, document body...');
+        $this->assertEquals($document->getFieldValue('body'), 'Document body, document body, document body...');
 
 
         if (PHP_OS == 'AIX') {
@@ -86,9 +86,9 @@ class DocumentTest extends \PHPUnit\Framework\TestCase
         $this->assertTrue($document->addField(Document\Field::Text('title', 'Title')) instanceof Document);
 
         $document =  new Document();
-        $document->addField(Document\Field::Text('title',      'Title'))
+        $document->addField(Document\Field::Text('title', 'Title'))
                  ->addField(Document\Field::Text('annotation', 'Annotation'))
-                 ->addField(Document\Field::Text('body',       'Document body, document body, document body...'));
+                 ->addField(Document\Field::Text('body', 'Document body, document body, document body...'));
     }
 
 
@@ -106,11 +106,13 @@ class DocumentTest extends \PHPUnit\Framework\TestCase
         $doc = Document\HTML::loadHTML('<HTML><HEAD><TITLE>Page title</TITLE></HEAD><BODY>Document body.</BODY></HTML>');
         $this->assertTrue($doc instanceof Document\HTML);
 
-        $doc->highlightExtended('document',
-                                array('\ZendSearchTest\Lucene\DocHighlightingContainer',
+        $doc->highlightExtended(
+            'document',
+            array('\ZendSearchTest\Lucene\DocHighlightingContainer',
                                       'extendedHighlightingCallback'),
-                                array('style="color:black;background-color:#ff66ff"',
-                                      '(!!!)'));
+            array('style="color:black;background-color:#ff66ff"',
+            '(!!!)')
+        );
         $this->assertTrue(strpos($doc->getHTML(), '<b style="color:black;background-color:#ff66ff">Document</b>(!!!) body.') !== false);
     }
 
@@ -130,11 +132,13 @@ class DocumentTest extends \PHPUnit\Framework\TestCase
         $doc = Document\HTML::loadHTML('<HTML><HEAD><TITLE>Page title</TITLE></HEAD><BODY>Document body.</BODY></HTML>');
         $this->assertTrue($doc instanceof Document\HTML);
 
-        $doc->highlightExtended('document',
-                                array('\ZendSearchTest\Lucene\DocHighlightingContainer',
+        $doc->highlightExtended(
+            'document',
+            array('\ZendSearchTest\Lucene\DocHighlightingContainer',
                                       'extendedHighlightingCallback'),
-                                array('style="color:black;background-color:#ff66ff"',
-                                      '<h3>(!!!)' /* Wrong HTML here, <h3> tag is not closed */));
+            array('style="color:black;background-color:#ff66ff"',
+            '<h3>(!!!)' /* Wrong HTML here, <h3> tag is not closed */)
+        );
         $this->assertTrue(strpos($doc->getHTML(), '<b style="color:black;background-color:#ff66ff">Document</b><h3>(!!!)</h3> body.') !== false);
     }
 
@@ -283,7 +287,7 @@ class DocumentTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($xlsxDocument->getFieldValue('title'), 'Test document');
         $this->assertEquals($xlsxDocument->getFieldValue('description'), 'This is a test document which can be used to demonstrate something.');
         $this->assertTrue($xlsxDocument->getFieldValue('body') != '');
-        $this->assertTrue( strpos($xlsxDocument->getFieldValue('body'), 'ipsum') !== false );
+        $this->assertTrue(strpos($xlsxDocument->getFieldValue('body'), 'ipsum') !== false);
     }
 }
 
