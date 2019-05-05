@@ -17,5 +17,8 @@
         "php": ">=5.3.3",
         "zendframework/zend-stdlib": "2.*",
         "squizlabs/php_codesniffer": "^3.4"
+    },
+    "require-dev": {
+        "rector/rector": "^0.4.12"
     }
 }
