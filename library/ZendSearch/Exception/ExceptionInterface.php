@@ -15,5 +15,5 @@ namespace ZendSearch\Exception;
  * @package    Zend_Search
  */
 interface ExceptionInterface
-{}
-
+{
+}
