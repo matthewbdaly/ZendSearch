@@ -46,7 +46,7 @@ class Term
      */
     public function __construct($text, $field = null)
     {
-        $this->field = ($field === null)?  Lucene\Lucene::getDefaultSearchField() : $field;
+        $this->field = ($field === null) ?  Lucene\Lucene::getDefaultSearchField() : $field;
         $this->text  = $text;
     }
 

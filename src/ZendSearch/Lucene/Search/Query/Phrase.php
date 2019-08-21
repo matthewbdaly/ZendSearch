@@ -92,7 +92,7 @@ class Phrase extends AbstractQuery
         if (is_array($terms)) {
             $this->_terms = array();
             foreach ($terms as $termId => $termText) {
-                $this->_terms[$termId] = ($field !== null)? new Index\Term($termText, $field):
+                $this->_terms[$termId] = ($field !== null) ? new Index\Term($termText, $field) :
                                                             new Index\Term($termText);
             }
         } elseif ($terms === null) {
@@ -150,7 +150,7 @@ class Phrase extends AbstractQuery
      */
     public function addTerm(Index\Term $term, $position = null)
     {
-        if ((count($this->_terms) != 0)&&(end($this->_terms)->field != $term->field)) {
+        if ((count($this->_terms) != 0) && (end($this->_terms)->field != $term->field)) {
             throw new InvalidArgumentException('All phrase terms must be in the same field: ' .
                                                    $term->field . ':' . $term->text);
         }

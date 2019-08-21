@@ -176,7 +176,7 @@ class MultiTerm extends AbstractQuery
 
                 $query->addSubquery(
                     $subquery->rewrite($index),
-                    ($this->_signs === null)?  true : $this->_signs[$termId]
+                    ($this->_signs === null) ?  true : $this->_signs[$termId]
                 );
             }
 
