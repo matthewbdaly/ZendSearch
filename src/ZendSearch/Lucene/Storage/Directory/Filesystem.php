@@ -146,7 +146,7 @@ class Filesystem implements DirectoryInterface
 
         $dirContent = opendir($this->_dirPath);
         while (($file = readdir($dirContent)) !== false) {
-            if (($file == '..') || ($file == '.')) {
+            if (($file == '..')||($file == '.')) {
                 continue;
             }
 
@@ -248,7 +248,7 @@ class Filesystem implements DirectoryInterface
         if (isset($this->_fileHandlers[$filename])) {
             return $this->_fileHandlers[$filename]->size();
         }
-        return filesize($this->_dirPath . '/' . $filename);
+        return filesize($this->_dirPath .'/'. $filename);
     }
 
 
@@ -260,7 +260,7 @@ class Filesystem implements DirectoryInterface
      */
     public function fileModified($filename)
     {
-        return filemtime($this->_dirPath . '/' . $filename);
+        return filemtime($this->_dirPath .'/'. $filename);
     }
 
 
@@ -319,7 +319,7 @@ class Filesystem implements DirectoryInterface
      */
     public function touchFile($filename)
     {
-        return touch($this->_dirPath . '/' . $filename);
+        return touch($this->_dirPath .'/'. $filename);
     }
 
 

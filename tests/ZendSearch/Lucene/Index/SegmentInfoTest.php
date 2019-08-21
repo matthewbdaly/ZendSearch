@@ -75,9 +75,9 @@ class SegmentInfoTest extends \PHPUnit\Framework\TestCase
         $fieldInfo = $segmentInfo->getField(2);
 
         $this->assertEquals($fieldInfo->name, 'contents');
-        $this->assertTrue((bool)$fieldInfo->isIndexed);
+        $this->assertTrue((boolean)$fieldInfo->isIndexed);
         $this->assertEquals($fieldInfo->number, 2);
-        $this->assertFalse((bool)$fieldInfo->storeTermVector);
+        $this->assertFalse((boolean)$fieldInfo->storeTermVector);
     }
 
     public function testGetFields()
@@ -97,19 +97,19 @@ class SegmentInfoTest extends \PHPUnit\Framework\TestCase
         $fieldInfos = $segmentInfo->getFieldInfos();
 
         $this->assertEquals($fieldInfos[0]->name, 'path');
-        $this->assertTrue((bool)$fieldInfos[0]->isIndexed);
+        $this->assertTrue((boolean)$fieldInfos[0]->isIndexed);
         $this->assertEquals($fieldInfos[0]->number, 0);
-        $this->assertFalse((bool)$fieldInfos[0]->storeTermVector);
+        $this->assertFalse((boolean)$fieldInfos[0]->storeTermVector);
 
         $this->assertEquals($fieldInfos[1]->name, 'modified');
-        $this->assertTrue((bool)$fieldInfos[1]->isIndexed);
+        $this->assertTrue((boolean)$fieldInfos[1]->isIndexed);
         $this->assertEquals($fieldInfos[1]->number, 1);
-        $this->assertFalse((bool)$fieldInfos[1]->storeTermVector);
+        $this->assertFalse((boolean)$fieldInfos[1]->storeTermVector);
 
         $this->assertEquals($fieldInfos[2]->name, 'contents');
-        $this->assertTrue((bool)$fieldInfos[2]->isIndexed);
+        $this->assertTrue((boolean)$fieldInfos[2]->isIndexed);
         $this->assertEquals($fieldInfos[2]->number, 2);
-        $this->assertFalse((bool)$fieldInfos[2]->storeTermVector);
+        $this->assertFalse((boolean)$fieldInfos[2]->storeTermVector);
     }
 
     public function testCount()

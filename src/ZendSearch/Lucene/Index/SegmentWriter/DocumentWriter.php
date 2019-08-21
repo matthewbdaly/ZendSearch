@@ -112,8 +112,8 @@ class DocumentWriter extends AbstractSegmentWriter
                         $docNorms[$field->name] = chr($similarity->encodeNorm($similarity->lengthNorm(
                             $field->name,
                             $tokenCounter
-                        ) *
-                                                                               $document->boost *
+                        )*
+                                                                               $document->boost*
                                                                                $field->boost));
                     }
                 } elseif (($fieldUtf8Value = $field->getUtf8Value()) == '') {
@@ -135,8 +135,8 @@ class DocumentWriter extends AbstractSegmentWriter
                     }
                     $this->_termDocs[$termKey][$this->_docCount][] = 0; // position
 
-                    $docNorms[$field->name] = chr($similarity->encodeNorm($similarity->lengthNorm($field->name, 1) *
-                                                                           $document->boost *
+                    $docNorms[$field->name] = chr($similarity->encodeNorm($similarity->lengthNorm($field->name, 1)*
+                                                                           $document->boost*
                                                                            $field->boost));
                 }
             }

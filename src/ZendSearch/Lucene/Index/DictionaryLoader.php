@@ -55,26 +55,26 @@ class DictionaryLoader
         // $indexTermCount = $tiiFile->readLong();
         if (PHP_INT_SIZE > 4) {
             $indexTermCount = ord($data[$pos]) << 56  |
-                              ord($data[$pos + 1]) << 48  |
-                              ord($data[$pos + 2]) << 40  |
-                              ord($data[$pos + 3]) << 32  |
-                              ord($data[$pos + 4]) << 24  |
-                              ord($data[$pos + 5]) << 16  |
-                              ord($data[$pos + 6]) << 8   |
-                              ord($data[$pos + 7]);
+                              ord($data[$pos+1]) << 48  |
+                              ord($data[$pos+2]) << 40  |
+                              ord($data[$pos+3]) << 32  |
+                              ord($data[$pos+4]) << 24  |
+                              ord($data[$pos+5]) << 16  |
+                              ord($data[$pos+6]) << 8   |
+                              ord($data[$pos+7]);
         } else {
             if ((ord($data[$pos])            != 0) ||
-                (ord($data[$pos + 1])          != 0) ||
-                (ord($data[$pos + 2])          != 0) ||
-                (ord($data[$pos + 3])          != 0) ||
-                ((ord($data[$pos + 4]) & 0x80) != 0)) {
+                (ord($data[$pos+1])          != 0) ||
+                (ord($data[$pos+2])          != 0) ||
+                (ord($data[$pos+3])          != 0) ||
+                ((ord($data[$pos+4]) & 0x80) != 0)) {
                     throw new InvalidFileFormatException('Largest supported segment size (for 32-bit mode) is 2Gb');
             }
 
-            $indexTermCount = ord($data[$pos + 4]) << 24  |
-                              ord($data[$pos + 5]) << 16  |
-                              ord($data[$pos + 6]) << 8   |
-                              ord($data[$pos + 7]);
+            $indexTermCount = ord($data[$pos+4]) << 24  |
+                              ord($data[$pos+5]) << 16  |
+                              ord($data[$pos+6]) << 8   |
+                              ord($data[$pos+7]);
         }
         $pos += 8;
 
@@ -82,7 +82,7 @@ class DictionaryLoader
         $pos += 4;
 
         // $skipInterval   = $tiiFile->readInt();
-        $skipInterval = ord($data[$pos]) << 24 | ord($data[$pos + 1]) << 16 | ord($data[$pos + 2]) << 8  | ord($data[$pos + 3]);
+        $skipInterval = ord($data[$pos]) << 24 | ord($data[$pos+1]) << 16 | ord($data[$pos+2]) << 8  | ord($data[$pos+3]);
         $pos += 4;
         if ($indexTermCount < 1) {
             throw new InvalidFileFormatException('Wrong number of terms in a term dictionary index');
@@ -101,7 +101,7 @@ class DictionaryLoader
             //$termPrefixLength = $tiiFile->readVInt();
             $nbyte = ord($data[$pos++]);
             $termPrefixLength = $nbyte & 0x7F;
-            for ($shift = 7; ($nbyte & 0x80) != 0; $shift += 7) {
+            for ($shift=7; ($nbyte & 0x80) != 0; $shift += 7) {
                 $nbyte = ord($data[$pos++]);
                 $termPrefixLength |= ($nbyte & 0x7F) << $shift;
             }
@@ -109,7 +109,7 @@ class DictionaryLoader
             // $termSuffix       = $tiiFile->readString();
             $nbyte = ord($data[$pos++]);
             $len = $nbyte & 0x7F;
-            for ($shift = 7; ($nbyte & 0x80) != 0; $shift += 7) {
+            for ($shift=7; ($nbyte & 0x80) != 0; $shift += 7) {
                 $nbyte = ord($data[$pos++]);
                 $len |= ($nbyte & 0x7F) << $shift;
             }
@@ -137,10 +137,10 @@ class DictionaryLoader
                         // Check for null character. Java2 encodes null character
                         // in two bytes.
                         if (ord($termSuffix[$count1]) == 0xC0 &&
-                            ord($termSuffix[$count1 + 1]) == 0x80   ) {
+                            ord($termSuffix[$count1+1]) == 0x80   ) {
                             $termSuffix[$count1] = 0;
-                            $termSuffix = substr($termSuffix, 0, $count1 + 1)
-                                        . substr($termSuffix, $count1 + 2);
+                            $termSuffix = substr($termSuffix, 0, $count1+1)
+                                        . substr($termSuffix, $count1+2);
                         }
                         $count1 += $addBytes;
                     }
@@ -174,7 +174,7 @@ class DictionaryLoader
             // $termFieldNum     = $tiiFile->readVInt();
             $nbyte = ord($data[$pos++]);
             $termFieldNum = $nbyte & 0x7F;
-            for ($shift = 7; ($nbyte & 0x80) != 0; $shift += 7) {
+            for ($shift=7; ($nbyte & 0x80) != 0; $shift += 7) {
                 $nbyte = ord($data[$pos++]);
                 $termFieldNum |= ($nbyte & 0x7F) << $shift;
             }
@@ -182,7 +182,7 @@ class DictionaryLoader
             // $docFreq          = $tiiFile->readVInt();
             $nbyte = ord($data[$pos++]);
             $docFreq = $nbyte & 0x7F;
-            for ($shift = 7; ($nbyte & 0x80) != 0; $shift += 7) {
+            for ($shift=7; ($nbyte & 0x80) != 0; $shift += 7) {
                 $nbyte = ord($data[$pos++]);
                 $docFreq |= ($nbyte & 0x7F) << $shift;
             }
@@ -190,7 +190,7 @@ class DictionaryLoader
             // $freqPointer     += $tiiFile->readVInt();
             $nbyte = ord($data[$pos++]);
             $vint = $nbyte & 0x7F;
-            for ($shift = 7; ($nbyte & 0x80) != 0; $shift += 7) {
+            for ($shift=7; ($nbyte & 0x80) != 0; $shift += 7) {
                 $nbyte = ord($data[$pos++]);
                 $vint |= ($nbyte & 0x7F) << $shift;
             }
@@ -199,7 +199,7 @@ class DictionaryLoader
             // $proxPointer     += $tiiFile->readVInt();
             $nbyte = ord($data[$pos++]);
             $vint = $nbyte & 0x7F;
-            for ($shift = 7; ($nbyte & 0x80) != 0; $shift += 7) {
+            for ($shift=7; ($nbyte & 0x80) != 0; $shift += 7) {
                 $nbyte = ord($data[$pos++]);
                 $vint |= ($nbyte & 0x7F) << $shift;
             }
@@ -209,7 +209,7 @@ class DictionaryLoader
                 // $skipDelta = $tiiFile->readVInt();
                 $nbyte = ord($data[$pos++]);
                 $vint = $nbyte & 0x7F;
-                for ($shift = 7; ($nbyte & 0x80) != 0; $shift += 7) {
+                for ($shift=7; ($nbyte & 0x80) != 0; $shift += 7) {
                     $nbyte = ord($data[$pos++]);
                     $vint |= ($nbyte & 0x7F) << $shift;
                 }
@@ -221,7 +221,7 @@ class DictionaryLoader
             // $indexPointer += $tiiFile->readVInt();
             $nbyte = ord($data[$pos++]);
             $vint = $nbyte & 0x7F;
-            for ($shift = 7; ($nbyte & 0x80) != 0; $shift += 7) {
+            for ($shift=7; ($nbyte & 0x80) != 0; $shift += 7) {
                 $nbyte = ord($data[$pos++]);
                 $vint |= ($nbyte & 0x7F) << $shift;
             }

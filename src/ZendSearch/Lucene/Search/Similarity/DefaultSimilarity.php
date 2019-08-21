@@ -33,7 +33,7 @@ class DefaultSimilarity extends AbstractSimilarity
             return 1E10;
         }
 
-        return 1.0 / sqrt($numTerms);
+        return 1.0/sqrt($numTerms);
     }
 
     /**
@@ -44,7 +44,7 @@ class DefaultSimilarity extends AbstractSimilarity
      */
     public function queryNorm($sumOfSquaredWeights)
     {
-        return 1.0 / sqrt($sumOfSquaredWeights);
+        return 1.0/sqrt($sumOfSquaredWeights);
     }
 
     /**
@@ -66,7 +66,7 @@ class DefaultSimilarity extends AbstractSimilarity
      */
     public function sloppyFreq($distance)
     {
-        return 1.0 / ($distance + 1);
+        return 1.0/($distance + 1);
     }
 
     /**
@@ -78,7 +78,7 @@ class DefaultSimilarity extends AbstractSimilarity
      */
     public function idfFreq($docFreq, $numDocs)
     {
-        return log($numDocs / (float)($docFreq + 1)) + 1.0;
+        return log($numDocs/(float)($docFreq+1)) + 1.0;
     }
 
     /**
@@ -90,6 +90,6 @@ class DefaultSimilarity extends AbstractSimilarity
      */
     public function coord($overlap, $maxOverlap)
     {
-        return $overlap / (float)$maxOverlap;
+        return $overlap/(float)$maxOverlap;
     }
 }

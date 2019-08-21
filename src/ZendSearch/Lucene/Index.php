@@ -777,11 +777,11 @@ class Index implements SearchIndexInterface
                     $sortArgs[] = &$sortFieldValues[$fieldName];
                 }
 
-                if ($count + 1 < count($argList)  &&  is_integer($argList[$count + 1])) {
+                if ($count + 1 < count($argList)  &&  is_integer($argList[$count+1])) {
                     $count++;
                     $sortArgs[] = &$argList[$count];
 
-                    if ($count + 1 < count($argList)  &&  is_integer($argList[$count + 1])) {
+                    if ($count + 1 < count($argList)  &&  is_integer($argList[$count+1])) {
                         $count++;
                         $sortArgs[] = &$argList[$count];
                     } else {
@@ -858,7 +858,7 @@ class Index implements SearchIndexInterface
         }
 
         $fdxFile = $segmentInfo->openCompoundFile('.fdx');
-        $fdxFile->seek(($id - $segmentStartId) * 8, SEEK_CUR);
+        $fdxFile->seek(($id-$segmentStartId)*8, SEEK_CUR);
         $fieldValuesPosition = $fdxFile->readLong();
 
         $fdtFile = $segmentInfo->openCompoundFile('.fdt');

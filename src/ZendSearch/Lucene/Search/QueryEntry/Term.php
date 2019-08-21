@@ -88,7 +88,7 @@ class Term extends AbstractQueryEntry
             $query = new \ZendSearch\Lucene\Search\Query\Preprocessing\Fuzzy(
                 $this->_term,
                 $encoding,
-                ($this->_field !== null) ?
+                ($this->_field !== null)?
                                                                                   iconv($encoding, 'UTF-8', $this->_field) :
                                                                                   null,
                 $this->_similarity
@@ -101,7 +101,7 @@ class Term extends AbstractQueryEntry
         $query = new \ZendSearch\Lucene\Search\Query\Preprocessing\Term(
             $this->_term,
             $encoding,
-            ($this->_field !== null) ?
+            ($this->_field !== null)?
                                                                               iconv($encoding, 'UTF-8', $this->_field) :
                                                                               null
         );

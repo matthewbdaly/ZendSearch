@@ -259,9 +259,9 @@ class Memory extends AbstractFile
         // Only append operation is supported now
 
         settype($value, 'integer');
-        $this->_data .= chr($value >> 24 & 0xFF) .
-                        chr($value >> 16 & 0xFF) .
-                        chr($value >> 8  & 0xFF) .
+        $this->_data .= chr($value>>24 & 0xFF) .
+                        chr($value>>16 & 0xFF) .
+                        chr($value>>8  & 0xFF) .
                         chr($value     & 0xFF);
 
         $this->_position = strlen($this->_data);
@@ -313,13 +313,13 @@ class Memory extends AbstractFile
          */
         if (PHP_INT_SIZE > 4) {
             settype($value, 'integer');
-            $this->_data .= chr($value >> 56 & 0xFF) .
-                            chr($value >> 48 & 0xFF) .
-                            chr($value >> 40 & 0xFF) .
-                            chr($value >> 32 & 0xFF) .
-                            chr($value >> 24 & 0xFF) .
-                            chr($value >> 16 & 0xFF) .
-                            chr($value >> 8  & 0xFF) .
+            $this->_data .= chr($value>>56 & 0xFF) .
+                            chr($value>>48 & 0xFF) .
+                            chr($value>>40 & 0xFF) .
+                            chr($value>>32 & 0xFF) .
+                            chr($value>>24 & 0xFF) .
+                            chr($value>>16 & 0xFF) .
+                            chr($value>>8  & 0xFF) .
                             chr($value     & 0xFF);
         } else {
             $this->_writeLong32Bit($value);
@@ -363,7 +363,7 @@ class Memory extends AbstractFile
             return $wordLow;
         }
 
-        return $wordHigh * (float)0x100000000/* 0x00000001 00000000 */ + $wordLow;
+        return $wordHigh*(float)0x100000000/* 0x00000001 00000000 */ + $wordLow;
     }
 
 
@@ -385,8 +385,8 @@ class Memory extends AbstractFile
             $wordHigh = (int)0xFFFFFFFF;
             $wordLow  = (int)$value;
         } else {
-            $wordHigh = (int)($value / (float)0x100000000/* 0x00000001 00000000 */);
-            $wordLow  = $value - $wordHigh * (float)0x100000000/* 0x00000001 00000000 */;
+            $wordHigh = (int)($value/(float)0x100000000/* 0x00000001 00000000 */);
+            $wordLow  = $value - $wordHigh*(float)0x100000000/* 0x00000001 00000000 */;
 
             if ($wordLow > 0x7FFFFFFF) {
                 // Highest bit of low word is set. Translate it to the corresponding negative integer value
@@ -410,7 +410,7 @@ class Memory extends AbstractFile
         $nextByte = ord($this->_data[$this->_position++]);
         $val = $nextByte & 0x7F;
 
-        for ($shift = 7; ($nextByte & 0x80) != 0; $shift += 7) {
+        for ($shift=7; ($nextByte & 0x80) != 0; $shift += 7) {
             $nextByte = ord($this->_data[$this->_position++]);
             $val |= ($nextByte & 0x7F) << $shift;
         }
@@ -429,7 +429,7 @@ class Memory extends AbstractFile
 
         settype($value, 'integer');
         while ($value > 0x7F) {
-            $this->_data .= chr(($value & 0x7F) | 0x80);
+            $this->_data .= chr(($value & 0x7F)|0x80);
             $value >>= 7;
         }
         $this->_data .= chr($value);
@@ -484,10 +484,10 @@ class Memory extends AbstractFile
                     // Check for null character. Java2 encodes null character
                     // in two bytes.
                     if (ord($str_val[$count])   == 0xC0 &&
-                        ord($str_val[$count + 1]) == 0x80   ) {
+                        ord($str_val[$count+1]) == 0x80   ) {
                         $str_val[$count] = 0;
-                        $str_val = substr($str_val, 0, $count + 1)
-                                 . substr($str_val, $count + 2);
+                        $str_val = substr($str_val, 0, $count+1)
+                                 . substr($str_val, $count+2);
                     }
                     $count += $addBytes;
                 }

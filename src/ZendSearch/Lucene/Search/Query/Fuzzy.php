@@ -124,7 +124,7 @@ class Fuzzy extends AbstractQuery
 
         $this->_term              = $term;
         $this->_minimumSimilarity = $minimumSimilarity;
-        $this->_prefixLength      = ($prefixLength !== null) ? $prefixLength : self::$_defaultPrefixLength;
+        $this->_prefixLength      = ($prefixLength !== null)? $prefixLength : self::$_defaultPrefixLength;
     }
 
     /**
@@ -157,7 +157,7 @@ class Fuzzy extends AbstractQuery
      */
     private function _calculateMaxDistance($prefixLength, $termLength, $length)
     {
-        $this->_maxDistances[$length] = (int) ((1 - $this->_minimumSimilarity) * (min($termLength, $length) + $prefixLength));
+        $this->_maxDistances[$length] = (int) ((1 - $this->_minimumSimilarity)*(min($termLength, $length) + $prefixLength));
         return $this->_maxDistances[$length];
     }
 
@@ -191,7 +191,7 @@ class Fuzzy extends AbstractQuery
         // we calculate length of the rest in bytes since levenshtein() is not UTF-8 compatible
         $termRestLength   = strlen($termRest);
 
-        $scaleFactor = 1 / (1 - $this->_minimumSimilarity);
+        $scaleFactor = 1/(1 - $this->_minimumSimilarity);
 
         $maxTerms = Lucene\Lucene::getTermsPerQueryLimit();
         foreach ($fields as $field) {
@@ -206,16 +206,16 @@ class Fuzzy extends AbstractQuery
                     // Calculate similarity
                     $target = substr($index->currentTerm()->text, $prefixByteLength);
 
-                    $maxDistance = isset($this->_maxDistances[strlen($target)]) ?
+                    $maxDistance = isset($this->_maxDistances[strlen($target)])?
                                        $this->_maxDistances[strlen($target)] :
                                        $this->_calculateMaxDistance($prefixUtf8Length, $termRestLength, strlen($target));
 
                     if ($termRestLength == 0) {
                         // we don't have anything to compare.  That means if we just add
                         // the letters for current term we get the new word
-                        $similarity = (($prefixUtf8Length == 0) ? 0 : 1 - strlen($target) / $prefixUtf8Length);
+                        $similarity = (($prefixUtf8Length == 0)? 0 : 1 - strlen($target)/$prefixUtf8Length);
                     } elseif (strlen($target) == 0) {
-                        $similarity = (($prefixUtf8Length == 0) ? 0 : 1 - $termRestLength / $prefixUtf8Length);
+                        $similarity = (($prefixUtf8Length == 0)? 0 : 1 - $termRestLength/$prefixUtf8Length);
                     } elseif ($maxDistance < abs($termRestLength - strlen($target))) {
                         //just adding the characters of term to target or vice-versa results in too many edits
                         //for example "pre" length is 3 and "prefixes" length is 8.  We can see that
@@ -225,13 +225,13 @@ class Fuzzy extends AbstractQuery
                         //without looking at it.
                         $similarity = 0;
                     } else {
-                        $similarity = 1 - levenshtein($termRest, $target) / ($prefixUtf8Length + min($termRestLength, strlen($target)));
+                        $similarity = 1 - levenshtein($termRest, $target)/($prefixUtf8Length + min($termRestLength, strlen($target)));
                     }
 
                     if ($similarity > $this->_minimumSimilarity) {
                         $this->_matches[]  = $index->currentTerm();
                         $this->_termKeys[] = $index->currentTerm()->key();
-                        $this->_scores[]   = ($similarity - $this->_minimumSimilarity) * $scaleFactor;
+                        $this->_scores[]   = ($similarity - $this->_minimumSimilarity)*$scaleFactor;
 
                         if ($maxTerms != 0  &&  count($this->_matches) > $maxTerms) {
                             throw new OutOfBoundsException('Terms per query limit is reached.');
@@ -247,7 +247,7 @@ class Fuzzy extends AbstractQuery
                     // Calculate similarity
                     $target = $index->currentTerm()->text;
 
-                    $maxDistance = isset($this->_maxDistances[strlen($target)]) ?
+                    $maxDistance = isset($this->_maxDistances[strlen($target)])?
                                        $this->_maxDistances[strlen($target)] :
                                        $this->_calculateMaxDistance(0, $termRestLength, strlen($target));
 
@@ -260,13 +260,13 @@ class Fuzzy extends AbstractQuery
                         //without looking at it.
                         $similarity = 0;
                     } else {
-                        $similarity = 1 - levenshtein($termRest, $target) / min($termRestLength, strlen($target));
+                        $similarity = 1 - levenshtein($termRest, $target)/min($termRestLength, strlen($target));
                     }
 
                     if ($similarity > $this->_minimumSimilarity) {
                         $this->_matches[]  = $index->currentTerm();
                         $this->_termKeys[] = $index->currentTerm()->key();
-                        $this->_scores[]   = ($similarity - $this->_minimumSimilarity) * $scaleFactor;
+                        $this->_scores[]   = ($similarity - $this->_minimumSimilarity)*$scaleFactor;
 
                         if ($maxTerms != 0  &&  count($this->_matches) > $maxTerms) {
                             throw new OutOfBoundsException('Terms per query limit is reached.');
@@ -420,7 +420,7 @@ class Fuzzy extends AbstractQuery
         // we calculate length of the rest in bytes since levenshtein() is not UTF-8 compatible
         $termRestLength   = strlen($termRest);
 
-        $scaleFactor = 1 / (1 - $this->_minimumSimilarity);
+        $scaleFactor = 1/(1 - $this->_minimumSimilarity);
 
         $docBody = $highlighter->getDocument()->getFieldUtf8Value('body');
         $tokens = Lucene\Analysis\Analyzer\Analyzer::getDefault()->tokenize($docBody, 'UTF-8');
@@ -431,16 +431,16 @@ class Fuzzy extends AbstractQuery
                 // Calculate similarity
                 $target = substr($termText, $prefixByteLength);
 
-                $maxDistance = isset($this->_maxDistances[strlen($target)]) ?
+                $maxDistance = isset($this->_maxDistances[strlen($target)])?
                                    $this->_maxDistances[strlen($target)] :
                                    $this->_calculateMaxDistance($prefixUtf8Length, $termRestLength, strlen($target));
 
                 if ($termRestLength == 0) {
                     // we don't have anything to compare.  That means if we just add
                     // the letters for current term we get the new word
-                    $similarity = (($prefixUtf8Length == 0) ? 0 : 1 - strlen($target) / $prefixUtf8Length);
+                    $similarity = (($prefixUtf8Length == 0)? 0 : 1 - strlen($target)/$prefixUtf8Length);
                 } elseif (strlen($target) == 0) {
-                    $similarity = (($prefixUtf8Length == 0) ? 0 : 1 - $termRestLength / $prefixUtf8Length);
+                    $similarity = (($prefixUtf8Length == 0)? 0 : 1 - $termRestLength/$prefixUtf8Length);
                 } elseif ($maxDistance < abs($termRestLength - strlen($target))) {
                     //just adding the characters of term to target or vice-versa results in too many edits
                     //for example "pre" length is 3 and "prefixes" length is 8.  We can see that
@@ -450,7 +450,7 @@ class Fuzzy extends AbstractQuery
                     //without looking at it.
                     $similarity = 0;
                 } else {
-                    $similarity = 1 - levenshtein($termRest, $target) / ($prefixUtf8Length + min($termRestLength, strlen($target)));
+                    $similarity = 1 - levenshtein($termRest, $target)/($prefixUtf8Length + min($termRestLength, strlen($target)));
                 }
 
                 if ($similarity > $this->_minimumSimilarity) {
@@ -470,9 +470,9 @@ class Fuzzy extends AbstractQuery
     public function __toString()
     {
         // It's used only for query visualisation, so we don't care about characters escaping
-        return (($this->_term->field === null) ? '' : $this->_term->field . ':')
+        return (($this->_term->field === null)? '' : $this->_term->field . ':')
              . $this->_term->text . '~'
-             . (($this->_minimumSimilarity != self::DEFAULT_MIN_SIMILARITY) ? round($this->_minimumSimilarity, 4) : '')
-             . (($this->getBoost() != 1) ? '^' . round($this->getBoost(), 4) : '');
+             . (($this->_minimumSimilarity != self::DEFAULT_MIN_SIMILARITY)? round($this->_minimumSimilarity, 4) : '')
+             . (($this->getBoost() != 1)? '^' . round($this->getBoost(), 4) : '');
     }
 }
