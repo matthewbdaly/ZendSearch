@@ -140,7 +140,7 @@ class Filesystem extends AbstractFile
      * @param integer $length
      * @return string
      */
-    protected function _fread($length = 1)
+    protected function fread($length = 1)
     {
         if ($length == 0) {
             return '';
@@ -168,7 +168,7 @@ class Filesystem extends AbstractFile
      *
      * @return void
      */
-    protected function _fwrite($data, $length = null): void
+    protected function fwrite($data, $length = null): void
     {
         if ($length === null) {
             fwrite($this->_fileHandle, $data);

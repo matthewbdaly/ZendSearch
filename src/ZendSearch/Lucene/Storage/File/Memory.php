@@ -51,7 +51,7 @@ class Memory extends AbstractFile
      * @param integer $length
      * @return string
      */
-    protected function _fread($length = 1)
+    protected function fread($length = 1)
     {
         $returnValue = substr($this->_data, $this->_position, $length);
         $this->_position += $length;
@@ -129,7 +129,7 @@ class Memory extends AbstractFile
      *
      * @return void
      */
-    protected function _fwrite($data, $length = null): void
+    protected function fwrite($data, $length = null): void
     {
         // We do not need to check if file position points to the end of "file".
         // Only append operation is supported now

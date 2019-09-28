@@ -28,7 +28,7 @@ abstract class AbstractFile implements FileInterface
      */
     public function readByte()
     {
-        return ord($this->_fread(1));
+        return ord($this->fread(1));
     }
 
     /**
@@ -38,7 +38,7 @@ abstract class AbstractFile implements FileInterface
      */
     public function writeByte($byte)
     {
-        return $this->_fwrite(chr($byte), 1);
+        return $this->fwrite(chr($byte), 1);
     }
 
     /**
@@ -50,7 +50,7 @@ abstract class AbstractFile implements FileInterface
      */
     public function readBytes($num)
     {
-        return $this->_fread($num);
+        return $this->fread($num);
     }
 
     /**
@@ -64,7 +64,7 @@ abstract class AbstractFile implements FileInterface
      */
     public function writeBytes($data, $num = null)
     {
-        $this->_fwrite($data, $num);
+        $this->fwrite($data, $num);
     }
 
 
@@ -76,7 +76,7 @@ abstract class AbstractFile implements FileInterface
      */
     public function readInt()
     {
-        $str = $this->_fread(4);
+        $str = $this->fread(4);
 
         return  ord($str[0]) << 24 |
                 ord($str[1]) << 16 |
@@ -95,7 +95,7 @@ abstract class AbstractFile implements FileInterface
     public function writeInt($value)
     {
         settype($value, 'integer');
-        $this->_fwrite(chr($value>>24 & 0xFF) .
+        $this->fwrite(chr($value>>24 & 0xFF) .
                         chr($value>>16 & 0xFF) .
                         chr($value>>8  & 0xFF) .
                         chr($value     & 0xFF), 4);
@@ -115,7 +115,7 @@ abstract class AbstractFile implements FileInterface
          * fseek() uses long for offset. Thus, largest index segment file size in 32bit mode is 2Gb
          */
         if (PHP_INT_SIZE > 4) {
-            $str = $this->_fread(8);
+            $str = $this->fread(8);
 
             return  ord($str[0]) << 56  |
                     ord($str[1]) << 48  |
@@ -145,7 +145,7 @@ abstract class AbstractFile implements FileInterface
          */
         if (PHP_INT_SIZE > 4) {
             settype($value, 'integer');
-            $this->_fwrite(chr($value>>56 & 0xFF) .
+            $this->fwrite(chr($value>>56 & 0xFF) .
                             chr($value>>48 & 0xFF) .
                             chr($value>>40 & 0xFF) .
                             chr($value>>32 & 0xFF) .
@@ -241,11 +241,11 @@ abstract class AbstractFile implements FileInterface
      */
     public function readVInt()
     {
-        $nextByte = ord($this->_fread(1));
+        $nextByte = ord($this->fread(1));
         $val = $nextByte & 0x7F;
 
         for ($shift=7; ($nextByte & 0x80) != 0; $shift += 7) {
-            $nextByte = ord($this->_fread(1));
+            $nextByte = ord($this->fread(1));
             $val |= ($nextByte & 0x7F) << $shift;
         }
         return $val;
@@ -262,10 +262,10 @@ abstract class AbstractFile implements FileInterface
     {
         settype($value, 'integer');
         while ($value > 0x7F) {
-            $this->_fwrite(chr(($value & 0x7F)|0x80));
+            $this->fwrite(chr(($value & 0x7F)|0x80));
             $value >>= 7;
         }
-        $this->_fwrite(chr($value));
+        $this->fwrite(chr($value));
     }
 
 
@@ -294,7 +294,7 @@ abstract class AbstractFile implements FileInterface
              * characters.
              */
 
-            $str_val = $this->_fread($strlen);
+            $str_val = $this->fread($strlen);
 
             for ($count = 0; $count < $strlen; $count++) {
                 if (( ord($str_val[$count]) & 0xC0 ) == 0xC0) {
@@ -307,7 +307,7 @@ abstract class AbstractFile implements FileInterface
                             $addBytes++;
                         }
                     }
-                    $str_val .= $this->_fread($addBytes);
+                    $str_val .= $this->fread($addBytes);
                     $strlen += $addBytes;
 
                     // Check for null character. Java2 encodes null character
@@ -388,9 +388,9 @@ abstract class AbstractFile implements FileInterface
 
         $this->writeVInt($chars);
         if ($containNullChars) {
-            $this->_fwrite(str_replace($str, "\x00", "\xC0\x80"));
+            $this->fwrite(str_replace($str, "\x00", "\xC0\x80"));
         } else {
-            $this->_fwrite($str);
+            $this->fwrite($str);
         }
     }
 
@@ -403,6 +403,6 @@ abstract class AbstractFile implements FileInterface
      */
     public function readBinary()
     {
-        return $this->_fread($this->readVInt());
+        return $this->fread($this->readVInt());
     }
 }
