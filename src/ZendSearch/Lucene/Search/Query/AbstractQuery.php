@@ -99,6 +99,7 @@ abstract class AbstractQuery
      * Constructs an initializes a Weight for a _top-level_query_.
      *
      * @param \ZendSearch\Lucene\SearchIndexInterface $reader
+     * @return \ZendSearch\Lucene\Search\Weight\AbstractWeight|null
      */
     protected function _initWeight(Lucene\SearchIndexInterface $reader)
     {
