@@ -406,7 +406,7 @@ abstract class AbstractFile implements FileInterface
         return $this->fread($this->readVInt());
     }
 
-    abstract protected function fread($length = 1);
+    abstract protected function fread(int $length = 1): string;
 
     abstract protected function fwrite($data, $length = null): void;
 }

@@ -51,7 +51,7 @@ class Memory extends AbstractFile
      * @param integer $length
      * @return string
      */
-    protected function fread($length = 1)
+    protected function fread(int $length = 1): string
     {
         $returnValue = substr($this->_data, $this->_position, $length);
         $this->_position += $length;
