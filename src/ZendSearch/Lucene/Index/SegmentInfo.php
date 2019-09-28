@@ -1519,7 +1519,7 @@ class SegmentInfo implements TermsStreamInterface
      * This method must be invoked only from the Writer _updateSegments() method,
      * so index Write lock has to be already obtained.
      *
-     * @internal 
+     * @internal
      *
      * @throws ZendSearch\Lucene\Exception\RuntimeException
      *
