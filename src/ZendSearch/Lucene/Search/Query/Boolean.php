@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Zend Framework (http://framework.zend.com/)
  *
@@ -131,7 +132,7 @@ class Boolean extends AbstractQuery
         foreach ($this->_subqueries as $subqueryId => $subquery) {
             $query->addSubquery(
                 $subquery->rewrite($index),
-                ($this->_signs === null)?  true : $this->_signs[$subqueryId]
+                ($this->_signs === null) ?  true : $this->_signs[$subqueryId]
             );
         }
 
@@ -152,7 +153,7 @@ class Boolean extends AbstractQuery
         // Optimize all subqueries
         foreach ($this->_subqueries as $id => $subquery) {
             $subqueries[] = $subquery->optimize($index);
-            $signs[]      = ($this->_signs === null)? true : $this->_signs[$id];
+            $signs[]      = ($this->_signs === null) ? true : $this->_signs[$id];
         }
 
         // Remove insignificant subqueries
@@ -223,7 +224,7 @@ class Boolean extends AbstractQuery
             }
 
             $optimizedQuery = clone reset($subqueries);
-            $optimizedQuery->setBoost($optimizedQuery->getBoost()*$this->getBoost());
+            $optimizedQuery->setBoost($optimizedQuery->getBoost() * $this->getBoost());
 
             return $optimizedQuery;
         }
@@ -283,7 +284,7 @@ class Boolean extends AbstractQuery
 
                     foreach ($subTerms as $termId => $term) {
                         $terms[]        = $term;
-                        $tsigns[]       = ($subSigns === null)? true : $subSigns[$termId];
+                        $tsigns[]       = ($subSigns === null) ? true : $subSigns[$termId];
                         $boostFactors[] = $subquery->getBoost();
                     }
 
@@ -320,7 +321,7 @@ class Boolean extends AbstractQuery
 
                     foreach ($subTerms as $termId => $term) {
                         $terms[]  = $term;
-                        $tsigns[] = ($signs[$id] === null)? null  /* optional */ :
+                        $tsigns[] = ($signs[$id] === null) ? null  /* optional */ :
                                                             false /* prohibited */;
                         $boostFactors[] = $subquery->getBoost();
                     }
@@ -343,7 +344,7 @@ class Boolean extends AbstractQuery
         // Check, if all subqueries have been decomposed and all terms has the same boost factor
         if (count($subqueries) == 0  &&  count(array_unique($boostFactors)) == 1) {
             $optimizedQuery = new MultiTerm($terms, $tsigns);
-            $optimizedQuery->setBoost(reset($boostFactors)*$this->getBoost());
+            $optimizedQuery->setBoost(reset($boostFactors) * $this->getBoost());
 
             return $optimizedQuery;
         }
@@ -379,7 +380,7 @@ class Boolean extends AbstractQuery
 
             $subqueries[] = $clause;
             // Clause sign is 'required' if clause contains required terms. 'Optional' otherwise.
-            $signs[]      = (in_array(true, $tsigns))? true : null;
+            $signs[]      = (in_array(true, $tsigns)) ? true : null;
 
             // Clear terms list
             $terms = array();

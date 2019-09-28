@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Zend Framework (http://framework.zend.com/)
  *
@@ -420,17 +421,19 @@ abstract class AbstractSimilarity
             $delta = $f - self::$_normTable[$mid];
 
             if ($delta < 0) {
-                $highIndex = $mid-1;
+                $highIndex = $mid - 1;
             } elseif ($delta > 0) {
-                $lowIndex  = $mid+1;
+                $lowIndex  = $mid + 1;
             } else {
                 return $mid; // We got it!
             }
         }
 
         // round to closest value
-        if ($highIndex != 255 &&
-            $f - self::$_normTable[$highIndex] > self::$_normTable[$highIndex+1] - $f ) {
+        if (
+            $highIndex != 255 &&
+            $f - self::$_normTable[$highIndex] > self::$_normTable[$highIndex + 1] - $f
+        ) {
             return $highIndex + 1;
         } else {
             return $highIndex;

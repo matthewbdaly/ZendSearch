@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Zend Framework (http://framework.zend.com/)
  *
@@ -266,7 +267,7 @@ class IndexTest extends \PHPUnit\Framework\TestCase
             if (is_dir($indexSourceDir . '/' . $file)) {
                 continue;
             }
-            if (strcasecmp(substr($file, strlen($file)-5), '.html') != 0) {
+            if (strcasecmp(substr($file, strlen($file) - 5), '.html') != 0) {
                 continue;
             }
 
@@ -310,7 +311,7 @@ class IndexTest extends \PHPUnit\Framework\TestCase
             if (is_dir($indexSourceDir . '/' . $file)) {
                 continue;
             }
-            if (strcasecmp(substr($file, strlen($file)-5), '.html') != 0) {
+            if (strcasecmp(substr($file, strlen($file) - 5), '.html') != 0) {
                 continue;
             }
 
@@ -488,7 +489,7 @@ class IndexTest extends \PHPUnit\Framework\TestCase
     {
         $index = Lucene\Lucene::create(__DIR__ . '/_index/_files');
 
-        $document = new Document;
+        $document = new Document();
         $document->addField(Document\Field::Keyword('_id', 'myId'));
         $document->addField(Document\Field::Keyword('bla', 'blubb'));
         $index->addDocument($document);

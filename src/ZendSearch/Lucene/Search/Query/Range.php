@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Zend Framework (http://framework.zend.com/)
  *
@@ -85,7 +86,7 @@ class Range extends AbstractQuery
             throw new InvalidArgumentException('Both terms must be for the same field');
         }
 
-        $this->_field     = ($lowerTerm !== null)? $lowerTerm->field : $upperTerm->field;
+        $this->_field     = ($lowerTerm !== null) ? $lowerTerm->field : $upperTerm->field;
         $this->_lowerTerm = $lowerTerm;
         $this->_upperTerm = $upperTerm;
         $this->_inclusive = $inclusive;
@@ -158,8 +159,10 @@ class Range extends AbstractQuery
 
                 $index->skipTo($lowerTerm);
 
-                if (!$this->_inclusive  &&
-                    $index->currentTerm() == $lowerTerm) {
+                if (
+                    !$this->_inclusive  &&
+                    $index->currentTerm() == $lowerTerm
+                ) {
                     // Skip lower term
                     $index->nextTerm();
                 }
@@ -172,9 +175,11 @@ class Range extends AbstractQuery
                 // Walk up to the upper term
                 $upperTerm = new Index\Term($this->_upperTerm->text, $field);
 
-                while ($index->currentTerm() !== null          &&
+                while (
+                    $index->currentTerm() !== null          &&
                        $index->currentTerm()->field == $field  &&
-                       $index->currentTerm()->text  <  $upperTerm->text) {
+                       $index->currentTerm()->text  <  $upperTerm->text
+                ) {
                     $this->_matches[] = $index->currentTerm();
 
                     if ($maxTerms != 0  &&  count($this->_matches) > $maxTerms) {
@@ -324,22 +329,30 @@ class Range extends AbstractQuery
         $docBody = $highlighter->getDocument()->getFieldUtf8Value('body');
         $tokens = Lucene\Analysis\Analyzer\Analyzer::getDefault()->tokenize($docBody, 'UTF-8');
 
-        $lowerTermText = ($this->_lowerTerm !== null)? $this->_lowerTerm->text : null;
-        $upperTermText = ($this->_upperTerm !== null)? $this->_upperTerm->text : null;
+        $lowerTermText = ($this->_lowerTerm !== null) ? $this->_lowerTerm->text : null;
+        $upperTermText = ($this->_upperTerm !== null) ? $this->_upperTerm->text : null;
 
         if ($this->_inclusive) {
             foreach ($tokens as $token) {
                 $termText = $token->getTermText();
-                if (($lowerTermText == null  ||  $lowerTermText <= $termText)  &&
-                    ($upperTermText == null  ||  $termText <= $upperTermText)) {
+                if (
+                    ($lowerTermText == null
+                    ||  $lowerTermText <= $termText)
+                    && ($upperTermText == null
+                    ||  $termText <= $upperTermText)
+                ) {
                     $words[] = $termText;
                 }
             }
         } else {
             foreach ($tokens as $token) {
                 $termText = $token->getTermText();
-                if (($lowerTermText == null  ||  $lowerTermText < $termText)  &&
-                    ($upperTermText == null  ||  $termText < $upperTermText)) {
+                if (
+                    ($lowerTermText == null
+                    ||  $lowerTermText < $termText)
+                    && ($upperTermText == null
+                    ||  $termText < $upperTermText)
+                ) {
                     $words[] = $termText;
                 }
             }
@@ -356,12 +369,12 @@ class Range extends AbstractQuery
     public function __toString()
     {
         // It's used only for query visualisation, so we don't care about characters escaping
-        return (($this->_field === null)? '' : $this->_field . ':')
-             . (($this->_inclusive)? '[' : '{')
-             . (($this->_lowerTerm !== null)?  $this->_lowerTerm->text : 'null')
+        return (($this->_field === null) ? '' : $this->_field . ':')
+             . (($this->_inclusive) ? '[' : '{')
+             . (($this->_lowerTerm !== null) ?  $this->_lowerTerm->text : 'null')
              . ' TO '
-             . (($this->_upperTerm !== null)?  $this->_upperTerm->text : 'null')
-             . (($this->_inclusive)? ']' : '}')
-             . (($this->getBoost() != 1)? '^' . round($this->getBoost(), 4) : '');
+             . (($this->_upperTerm !== null) ?  $this->_upperTerm->text : 'null')
+             . (($this->_inclusive) ? ']' : '}')
+             . (($this->getBoost() != 1) ? '^' . round($this->getBoost(), 4) : '');
     }
 }

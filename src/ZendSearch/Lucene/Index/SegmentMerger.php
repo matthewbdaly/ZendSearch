@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Zend Framework (http://framework.zend.com/)
  *
@@ -242,9 +243,11 @@ class SegmentMerger
             // Merge positions array
             $termDocs += $segmentInfo->currentTermPositions();
 
-            if ($segmentInfoQueue->top() === null ||
+            if (
+                $segmentInfoQueue->top() === null ||
                 $segmentInfoQueue->top()->currentTerm()->key() !=
-                            $segmentInfo->currentTerm()->key()) {
+                            $segmentInfo->currentTerm()->key()
+            ) {
                 // We got new term
                 ksort($termDocs, SORT_NUMERIC);
 

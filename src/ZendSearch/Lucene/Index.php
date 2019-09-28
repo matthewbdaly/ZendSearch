@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Zend Framework (http://framework.zend.com/)
  *
@@ -210,9 +211,11 @@ class Index implements SearchIndexInterface
      */
     public function setFormatVersion($formatVersion)
     {
-        if ($formatVersion != self::FORMAT_PRE_2_1  &&
+        if (
+            $formatVersion != self::FORMAT_PRE_2_1  &&
             $formatVersion != self::FORMAT_2_1  &&
-            $formatVersion != self::FORMAT_2_3) {
+            $formatVersion != self::FORMAT_2_3
+        ) {
             throw new InvalidArgumentException('Unsupported index format');
         }
 
@@ -790,11 +793,11 @@ class Index implements SearchIndexInterface
                     $sortArgs[] = &$sortFieldValues[$fieldName];
                 }
 
-                if ($count + 1 < count($argList)  &&  is_integer($argList[$count+1])) {
+                if ($count + 1 < count($argList)  &&  is_integer($argList[$count + 1])) {
                     $count++;
                     $sortArgs[] = &$argList[$count];
 
-                    if ($count + 1 < count($argList)  &&  is_integer($argList[$count+1])) {
+                    if ($count + 1 < count($argList)  &&  is_integer($argList[$count + 1])) {
                         $count++;
                         $sortArgs[] = &$argList[$count];
                     } else {
@@ -871,7 +874,7 @@ class Index implements SearchIndexInterface
         }
 
         $fdxFile = $segmentInfo->openCompoundFile('.fdx');
-        $fdxFile->seek(($id-$segmentStartId)*8, SEEK_CUR);
+        $fdxFile->seek(($id - $segmentStartId) * 8, SEEK_CUR);
         $fieldValuesPosition = $fdxFile->readLong();
 
         $fdtFile = $segmentInfo->openCompoundFile('.fdt');
@@ -1242,9 +1245,11 @@ class Index implements SearchIndexInterface
         }
 
         while (($segmentInfo = $segmentInfoQueue->pop()) !== null) {
-            if ($segmentInfoQueue->top() === null ||
+            if (
+                $segmentInfoQueue->top() === null ||
                 $segmentInfoQueue->top()->currentTerm()->key() !=
-                            $segmentInfo->currentTerm()->key()) {
+                            $segmentInfo->currentTerm()->key()
+            ) {
                 // We got new term
                 $result[] = $segmentInfo->currentTerm();
             }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Zend Framework (http://framework.zend.com/)
  *
@@ -109,8 +110,10 @@ class Fuzzy extends AbstractPreprocessing
 
                 $rewrittenSubquery = $subquery->rewrite($index);
 
-                if (!($rewrittenSubquery instanceof Query\Insignificant  ||
-                       $rewrittenSubquery instanceof Query\EmptyResult) ) {
+                if (
+                    !($rewrittenSubquery instanceof Query\Insignificant  ||
+                       $rewrittenSubquery instanceof Query\EmptyResult)
+                ) {
                     $query->addSubquery($rewrittenSubquery);
                 }
 

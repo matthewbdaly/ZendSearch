@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Zend Framework (http://framework.zend.com/)
  *
@@ -66,8 +67,8 @@ class Term extends AbstractWeight
      * @param \ZendSearch\Lucene\SearchIndexInterface             $reader
      */
     public function __construct(
-        Index\Term            $term,
-        Query\AbstractQuery   $query,
+        Index\Term $term,
+        Query\AbstractQuery $query,
         Lucene\SearchIndexInterface $reader
     ) {
         $this->_term   = $term;

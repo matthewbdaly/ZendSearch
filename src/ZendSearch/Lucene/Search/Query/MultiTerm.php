@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Zend Framework (http://framework.zend.com/)
  *
@@ -176,7 +177,7 @@ class MultiTerm extends AbstractQuery
 
                 $query->addSubquery(
                     $subquery->rewrite($index),
-                    ($this->_signs === null)?  true : $this->_signs[$termId]
+                    ($this->_signs === null) ?  true : $this->_signs[$termId]
                 );
             }
 
@@ -516,9 +517,10 @@ class MultiTerm extends AbstractQuery
         $matchedTerms = 0;
         foreach ($this->_terms as $termId => $term) {
             // Check if term is
-            if ($this->_signs[$termId] !== false &&        // not prohibited
+            if (
+                $this->_signs[$termId] !== false &&        // not prohibited
                 isset($this->_termsFreqs[$termId][$docId]) // matched
-               ) {
+            ) {
                 $matchedTerms++;
 
                 /**

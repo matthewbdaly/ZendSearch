@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Zend Framework (http://framework.zend.com/)
  *
@@ -161,10 +162,12 @@ class Writer
         if ($generation == 0) {
             // Create index in pre-2.1 mode
             foreach ($directory->fileList() as $file) {
-                if ($file == 'deletable' ||
+                if (
+                    $file == 'deletable' ||
                     $file == 'segments'  ||
-                    isset(self::$_indexExtensions[ substr($file, strlen($file)-4)]) ||
-                    preg_match('/\.f\d+$/i', $file) /* matches <segment_name>.f<decimal_nmber> file names */) {
+                    isset(self::$_indexExtensions[ substr($file, strlen($file) - 4)]) ||
+                    preg_match('/\.f\d+$/i', $file) /* matches <segment_name>.f<decimal_nmber> file names */
+                ) {
                         $directory->deleteFile($file);
                 }
             }
@@ -667,15 +670,18 @@ class Writer
                         }
                         $delFiles[$segmentNumber][$delGeneration] = $file;
                     }
-                } elseif (isset(self::$_indexExtensions[substr($file, strlen($file)-4)])) {
+                } elseif (isset(self::$_indexExtensions[substr($file, strlen($file) - 4)])) {
                     // one of per segment files ('<segment_name>.<ext>')
                     $segmentName = substr($file, 0, strlen($file) - 4);
                     // Check if it's not one of the segments in the current segments set
-                    if (!isset($segments[$segmentName])  &&
-                        ($this->_currentSegment === null  ||  $this->_currentSegment->getName() != $segmentName)) {
+                    if (
+                        !isset($segments[$segmentName])  &&
+                        ($this->_currentSegment === null  ||
+                        $this->_currentSegment->getName() != $segmentName)
+                    ) {
                         $filesToDelete[] = $file;
                         $filesTypes[]    = 3; // second group of files for deletions
-                        $filesNumbers[]  = (int)base_convert(substr($file, 1 /* skip '_' */, strlen($file)-5), 36, 10); // order by segment number
+                        $filesNumbers[]  = (int)base_convert(substr($file, 1 /* skip '_' */, strlen($file) - 5), 36, 10); // order by segment number
                     }
                 }
             }
@@ -696,7 +702,7 @@ class Writer
                 foreach ($segmentDelFiles as $delGeneration => $file) {
                         $filesToDelete[] = $file;
                         $filesTypes[]    = 4; // third group of files for deletions
-                        $filesNumbers[]  = $segmentNumber*$maxGenNumber + $delGeneration; // order by <segment_number>,<del_generation> pair
+                        $filesNumbers[]  = $segmentNumber * $maxGenNumber + $delGeneration; // order by <segment_number>,<del_generation> pair
                 }
             }
 
@@ -717,7 +723,7 @@ class Writer
                 try {
                     /** Skip shared docstore segments deleting */
                     /** @todo Process '.cfx' files to check if them are already unused */
-                    if (substr($file, strlen($file)-4) != '.cfx') {
+                    if (substr($file, strlen($file) - 4) != '.cfx') {
                         $this->_directory->deleteFile($file);
                     }
                 } catch (ExceptionInterface $e) {

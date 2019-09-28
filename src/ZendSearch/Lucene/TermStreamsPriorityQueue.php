@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Zend Framework (http://framework.zend.com/)
  *
@@ -108,9 +109,11 @@ class TermStreamsPriorityQueue implements Index\TermsStreamInterface
     public function nextTerm()
     {
         while (($termStream = $this->_termsStreamQueue->pop()) !== null) {
-            if ($this->_termsStreamQueue->top() === null ||
+            if (
+                $this->_termsStreamQueue->top() === null ||
                 $this->_termsStreamQueue->top()->currentTerm()->key() !=
-                            $termStream->currentTerm()->key()) {
+                            $termStream->currentTerm()->key()
+            ) {
                 // We got new term
                 $this->_lastTerm = $termStream->currentTerm();
 

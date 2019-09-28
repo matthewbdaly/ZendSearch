@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Zend Framework (http://framework.zend.com/)
  *
@@ -32,7 +33,7 @@ class MultiIndexTest extends \PHPUnit\Framework\TestCase
         ));
 
         $hits = $index->find('submitting');
-        $this->assertEquals(count($hits), 2*3);
+        $this->assertEquals(count($hits), 2 * 3);
         foreach ($hits as $hit) {
             $document = $hit->getDocument();
             $this->assertTrue($document instanceof Lucene\Document);

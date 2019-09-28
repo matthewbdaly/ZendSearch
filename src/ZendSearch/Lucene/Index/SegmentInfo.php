@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Zend Framework (http://framework.zend.com/)
  *
@@ -286,7 +287,7 @@ class SegmentInfo implements TermsStreamInterface
         $fieldNums  = array();
         $this->_fields = array();
 
-        for ($count=0; $count < $fieldsCount; $count++) {
+        for ($count = 0; $count < $fieldsCount; $count++) {
             $fieldName = $fnmFile->readString();
             $fieldBits = $fnmFile->readByte();
             $this->_fields[$count] = new FieldInfo(
@@ -356,7 +357,7 @@ class SegmentInfo implements TermsStreamInterface
             $delFile = $this->_directory->getFileObject($this->_name . '.del');
 
             $byteCount = $delFile->readInt();
-            $byteCount = ceil($byteCount/8);
+            $byteCount = ceil($byteCount / 8);
             $bitCount  = $delFile->readInt();
 
             if ($bitCount == 0) {
@@ -372,8 +373,8 @@ class SegmentInfo implements TermsStreamInterface
                 for ($count = 0; $count < $byteCount; $count++) {
                     $byte = ord($delBytes[$count]);
                     for ($bit = 0; $bit < 8; $bit++) {
-                        if ($byte & (1<<$bit)) {
-                            $deletions[$count*8 + $bit] = 1;
+                        if ($byte & (1 << $bit)) {
+                            $deletions[$count * 8 + $bit] = 1;
                         }
                     }
                 }
@@ -426,15 +427,15 @@ class SegmentInfo implements TermsStreamInterface
 
                 if (extension_loaded('bitset')) {
                     for ($bit = 0; $bit < 8; $bit++) {
-                        if ($nonZeroByte & (1<<$bit)) {
-                            bitset_incl($deletions, $byteNum*8 + $bit);
+                        if ($nonZeroByte & (1 << $bit)) {
+                            bitset_incl($deletions, $byteNum * 8 + $bit);
                         }
                     }
                     return $deletions;
                 } else {
                     for ($bit = 0; $bit < 8; $bit++) {
-                        if ($nonZeroByte & (1<<$bit)) {
-                            $deletions[$byteNum*8 + $bit] = 1;
+                        if ($nonZeroByte & (1 << $bit)) {
+                            $deletions[$byteNum * 8 + $bit] = 1;
                         }
                     }
                     return (count($deletions) > 0) ? $deletions : null;
@@ -442,7 +443,7 @@ class SegmentInfo implements TermsStreamInterface
             } while ($delFile->tell() < $delFileSize);
         } else {
             // $format is actually byte count
-            $byteCount = ceil($format/8);
+            $byteCount = ceil($format / 8);
             $bitCount  = $delFile->readInt();
 
             if ($bitCount == 0) {
@@ -458,8 +459,8 @@ class SegmentInfo implements TermsStreamInterface
                 for ($count = 0; $count < $byteCount; $count++) {
                     $byte = ord($delBytes[$count]);
                     for ($bit = 0; $bit < 8; $bit++) {
-                        if ($byte & (1<<$bit)) {
-                            $deletions[$count*8 + $bit] = 1;
+                        if ($byte & (1 << $bit)) {
+                            $deletions[$count * 8 + $bit] = 1;
                         }
                     }
                 }
@@ -485,7 +486,7 @@ class SegmentInfo implements TermsStreamInterface
 
             if (!$this->_sharedDocStoreOptions['isCompound']) {
                 $fdxFile = $this->_directory->getFileObject($fdxFName, $shareHandler);
-                $fdxFile->seek($this->_sharedDocStoreOptions['offset']*8, SEEK_CUR);
+                $fdxFile->seek($this->_sharedDocStoreOptions['offset'] * 8, SEEK_CUR);
 
                 if ($extension == '.fdx') {
                     // '.fdx' file is requested
@@ -515,7 +516,7 @@ class SegmentInfo implements TermsStreamInterface
             // Seek to the start of '.fdx' file within compound file
             $cfxFile->seek($this->_sharedDocStoreOptions['files'][$fdxFName]);
             // Seek to the start of current segment documents section
-            $cfxFile->seek($this->_sharedDocStoreOptions['offset']*8, SEEK_CUR);
+            $cfxFile->seek($this->_sharedDocStoreOptions['offset'] * 8, SEEK_CUR);
 
             if ($extension == '.fdx') {
                 // '.fdx' file is requested
@@ -815,7 +816,7 @@ class SegmentInfo implements TermsStreamInterface
 
         // search for appropriate value in dictionary
         $lowIndex = 0;
-        $highIndex = count($this->_termDictionary)-1;
+        $highIndex = count($this->_termDictionary) - 1;
         while ($highIndex >= $lowIndex) {
             // $mid = ($highIndex - $lowIndex)/2;
             $mid = ($highIndex + $lowIndex) >> 1;
@@ -828,9 +829,9 @@ class SegmentInfo implements TermsStreamInterface
             }
 
             if ($delta < 0) {
-                $highIndex = $mid-1;
+                $highIndex = $mid - 1;
             } elseif ($delta > 0) {
-                $lowIndex  = $mid+1;
+                $lowIndex  = $mid + 1;
             } else {
                 // return $this->_termDictionaryInfos[$mid]; // We got it!
                 $a = $this->_termDictionaryInfos[$mid];
@@ -854,8 +855,10 @@ class SegmentInfo implements TermsStreamInterface
 
         $tisFile = $this->openCompoundFile('.tis');
         $tiVersion = $tisFile->readInt();
-        if ($tiVersion != (int)0xFFFFFFFE /* pre-2.1 format */  &&
-            $tiVersion != (int)0xFFFFFFFD /* 2.1+ format    */) {
+        if (
+            $tiVersion != (int)0xFFFFFFFE /* pre-2.1 format */  &&
+            $tiVersion != (int)0xFFFFFFFD /* 2.1+ format    */
+        ) {
             throw new InvalidFileFormatException('Wrong TermInfoFile file format');
         }
 
@@ -866,16 +869,18 @@ class SegmentInfo implements TermsStreamInterface
             $maxSkipLevels = $tisFile->readInt();
         }
 
-        $tisFile->seek($prevTermInfo[4] /* indexPointer */ - (($tiVersion == (int)0xFFFFFFFD)? 24 : 20) /* header size*/, SEEK_CUR);
+        $tisFile->seek($prevTermInfo[4] /* indexPointer */ - (($tiVersion == (int)0xFFFFFFFD) ? 24 : 20) /* header size*/, SEEK_CUR);
 
         $termValue    = $prevTerm[1] /* text */;
         $termFieldNum = $prevTerm[0] /* field */;
         $freqPointer = $prevTermInfo[1] /* freqPointer */;
         $proxPointer = $prevTermInfo[2] /* proxPointer */;
-        for ($count = $prevPosition*$indexInterval + 1; $count <= $termCount &&
+        for (
+            $count = $prevPosition * $indexInterval + 1; $count <= $termCount &&
              ( $this->_getFieldPosition($termFieldNum) < $searchDicField ||
               ($this->_getFieldPosition($termFieldNum) == $searchDicField &&
-               strcmp($termValue, $term->text) < 0) ); $count++) {
+               strcmp($termValue, $term->text) < 0) ); $count++
+        ) {
             $termPrefixLength = $tisFile->readVInt();
             $termSuffix       = $tisFile->readString();
             $termFieldNum     = $tisFile->readVInt();
@@ -944,17 +949,17 @@ class SegmentInfo implements TermsStreamInterface
                     return array();
                 }
 
-                if ($this->_docCount/count($filter) < self::FULL_SCAN_VS_FETCH_BOUNDARY) {
+                if ($this->_docCount / count($filter) < self::FULL_SCAN_VS_FETCH_BOUNDARY) {
                     // Perform fetching
 // ---------------------------------------------------------------
                     $updatedFilterData = array();
 
-                    for ($count=0; $count < $termInfo->docFreq; $count++) {
+                    for ($count = 0; $count < $termInfo->docFreq; $count++) {
                         $docDelta = $frqFile->readVInt();
                         if ($docDelta % 2 == 1) {
-                            $docId += ($docDelta-1)/2;
+                            $docId += ($docDelta - 1) / 2;
                         } else {
-                            $docId += $docDelta/2;
+                            $docId += $docDelta / 2;
                             // read freq
                             $frqFile->readVInt();
                         }
@@ -970,12 +975,12 @@ class SegmentInfo implements TermsStreamInterface
                     // Perform full scan
                     $updatedFilterData = array();
 
-                    for ($count=0; $count < $termInfo->docFreq; $count++) {
+                    for ($count = 0; $count < $termInfo->docFreq; $count++) {
                         $docDelta = $frqFile->readVInt();
                         if ($docDelta % 2 == 1) {
-                            $docId += ($docDelta-1)/2;
+                            $docId += ($docDelta - 1) / 2;
                         } else {
-                            $docId += $docDelta/2;
+                            $docId += $docDelta / 2;
                             // read freq
                             $frqFile->readVInt();
                         }
@@ -990,12 +995,12 @@ class SegmentInfo implements TermsStreamInterface
             } else {
                 // Filter is present, but doesn't has data for the current segment yet
                 $filterData = array();
-                for ($count=0; $count < $termInfo->docFreq; $count++) {
+                for ($count = 0; $count < $termInfo->docFreq; $count++) {
                     $docDelta = $frqFile->readVInt();
                     if ($docDelta % 2 == 1) {
-                        $docId += ($docDelta-1)/2;
+                        $docId += ($docDelta - 1) / 2;
                     } else {
-                        $docId += $docDelta/2;
+                        $docId += $docDelta / 2;
                         // read freq
                         $frqFile->readVInt();
                     }
@@ -1006,12 +1011,12 @@ class SegmentInfo implements TermsStreamInterface
                 $docsFilter->segmentFilters[$this->_name] = $filterData;
             }
         } else {
-            for ($count=0; $count < $termInfo->docFreq; $count++) {
+            for ($count = 0; $count < $termInfo->docFreq; $count++) {
                 $docDelta = $frqFile->readVInt();
                 if ($docDelta % 2 == 1) {
-                    $docId += ($docDelta-1)/2;
+                    $docId += ($docDelta - 1) / 2;
                 } else {
-                    $docId += $docDelta/2;
+                    $docId += $docDelta / 2;
                     // read freq
                     $frqFile->readVInt();
                 }
@@ -1063,7 +1068,7 @@ class SegmentInfo implements TermsStreamInterface
                 }
 
 
-                if ($this->_docCount/count($filter) < self::FULL_SCAN_VS_FETCH_BOUNDARY) {
+                if ($this->_docCount / count($filter) < self::FULL_SCAN_VS_FETCH_BOUNDARY) {
                     // Perform fetching
 // ---------------------------------------------------------------
                     $updatedFilterData = array();
@@ -1071,13 +1076,13 @@ class SegmentInfo implements TermsStreamInterface
                     for ($count = 0; $count < $termInfo->docFreq; $count++) {
                         $docDelta = $frqFile->readVInt();
                         if ($docDelta % 2 == 1) {
-                            $docId += ($docDelta-1)/2;
+                            $docId += ($docDelta - 1) / 2;
                             if (isset($filter[$docId])) {
                                 $result[$shift + $docId] = 1;
                                 $updatedFilterData[$docId] = 1; // 1 is just a some constant value, so we don't need additional var dereference here
                             }
                         } else {
-                            $docId += $docDelta/2;
+                            $docId += $docDelta / 2;
                             if (isset($filter[$docId])) {
                                 $result[$shift + $docId] = $frqFile->readVInt();
                                 $updatedFilterData[$docId] = 1; // 1 is just a some constant value, so we don't need additional var dereference here
@@ -1093,13 +1098,13 @@ class SegmentInfo implements TermsStreamInterface
                     for ($count = 0; $count < $termInfo->docFreq; $count++) {
                         $docDelta = $frqFile->readVInt();
                         if ($docDelta % 2 == 1) {
-                            $docId += ($docDelta-1)/2;
+                            $docId += ($docDelta - 1) / 2;
                             if (isset($filter[$docId])) {
                                 $result[$shift + $docId] = 1;
                                 $updatedFilterData[$docId] = 1; // 1 is just some constant value, so we don't need additional var dereference here
                             }
                         } else {
-                            $docId += $docDelta/2;
+                            $docId += $docDelta / 2;
                             if (isset($filter[$docId])) {
                                 $result[$shift + $docId] = $frqFile->readVInt();
                                 $updatedFilterData[$docId] = 1; // 1 is just some constant value, so we don't need additional var dereference here
@@ -1115,11 +1120,11 @@ class SegmentInfo implements TermsStreamInterface
                 for ($count = 0; $count < $termInfo->docFreq; $count++) {
                     $docDelta = $frqFile->readVInt();
                     if ($docDelta % 2 == 1) {
-                        $docId += ($docDelta-1)/2;
+                        $docId += ($docDelta - 1) / 2;
                         $result[$shift + $docId] = 1;
                         $filterData[$docId] = 1; // 1 is just a some constant value, so we don't need additional var dereference here
                     } else {
-                        $docId += $docDelta/2;
+                        $docId += $docDelta / 2;
                         $result[$shift + $docId] = $frqFile->readVInt();
                         $filterData[$docId] = 1; // 1 is just a some constant value, so we don't need additional var dereference here
                     }
@@ -1131,10 +1136,10 @@ class SegmentInfo implements TermsStreamInterface
             for ($count = 0; $count < $termInfo->docFreq; $count++) {
                 $docDelta = $frqFile->readVInt();
                 if ($docDelta % 2 == 1) {
-                    $docId += ($docDelta-1)/2;
+                    $docId += ($docDelta - 1) / 2;
                     $result[$shift + $docId] = 1;
                 } else {
-                    $docId += $docDelta/2;
+                    $docId += $docDelta / 2;
                     $result[$shift + $docId] = $frqFile->readVInt();
                 }
             }
@@ -1182,16 +1187,16 @@ class SegmentInfo implements TermsStreamInterface
                     return array();
                 }
 
-                if ($this->_docCount/count($filter) < self::FULL_SCAN_VS_FETCH_BOUNDARY) {
+                if ($this->_docCount / count($filter) < self::FULL_SCAN_VS_FETCH_BOUNDARY) {
                     // Perform fetching
 // ---------------------------------------------------------------
                     for ($count = 0; $count < $termInfo->docFreq; $count++) {
                         $docDelta = $frqFile->readVInt();
                         if ($docDelta % 2 == 1) {
-                            $docId += ($docDelta-1)/2;
+                            $docId += ($docDelta - 1) / 2;
                             $freqs[$docId] = 1;
                         } else {
-                            $docId += $docDelta/2;
+                            $docId += $docDelta / 2;
                             $freqs[$docId] = $frqFile->readVInt();
                         }
                     }
@@ -1225,10 +1230,10 @@ class SegmentInfo implements TermsStreamInterface
                     for ($count = 0; $count < $termInfo->docFreq; $count++) {
                         $docDelta = $frqFile->readVInt();
                         if ($docDelta % 2 == 1) {
-                            $docId += ($docDelta-1)/2;
+                            $docId += ($docDelta - 1) / 2;
                             $freqs[$docId] = 1;
                         } else {
-                            $docId += $docDelta/2;
+                            $docId += $docDelta / 2;
                             $freqs[$docId] = $frqFile->readVInt();
                         }
                     }
@@ -1262,10 +1267,10 @@ class SegmentInfo implements TermsStreamInterface
                 for ($count = 0; $count < $termInfo->docFreq; $count++) {
                     $docDelta = $frqFile->readVInt();
                     if ($docDelta % 2 == 1) {
-                        $docId += ($docDelta-1)/2;
+                        $docId += ($docDelta - 1) / 2;
                         $freqs[$docId] = 1;
                     } else {
-                        $docId += $docDelta/2;
+                        $docId += $docDelta / 2;
                         $freqs[$docId] = $frqFile->readVInt();
                     }
                 }
@@ -1294,10 +1299,10 @@ class SegmentInfo implements TermsStreamInterface
             for ($count = 0; $count < $termInfo->docFreq; $count++) {
                 $docDelta = $frqFile->readVInt();
                 if ($docDelta % 2 == 1) {
-                    $docId += ($docDelta-1)/2;
+                    $docId += ($docDelta - 1) / 2;
                     $freqs[$docId] = 1;
                 } else {
-                    $docId += $docDelta/2;
+                    $docId += $docDelta / 2;
                     $freqs[$docId] = $frqFile->readVInt();
                 }
             }
@@ -1567,13 +1572,13 @@ class SegmentInfo implements TermsStreamInterface
             $delBytes = $this->_deleted;
             $bitCount = count(bitset_to_array($delBytes));
         } else {
-            $byteCount = floor($this->_docCount/8)+1;
+            $byteCount = floor($this->_docCount / 8) + 1;
             $delBytes = str_repeat(chr(0), $byteCount);
             for ($count = 0; $count < $byteCount; $count++) {
                 $byte = 0;
                 for ($bit = 0; $bit < 8; $bit++) {
-                    if (isset($this->_deleted[$count*8 + $bit])) {
-                        $byte |= (1<<$bit);
+                    if (isset($this->_deleted[$count * 8 + $bit])) {
+                        $byte |= (1 << $bit);
                     }
                 }
                 $delBytes[$count] = chr($byte);
@@ -1767,8 +1772,10 @@ class SegmentInfo implements TermsStreamInterface
         $this->_tisFileOffset = $this->_tisFile->tell();
 
         $tiVersion = $this->_tisFile->readInt();
-        if ($tiVersion != (int)0xFFFFFFFE /* pre-2.1 format */  &&
-            $tiVersion != (int)0xFFFFFFFD /* 2.1+ format    */) {
+        if (
+            $tiVersion != (int)0xFFFFFFFE /* pre-2.1 format */  &&
+            $tiVersion != (int)0xFFFFFFFD /* 2.1+ format    */
+        ) {
             throw new InvalidFileFormatException('Wrong TermInfoFile file format');
         }
 
@@ -1864,7 +1871,7 @@ class SegmentInfo implements TermsStreamInterface
 
         // search for appropriate value in dictionary
         $lowIndex = 0;
-        $highIndex = count($this->_termDictionary)-1;
+        $highIndex = count($this->_termDictionary) - 1;
         while ($highIndex >= $lowIndex) {
             // $mid = ($highIndex - $lowIndex)/2;
             $mid = ($highIndex + $lowIndex) >> 1;
@@ -1877,9 +1884,9 @@ class SegmentInfo implements TermsStreamInterface
             }
 
             if ($delta < 0) {
-                $highIndex = $mid-1;
+                $highIndex = $mid - 1;
             } elseif ($delta > 0) {
-                $lowIndex  = $mid+1;
+                $lowIndex  = $mid + 1;
             } else {
                 // We have reached term we are looking for
                 break;
@@ -1925,7 +1932,7 @@ class SegmentInfo implements TermsStreamInterface
             $prevTermInfo[2] /* proxPointer */,
             $prevTermInfo[3] /* skipOffset */
         );
-        $this->_termCount  =  $this->_termNum - $prevPosition*$this->_indexInterval;
+        $this->_termCount  =  $this->_termNum - $prevPosition * $this->_indexInterval;
 
         if ($highIndex == 0) {
             // skip start entry
@@ -1942,10 +1949,10 @@ class SegmentInfo implements TermsStreamInterface
                 for ($count = 0; $count < $this->_lastTermInfo->docFreq; $count++) {
                     $docDelta = $this->_frqFile->readVInt();
                     if ($docDelta % 2 == 1) {
-                        $docId += ($docDelta-1)/2;
+                        $docId += ($docDelta - 1) / 2;
                         $freqs[ $docId ] = 1;
                     } else {
-                        $docId += $docDelta/2;
+                        $docId += $docDelta / 2;
                         $freqs[ $docId ] = $this->_frqFile->readVInt();
                     }
                 }
@@ -1971,8 +1978,11 @@ class SegmentInfo implements TermsStreamInterface
 
         // Search term matching specified prefix
         while ($this->_lastTerm !== null) {
-            if (strcmp($this->_lastTerm->field, $prefix->field) > 0  ||
-                 ($prefix->field == $this->_lastTerm->field  &&  strcmp($this->_lastTerm->text, $prefix->text) >= 0) ) {
+            if (
+                strcmp($this->_lastTerm->field, $prefix->field) > 0  ||
+                 ($prefix->field == $this->_lastTerm->field  &&
+                 strcmp($this->_lastTerm->text, $prefix->text) >= 0)
+            ) {
                     // Current term matches or greate than the pattern
                     return;
             }
@@ -2031,10 +2041,10 @@ class SegmentInfo implements TermsStreamInterface
             for ($count = 0; $count < $this->_lastTermInfo->docFreq; $count++) {
                 $docDelta = $this->_frqFile->readVInt();
                 if ($docDelta % 2 == 1) {
-                    $docId += ($docDelta-1)/2;
+                    $docId += ($docDelta - 1) / 2;
                     $freqs[ $docId ] = 1;
                 } else {
-                    $docId += $docDelta/2;
+                    $docId += $docDelta / 2;
                     $freqs[ $docId ] = $this->_frqFile->readVInt();
                 }
             }

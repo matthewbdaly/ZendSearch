@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Zend Framework (http://framework.zend.com/)
  *
@@ -384,8 +385,10 @@ class QueryLexer extends Lucene\AbstractFSM
             $this->_queryStringPosition++;
 
             // check,
-            if ($this->_queryStringPosition == count($this->_queryString)  ||
-                $this->_queryString[$this->_queryStringPosition] != $lexeme) {
+            if (
+                $this->_queryStringPosition == count($this->_queryString)  ||
+                $this->_queryString[$this->_queryStringPosition] != $lexeme
+            ) {
                     throw new QueryParserException('Two chars lexeme expected. ' . $this->_positionMsg());
             }
 

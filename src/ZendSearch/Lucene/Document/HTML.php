@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Zend Framework (http://framework.zend.com/)
  *
@@ -157,17 +158,21 @@ class HTML extends Document
 
         $linkNodes = $this->_doc->getElementsByTagName('a');
         foreach ($linkNodes as $linkNode) {
-            if (($href = $linkNode->getAttribute('href')) != '' &&
-                (!self::$_excludeNoFollowLinks  ||  strtolower($linkNode->getAttribute('rel')) != 'nofollow' )
-               ) {
+            if (
+                ($href = $linkNode->getAttribute('href')) != '' &&
+                (!self::$_excludeNoFollowLinks  ||
+                strtolower($linkNode->getAttribute('rel')) != 'nofollow' )
+            ) {
                 $this->_links[] = $href;
             }
         }
         $linkNodes = $this->_doc->getElementsByTagName('area');
         foreach ($linkNodes as $linkNode) {
-            if (($href = $linkNode->getAttribute('href')) != '' &&
-                (!self::$_excludeNoFollowLinks  ||  strtolower($linkNode->getAttribute('rel')) != 'nofollow' )
-               ) {
+            if (
+                ($href = $linkNode->getAttribute('href')) != '' &&
+                (!self::$_excludeNoFollowLinks  ||
+                strtolower($linkNode->getAttribute('rel')) != 'nofollow' )
+            ) {
                 $this->_links[] = $href;
             }
         }

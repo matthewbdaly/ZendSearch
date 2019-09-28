@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Zend Framework (http://framework.zend.com/)
  *
@@ -92,7 +93,7 @@ class Phrase extends AbstractQuery
         if (is_array($terms)) {
             $this->_terms = array();
             foreach ($terms as $termId => $termText) {
-                $this->_terms[$termId] = ($field !== null)? new Index\Term($termText, $field):
+                $this->_terms[$termId] = ($field !== null) ? new Index\Term($termText, $field) :
                                                             new Index\Term($termText);
             }
         } elseif ($terms === null) {
@@ -155,7 +156,7 @@ class Phrase extends AbstractQuery
      */
     public function addTerm(Index\Term $term, $position = null): void
     {
-        if ((count($this->_terms) != 0)&&(end($this->_terms)->field != $term->field)) {
+        if ((count($this->_terms) != 0) && (end($this->_terms)->field != $term->field)) {
             throw new InvalidArgumentException('All phrase terms must be in the same field: ' .
                                                    $term->field . ':' . $term->text);
         }
@@ -288,9 +289,11 @@ class Phrase extends AbstractQuery
 
         // Calculate $lowCardTermId
         foreach ($this->_terms as $termId => $term) {
-            if ($lowCardTermId === null ||
+            if (
+                $lowCardTermId === null ||
                 count($this->_termsPositions[$termId][$docId]) <
-                count($this->_termsPositions[$lowCardTermId][$docId]) ) {
+                count($this->_termsPositions[$lowCardTermId][$docId])
+            ) {
                     $lowCardTermId = $termId;
             }
         }
@@ -347,9 +350,11 @@ class Phrase extends AbstractQuery
                     }
                 } else {
                     for ($count = 0; $count < $queueSize; $count++) {
-                        if ($lastTerm !== null &&
+                        if (
+                            $lastTerm !== null &&
                             abs($termPosition - $phraseQueue[$count][$lastTerm] -
-                                 ($this->_offsets[$termId] - $this->_offsets[$lastTerm])) > $this->_slop) {
+                                 ($this->_offsets[$termId] - $this->_offsets[$lastTerm])) > $this->_slop
+                        ) {
                             continue;
                         }
 

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Zend Framework (http://framework.zend.com/)
  *
@@ -87,7 +88,7 @@ class Phrase extends AbstractQueryEntry
         $query = new \ZendSearch\Lucene\Search\Query\Preprocessing\Phrase(
             $this->_phrase,
             $encoding,
-            ($this->_field !== null)?
+            ($this->_field !== null) ?
                                                                               iconv($encoding, 'UTF-8', $this->_field) :
             null
         );

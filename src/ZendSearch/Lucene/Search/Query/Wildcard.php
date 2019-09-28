@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Zend Framework (http://framework.zend.com/)
  *
@@ -161,9 +162,11 @@ class Wildcard extends AbstractQuery
             if ($prefix != '') {
                 $index->skipTo(new Index\Term($prefix, $field));
 
-                while ($index->currentTerm() !== null          &&
+                while (
+                    $index->currentTerm() !== null          &&
                        $index->currentTerm()->field == $field  &&
-                       substr($index->currentTerm()->text, 0, $prefixLength) == $prefix) {
+                       substr($index->currentTerm()->text, 0, $prefixLength) == $prefix
+                ) {
                     if (preg_match($matchExpression, $index->currentTerm()->text) === 1) {
                         $this->_matches[] = $index->currentTerm();
 

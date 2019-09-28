@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Zend Framework (http://framework.zend.com/)
  *
@@ -230,7 +231,7 @@ abstract class AbstractFSM
     public function addRules($rules): void
     {
         foreach ($rules as $rule) {
-            $this->addrule($rule[0], $rule[1], $rule[2], isset($rule[3])?$rule[3]:null);
+            $this->addrule($rule[0], $rule[1], $rule[2], isset($rule[3]) ? $rule[3] : null);
         }
     }
 
@@ -263,7 +264,7 @@ abstract class AbstractFSM
             $this->_rules[$sourceState] = array();
         }
         if (isset($this->_rules[$sourceState][$input])) {
-            throw new Exception\RuntimeException('Rule for {state,input} pair (' . $sourceState . ', '. $input . ') is already defined.');
+            throw new Exception\RuntimeException('Rule for {state,input} pair (' . $sourceState . ', ' . $input . ') is already defined.');
         }
 
         $this->_rules[$sourceState][$input] = $targetState;
@@ -290,7 +291,7 @@ abstract class AbstractFSM
     public function addEntryAction($state, FSMAction $action): void
     {
         if (!isset($this->_states[$state])) {
-            throw new Exception\InvalidArgumentException('Undefined state (' . $state. ').');
+            throw new Exception\InvalidArgumentException('Undefined state (' . $state . ').');
         }
 
         if (!isset($this->_entryActions[$state])) {
@@ -315,7 +316,7 @@ abstract class AbstractFSM
     public function addExitAction($state, FSMAction $action): void
     {
         if (!isset($this->_states[$state])) {
-            throw new Exception\InvalidArgumentException('Undefined state (' . $state. ').');
+            throw new Exception\InvalidArgumentException('Undefined state (' . $state . ').');
         }
 
         if (!isset($this->_exitActions[$state])) {
@@ -342,10 +343,10 @@ abstract class AbstractFSM
     public function addInputAction($state, $inputSymbol, FSMAction $action): void
     {
         if (!isset($this->_states[$state])) {
-            throw new Exception\InvalidArgumentException('Undefined state (' . $state. ').');
+            throw new Exception\InvalidArgumentException('Undefined state (' . $state . ').');
         }
         if (!isset($this->_inputAphabet[$inputSymbol])) {
-            throw new Exception\InvalidArgumentException('Undefined input symbol (' . $inputSymbol. ').');
+            throw new Exception\InvalidArgumentException('Undefined input symbol (' . $inputSymbol . ').');
         }
 
         if (!isset($this->_inputActions[$state])) {
@@ -374,10 +375,10 @@ abstract class AbstractFSM
     public function addTransitionAction($sourceState, $targetState, FSMAction $action): void
     {
         if (!isset($this->_states[$sourceState])) {
-            throw new Exception\InvalidArgumentException('Undefined source state (' . $sourceState. ').');
+            throw new Exception\InvalidArgumentException('Undefined source state (' . $sourceState . ').');
         }
         if (!isset($this->_states[$targetState])) {
-            throw new Exception\InvalidArgumentException('Undefined source state (' . $targetState. ').');
+            throw new Exception\InvalidArgumentException('Undefined source state (' . $targetState . ').');
         }
 
         if (!isset($this->_transitionActions[$sourceState])) {
@@ -418,8 +419,10 @@ abstract class AbstractFSM
                 $action->doAction();
             }
         }
-        if (isset($this->_inputActions[$sourceState]) &&
-            isset($this->_inputActions[$sourceState][$input])) {
+        if (
+            isset($this->_inputActions[$sourceState]) &&
+            isset($this->_inputActions[$sourceState][$input])
+        ) {
             foreach ($this->_inputActions[$sourceState][$input] as $action) {
                 $action->doAction();
             }
@@ -428,8 +431,10 @@ abstract class AbstractFSM
 
         $this->_currentState = $targetState;
 
-        if (isset($this->_transitionActions[$sourceState]) &&
-            isset($this->_transitionActions[$sourceState][$targetState])) {
+        if (
+            isset($this->_transitionActions[$sourceState]) &&
+            isset($this->_transitionActions[$sourceState][$targetState])
+        ) {
             foreach ($this->_transitionActions[$sourceState][$targetState] as $action) {
                 $action->doAction();
             }

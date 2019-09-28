@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Zend Framework (http://framework.zend.com/)
  *
@@ -63,8 +64,10 @@ class Utf8 extends AbstractCommon
         $this->_bytePosition = 0;
 
         // convert input into UTF-8
-        if (strcasecmp($this->_encoding, 'utf8') != 0  &&
-            strcasecmp($this->_encoding, 'utf-8') != 0 ) {
+        if (
+            strcasecmp($this->_encoding, 'utf8') != 0  &&
+            strcasecmp($this->_encoding, 'utf-8') != 0
+        ) {
                 $this->_input = iconv($this->_encoding, 'UTF-8', $this->_input);
                 $this->_encoding = 'UTF-8';
         }

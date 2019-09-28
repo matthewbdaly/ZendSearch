@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Zend Framework (http://framework.zend.com/)
  *
@@ -432,7 +433,7 @@ abstract class AbstractSegmentWriter
 
         $prevDoc = 0;
         foreach ($termDocs as $docId => $termPositions) {
-            $docDelta = ($docId - $prevDoc)*2;
+            $docDelta = ($docId - $prevDoc) * 2;
             $prevDoc = $docId;
             if (count($termPositions) > 1) {
                 $this->_frqFile->writeVInt($docDelta);
@@ -485,7 +486,7 @@ abstract class AbstractSegmentWriter
 
         $this->_tiiFile->seek(4);
         // + 1 is used to count an additional special index entry (empty term at the start of the list)
-        $this->_tiiFile->writeLong(($this->_termCount - $this->_termCount % self::$indexInterval)/self::$indexInterval + 1);
+        $this->_tiiFile->writeLong(($this->_termCount - $this->_termCount % self::$indexInterval) / self::$indexInterval + 1);
     }
 
 
@@ -504,15 +505,17 @@ abstract class AbstractSegmentWriter
     protected function _dumpTermDictEntry(
         File\FileInterface $dicFile,
         &$prevTerm,
-        Index\Term     $term,
+        Index\Term $term,
         &$prevTermInfo,
         Index\TermInfo $termInfo
     ): void {
         if (isset($prevTerm) && $prevTerm->field == $term->field) {
             $matchedBytes = 0;
             $maxBytes = min(strlen($prevTerm->text), strlen($term->text));
-            while ($matchedBytes < $maxBytes  &&
-                $prevTerm->text[$matchedBytes] == $term->text[$matchedBytes]) {
+            while (
+                $matchedBytes < $maxBytes  &&
+                $prevTerm->text[$matchedBytes] == $term->text[$matchedBytes]
+            ) {
                 $matchedBytes++;
             }
 

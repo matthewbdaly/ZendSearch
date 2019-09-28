@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Zend Framework (http://framework.zend.com/)
  *
@@ -40,9 +41,11 @@ class TermsPriorityQueueTest extends \PHPUnit\Framework\TestCase
 
         $result = array();
         while (($segmentInfo = $segmentInfoQueue->pop()) !== null) {
-            if ($segmentInfoQueue->top() === null ||
+            if (
+                $segmentInfoQueue->top() === null ||
                 $segmentInfoQueue->top()->currentTerm()->key() !=
-                            $segmentInfo->currentTerm()->key()) {
+                            $segmentInfo->currentTerm()->key()
+            ) {
                 // We got new term
                 $result[] = $segmentInfo->currentTerm();
             }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Zend Framework (http://framework.zend.com/)
  *
@@ -51,7 +52,7 @@ class Boolean extends AbstractWeight
      * @param \ZendSearch\Lucene\Search\Query\AbstractQuery $query
      * @param \ZendSearch\Lucene\SearchIndexInterface    $reader
      */
-    public function __construct(Query\AbstractQuery $query, Lucene\SearchIndexInterface    $reader)
+    public function __construct(Query\AbstractQuery $query, Lucene\SearchIndexInterface $reader)
     {
         $this->_query   = $query;
         $this->_reader  = $reader;
