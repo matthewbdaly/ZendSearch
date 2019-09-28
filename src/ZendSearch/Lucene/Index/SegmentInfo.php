@@ -1463,6 +1463,8 @@ class SegmentInfo implements TermsStreamInterface
      * Checks, that document is deleted
      *
      * @param integer
+     * @param int $id
+     *
      * @return boolean
      */
     public function isDeleted($id)

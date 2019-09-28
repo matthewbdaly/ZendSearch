@@ -333,6 +333,7 @@ abstract class AbstractFSM
      * @param integer|string $state
      * @param integer|string $input
      * @param \ZendSearch\Lucene\FSMAction $action
+     * @param int|string $inputSymbol
      *
      * @throws \ZendSearch\Lucene\Exception\InvalidArgumentException
      *

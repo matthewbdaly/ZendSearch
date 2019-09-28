@@ -46,6 +46,9 @@ class StreamWriter extends AbstractSegmentWriter
         $this->_files[] = $this->_name . '.fdt';
     }
 
+    /**
+     * @param string $normVector
+     */
     public function addNorm($fieldName, $normVector): void
     {
         if (isset($this->_norms[$fieldName])) {

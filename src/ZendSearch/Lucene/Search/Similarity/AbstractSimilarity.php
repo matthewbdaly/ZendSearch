@@ -400,6 +400,8 @@ abstract class AbstractSimilarity
      * Float to byte conversion
      *
      * @param integer $b
+     * @param float $f
+     *
      * @return float
      */
     private static function _floatToByte($f)

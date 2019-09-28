@@ -107,7 +107,10 @@ class Document
      * Returns the string value of a named field in this document.
      *
      * @see __get()
+     *
      * @return string
+     *
+     * @param string $fieldName
      */
     public function getFieldValue($fieldName)
     {
@@ -118,7 +121,10 @@ class Document
      * Returns the string value of a named field in UTF-8 encoding.
      *
      * @see __get()
+     *
      * @return string
+     *
+     * @param string $fieldName
      */
     public function getFieldUtf8Value($fieldName)
     {

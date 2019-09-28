@@ -147,6 +147,7 @@ class BooleanExpressionRecognizer extends Lucene\AbstractFSM
      * Process expression literal.
      *
      * @param integer $operator
+     * @param QueryEntry\AbstractQueryEntry $literal
      *
      * @return void
      */
