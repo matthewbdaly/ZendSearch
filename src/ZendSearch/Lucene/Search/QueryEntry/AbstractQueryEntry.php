@@ -45,8 +45,10 @@ abstract class AbstractQueryEntry
      * Boost query entry
      *
      * @param float $boostFactor
+     *
+     * @return void
      */
-    public function boost($boostFactor)
+    public function boost($boostFactor): void
     {
         $this->_boost *= $boostFactor;
     }

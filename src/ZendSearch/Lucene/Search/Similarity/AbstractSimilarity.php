@@ -297,8 +297,10 @@ abstract class AbstractSimilarity
      * code.
      *
      * @param AbstractSimilarity $similarity
+     *
+     * @return void
      */
-    public static function setDefault(AbstractSimilarity $similarity)
+    public static function setDefault(AbstractSimilarity $similarity): void
     {
         self::$_defaultImpl = $similarity;
     }

@@ -268,7 +268,10 @@ class Range extends AbstractQuery
      *
      * @param \ZendSearch\Lucene\SearchIndexInterface $reader
      * @param \ZendSearch\Lucene\Index\DocsFilter|null $docsFilter
+     *
      * @throws \ZendSearch\Lucene\Exception\UnsupportedMethodCallException
+     *
+     * @return void
      */
     public function execute(Lucene\SearchIndexInterface $reader, $docsFilter = null)
     {
@@ -311,6 +314,8 @@ class Range extends AbstractQuery
      * Query specific matches highlighting
      *
      * @param Highlighter $highlighter  Highlighter object (also contains doc for highlighting)
+     *
+     * @return void
      */
     protected function _highlightMatches(Highlighter $highlighter)
     {

@@ -65,10 +65,13 @@ class StopWords implements TokenFilterInterface
      * You can call this method one or more times. New stopwords are always added to current set.
      *
      * @param string $filepath full path for text file with stopwords
+     *
      * @throws \ZendSearch\Lucene\Exception\InvalidArgumentException
      * @throws \ZendSearch\Lucene\Exception\RuntimeException
+     *
+     * @return void
      */
-    public function loadFromFile($filepath = null)
+    public function loadFromFile($filepath = null): void
     {
         if (! $filepath || ! file_exists($filepath)) {
             throw new InvalidArgumentException('You have to provide valid file path');

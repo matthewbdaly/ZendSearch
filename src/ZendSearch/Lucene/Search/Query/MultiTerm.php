@@ -277,8 +277,10 @@ class MultiTerm extends AbstractQuery
      *
      * @param integer $num
      * @param \ZendSearch\Lucene\Search\Weight\Term $weight
+     *
+     * @return void
      */
-    public function setWeight($num, $weight)
+    public function setWeight($num, $weight): void
     {
         $this->_weights[$num] = $weight;
     }
@@ -302,8 +304,10 @@ class MultiTerm extends AbstractQuery
      * (like '+something +another')
      *
      * @param \ZendSearch\Lucene\SearchIndexInterface $reader
+     *
+     * @return void
      */
-    private function _calculateConjunctionResult(Lucene\SearchIndexInterface $reader)
+    private function _calculateConjunctionResult(Lucene\SearchIndexInterface $reader): void
     {
         $this->_resVector = null;
 
@@ -350,8 +354,10 @@ class MultiTerm extends AbstractQuery
      * (like '+something -another')
      *
      * @param \ZendSearch\Lucene\SearchIndexInterface $reader
+     *
+     * @return void
      */
-    private function _calculateNonConjunctionResult(Lucene\SearchIndexInterface $reader)
+    private function _calculateNonConjunctionResult(Lucene\SearchIndexInterface $reader): void
     {
         $requiredVectors      = array();
         $requiredVectorsSizes = array();
@@ -535,6 +541,8 @@ class MultiTerm extends AbstractQuery
      *
      * @param \ZendSearch\Lucene\SearchIndexInterface $reader
      * @param \ZendSearch\Lucene\Index\DocsFilter|null $docsFilter
+     *
+     * @return void
      */
     public function execute(Lucene\SearchIndexInterface $reader, $docsFilter = null)
     {
@@ -606,6 +614,8 @@ class MultiTerm extends AbstractQuery
      * Query specific matches highlighting
      *
      * @param Highlighter $highlighter  Highlighter object (also contains doc for highlighting)
+     *
+     * @return void
      */
     protected function _highlightMatches(Highlighter $highlighter)
     {

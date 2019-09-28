@@ -81,8 +81,10 @@ class Wildcard extends AbstractQuery
      * Set minimum prefix length
      *
      * @param integer $minPrefixLength
+     *
+     * @return void
      */
-    public static function setMinPrefixLength($minPrefixLength)
+    public static function setMinPrefixLength($minPrefixLength): void
     {
         self::$_minPrefixLength = $minPrefixLength;
     }
@@ -263,7 +265,10 @@ class Wildcard extends AbstractQuery
      *
      * @param \ZendSearch\Lucene\SearchIndexInterface $reader
      * @param \ZendSearch\Lucene\Index\DocsFilter|null $docsFilter
+     *
      * @throws \ZendSearch\Lucene\Exception\UnsupportedMethodCallException
+     *
+     * @return void
      */
     public function execute(Lucene\SearchIndexInterface $reader, $docsFilter = null)
     {
@@ -304,6 +309,8 @@ class Wildcard extends AbstractQuery
      * Query specific matches highlighting
      *
      * @param Highlighter $highlighter  Highlighter object (also contains doc for highlighting)
+     *
+     * @return void
      */
     protected function _highlightMatches(Highlighter $highlighter)
     {

@@ -141,8 +141,10 @@ class Fuzzy extends AbstractQuery
      * Set default non-fuzzy prefix length
      *
      * @param integer $defaultPrefixLength
+     *
+     * @return void
      */
-    public static function setDefaultPrefixLength($defaultPrefixLength)
+    public static function setDefaultPrefixLength($defaultPrefixLength): void
     {
         self::$_defaultPrefixLength = $defaultPrefixLength;
     }
@@ -361,8 +363,11 @@ class Fuzzy extends AbstractQuery
      * It also initializes necessary internal structures
      *
      * @param \ZendSearch\Lucene\SearchIndexInterface $reader
-     * @throws \ZendSearch\Lucene\Exception\UnsupportedMethodCallException
      * @param \ZendSearch\Lucene\Index\DocsFilter|null $docsFilter
+     *
+     * @throws \ZendSearch\Lucene\Exception\UnsupportedMethodCallException
+     *
+     * @return void
      */
     public function execute(Lucene\SearchIndexInterface $reader, $docsFilter = null)
     {
@@ -405,6 +410,8 @@ class Fuzzy extends AbstractQuery
      * Query specific matches highlighting
      *
      * @param Highlighter $highlighter  Highlighter object (also contains doc for highlighting)
+     *
+     * @return void
      */
     protected function _highlightMatches(Highlighter $highlighter)
     {

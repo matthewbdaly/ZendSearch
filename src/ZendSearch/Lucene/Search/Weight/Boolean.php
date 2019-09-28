@@ -107,6 +107,8 @@ class Boolean extends AbstractWeight
      * Assigns the query normalization factor to this.
      *
      * @param float $queryNorm
+     *
+     * @return void
      */
     public function normalize($queryNorm)
     {

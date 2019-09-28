@@ -47,8 +47,10 @@ abstract class AbstractPriorityQueue
      * O(log(N)) time
      *
      * @param mixed $element
+     *
+     * @return void
      */
-    public function put($element)
+    public function put($element): void
     {
         $nodeId   = count($this->_heap);
         $parentId = ($nodeId-1) >> 1;   // floor( ($nodeId-1)/2 )
@@ -138,8 +140,10 @@ abstract class AbstractPriorityQueue
 
     /**
      * Clear queue
+     *
+     * @return void
      */
-    public function clear()
+    public function clear(): void
     {
         $this->_heap = array();
     }

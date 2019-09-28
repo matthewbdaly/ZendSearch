@@ -62,8 +62,10 @@ class Filesystem implements DirectoryInterface
      * Set default file permissions
      *
      * @param integer $mode
+     *
+     * @return void
      */
-    public static function setDefaultFilePermissions($mode)
+    public static function setDefaultFilePermissions($mode): void
     {
         self::$_defaultFilePermissions = $mode;
     }

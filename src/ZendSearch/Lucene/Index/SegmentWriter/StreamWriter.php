@@ -34,8 +34,10 @@ class StreamWriter extends AbstractSegmentWriter
 
     /**
      * Create stored fields files and open them for write
+     *
+     * @return void
      */
-    public function createStoredFieldsFiles()
+    public function createStoredFieldsFiles(): void
     {
         $this->_fdxFile = $this->_directory->createFile($this->_name . '.fdx');
         $this->_fdtFile = $this->_directory->createFile($this->_name . '.fdt');
@@ -44,7 +46,7 @@ class StreamWriter extends AbstractSegmentWriter
         $this->_files[] = $this->_name . '.fdt';
     }
 
-    public function addNorm($fieldName, $normVector)
+    public function addNorm($fieldName, $normVector): void
     {
         if (isset($this->_norms[$fieldName])) {
             $this->_norms[$fieldName] .= $normVector;

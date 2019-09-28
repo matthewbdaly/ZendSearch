@@ -106,8 +106,10 @@ class Filesystem extends AbstractFile
 
     /**
      * Close File object
+     *
+     * @return void
      */
-    public function close()
+    public function close(): void
     {
         if ($this->_fileHandle !== null) {
             ErrorHandler::start(E_WARNING);
@@ -163,8 +165,10 @@ class Filesystem extends AbstractFile
      *
      * @param string $data
      * @param integer $length
+     *
+     * @return void
      */
-    protected function _fwrite($data, $length = null)
+    protected function _fwrite($data, $length = null): void
     {
         if ($length === null) {
             fwrite($this->_fileHandle, $data);

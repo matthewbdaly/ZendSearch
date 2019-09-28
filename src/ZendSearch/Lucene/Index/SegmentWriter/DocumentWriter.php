@@ -60,9 +60,12 @@ class DocumentWriter extends AbstractSegmentWriter
      * Adds a document to this segment.
      *
      * @param \ZendSearch\Lucene\Document $document
+     *
      * @throws LuceneException\UnsupportedMethodCallException
+     *
+     * @return void
      */
-    public function addDocument(Document $document)
+    public function addDocument(Document $document): void
     {
         $storedFields = array();
         $docNorms     = array();
@@ -173,8 +176,10 @@ class DocumentWriter extends AbstractSegmentWriter
 
     /**
      * Dump Term Dictionary (.tis) and Term Dictionary Index (.tii) segment files
+     *
+     * @return void
      */
-    protected function _dumpDictionary()
+    protected function _dumpDictionary(): void
     {
         ksort($this->_termDictionary, SORT_STRING);
 

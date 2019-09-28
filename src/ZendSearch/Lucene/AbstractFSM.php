@@ -131,8 +131,10 @@ abstract class AbstractFSM
      * Add states to the state machine
      *
      * @param array $states
+     *
+     * @return void
      */
-    public function addStates($states)
+    public function addStates($states): void
     {
         foreach ($states as $state) {
             $this->addState($state);
@@ -143,8 +145,10 @@ abstract class AbstractFSM
      * Add state to the state machine
      *
      * @param integer|string $state
+     *
+     * @return void
      */
-    public function addState($state)
+    public function addState($state): void
     {
         $this->_states[$state] = $state;
 
@@ -158,9 +162,12 @@ abstract class AbstractFSM
      * No any action is invoked
      *
      * @param integer|string $state
+     *
      * @throws \ZendSearch\Lucene\Exception\InvalidArgumentException
+     *
+     * @return void
      */
-    public function setState($state)
+    public function setState($state): void
     {
         if (!isset($this->_states[$state])) {
             throw new Exception\InvalidArgumentException('State \'' . $state . '\' is not on of the possible FSM states.');
@@ -183,8 +190,10 @@ abstract class AbstractFSM
      * Add symbols to the input alphabet
      *
      * @param array $inputAphabet
+     *
+     * @return void
      */
-    public function addInputSymbols($inputAphabet)
+    public function addInputSymbols($inputAphabet): void
     {
         foreach ($inputAphabet as $inputSymbol) {
             $this->addInputSymbol($inputSymbol);
@@ -195,8 +204,10 @@ abstract class AbstractFSM
      * Add symbol to the input alphabet
      *
      * @param integer|string $inputSymbol
+     *
+     * @return void
      */
-    public function addInputSymbol($inputSymbol)
+    public function addInputSymbol($inputSymbol): void
     {
         $this->_inputAphabet[$inputSymbol] = $inputSymbol;
     }
@@ -213,8 +224,10 @@ abstract class AbstractFSM
      *      )
      *
      * @param array $rules
+     *
+     * @return void
      */
-    public function addRules($rules)
+    public function addRules($rules): void
     {
         foreach ($rules as $rule) {
             $this->addrule($rule[0], $rule[1], $rule[2], isset($rule[3])?$rule[3]:null);
@@ -228,10 +241,13 @@ abstract class AbstractFSM
      * @param integer|string $input
      * @param integer|string $targetState
      * @param \ZendSearch\Lucene\FSMAction|null $inputAction
+     *
      * @throws \ZendSearch\Lucene\Exception\InvalidArgumentException
      * @throws \ZendSearch\Lucene\Exception\RuntimeException
+     *
+     * @return void
      */
-    public function addRule($sourceState, $input, $targetState, $inputAction = null)
+    public function addRule($sourceState, $input, $targetState, $inputAction = null): void
     {
         if (!isset($this->_states[$sourceState])) {
             throw new Exception\InvalidArgumentException('Undefined source state (' . $sourceState . ').');
@@ -266,9 +282,12 @@ abstract class AbstractFSM
      *
      * @param integer|string $state
      * @param \ZendSearch\Lucene\FSMAction $action
+     *
      * @throws \ZendSearch\Lucene\Exception\InvalidArgumentException
+     *
+     * @return void
      */
-    public function addEntryAction($state, FSMAction $action)
+    public function addEntryAction($state, FSMAction $action): void
     {
         if (!isset($this->_states[$state])) {
             throw new Exception\InvalidArgumentException('Undefined state (' . $state. ').');
@@ -288,9 +307,12 @@ abstract class AbstractFSM
      *
      * @param integer|string $state
      * @param \ZendSearch\Lucene\FSMAction $action
+     *
      * @throws \ZendSearch\Lucene\Exception\InvalidArgumentException
+     *
+     * @return void
      */
-    public function addExitAction($state, FSMAction $action)
+    public function addExitAction($state, FSMAction $action): void
     {
         if (!isset($this->_states[$state])) {
             throw new Exception\InvalidArgumentException('Undefined state (' . $state. ').');
@@ -311,9 +333,12 @@ abstract class AbstractFSM
      * @param integer|string $state
      * @param integer|string $input
      * @param \ZendSearch\Lucene\FSMAction $action
+     *
      * @throws \ZendSearch\Lucene\Exception\InvalidArgumentException
+     *
+     * @return void
      */
-    public function addInputAction($state, $inputSymbol, FSMAction $action)
+    public function addInputAction($state, $inputSymbol, FSMAction $action): void
     {
         if (!isset($this->_states[$state])) {
             throw new Exception\InvalidArgumentException('Undefined state (' . $state. ').');
@@ -340,9 +365,12 @@ abstract class AbstractFSM
      * @param integer|string $sourceState
      * @param integer|string $targetState
      * @param \ZendSearch\Lucene\FSMAction $action
+     *
      * @throws \ZendSearch\Lucene\Exception\InvalidArgumentException
+     *
+     * @return void
      */
-    public function addTransitionAction($sourceState, $targetState, FSMAction $action)
+    public function addTransitionAction($sourceState, $targetState, FSMAction $action): void
     {
         if (!isset($this->_states[$sourceState])) {
             throw new Exception\InvalidArgumentException('Undefined source state (' . $sourceState. ').');
@@ -366,10 +394,13 @@ abstract class AbstractFSM
      * Process an input
      *
      * @param mixed $input
+     *
      * @throws \ZendSearch\Lucene\Exception\RuntimeException
      * @throws \ZendSearch\Lucene\Exception\InvalidArgumentException
+     *
+     * @return void
      */
-    public function process($input)
+    public function process($input): void
     {
         if (!isset($this->_rules[$this->_currentState])) {
             throw new Exception\RuntimeException('There is no any rule for current state (' . $this->_currentState . ').');
@@ -411,8 +442,10 @@ abstract class AbstractFSM
 
     /**
      * @throws \ZendSearch\Lucene\Exception\RuntimeException
+     *
+     * @return void
      */
-    public function reset()
+    public function reset(): void
     {
         if (count($this->_states) == 0) {
             throw new Exception\RuntimeException('There is no any state defined for FSM.');

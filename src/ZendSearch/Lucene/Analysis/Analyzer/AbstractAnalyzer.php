@@ -61,6 +61,8 @@ abstract class AbstractAnalyzer implements LuceneAnalyzer
      * Set input
      *
      * @param string $data
+     *
+     * @return void
      */
     public function setInput($data, $encoding = '')
     {

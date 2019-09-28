@@ -153,8 +153,10 @@ class Writer
      * @param \ZendSearch\Lucene\Storage\Directory\DirectoryInterface $directory
      * @param integer $generation
      * @param integer $nameCount
+     *
+     * @return void
      */
-    public static function createIndex(Directory\DirectoryInterface $directory, $generation, $nameCount)
+    public static function createIndex(Directory\DirectoryInterface $directory, $generation, $nameCount): void
     {
         if ($generation == 0) {
             // Create index in pre-2.1 mode
@@ -221,8 +223,10 @@ class Writer
      * Adds a document to this index.
      *
      * @param \ZendSearch\Lucene\Document $document
+     *
+     * @return void
      */
-    public function addDocument(Document $document)
+    public function addDocument(Document $document): void
     {
         if ($this->_currentSegment === null) {
             $this->_currentSegment =
@@ -286,8 +290,10 @@ class Writer
 
     /**
      * Merge segments if necessary
+     *
+     * @return void
      */
-    private function _maybeMergeSegments()
+    private function _maybeMergeSegments(): void
     {
         if (Lucene\LockManager::obtainOptimizationLock($this->_directory) === false) {
             return;
@@ -355,8 +361,10 @@ class Writer
      * $segments is an array of SegmentInfo objects
      *
      * @param array $segments
+     *
+     * @return void
      */
-    private function _mergeSegments($segments)
+    private function _mergeSegments($segments): void
     {
         $newName = $this->_newSegmentName();
 
@@ -382,8 +390,10 @@ class Writer
      *
      * @throws \ZendSearch\Lucene\Exception\RuntimeException
      * @throws \ZendSearch\Lucene\Exception\InvalidFileFormatException
+     *
+     * @return void
      */
-    private function _updateSegments()
+    private function _updateSegments(): void
     {
         // Get an exclusive index lock
         Lucene\LockManager::obtainWriteLock($this->_directory);
@@ -747,8 +757,10 @@ class Writer
 
     /**
      * Commit current changes
+     *
+     * @return void
      */
-    public function commit()
+    public function commit(): void
     {
         if ($this->_currentSegment !== null) {
             $newSegment = $this->_currentSegment->close();

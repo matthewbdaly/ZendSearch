@@ -83,8 +83,10 @@ class Lucene
      * Default value is null
      *
      * @param string $fieldName
+     *
+     * @return void
      */
-    public static function setDefaultSearchField($fieldName)
+    public static function setDefaultSearchField($fieldName): void
     {
         self::$_defaultSearchField = $fieldName;
     }
@@ -107,8 +109,10 @@ class Lucene
      * 0 (default) means no limit
      *
      * @param integer $limit
+     *
+     * @return void
      */
-    public static function setResultSetLimit($limit)
+    public static function setResultSetLimit($limit): void
     {
         self::$_resultSetLimit = $limit;
     }
@@ -131,8 +135,10 @@ class Lucene
      * 0 means no limit
      *
      * @param integer $limit
+     *
+     * @return void
      */
-    public static function setTermsPerQueryLimit($limit)
+    public static function setTermsPerQueryLimit($limit): void
     {
         self::$_termsPerQueryLimit = $limit;
     }

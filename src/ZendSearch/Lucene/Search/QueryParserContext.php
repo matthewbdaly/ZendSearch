@@ -114,8 +114,10 @@ class QueryParserContext
      * Set field for next entry
      *
      * @param string $field
+     *
+     * @return void
      */
-    public function setNextEntryField($field)
+    public function setNextEntryField($field): void
     {
         $this->_nextEntryField = $field;
     }
@@ -125,10 +127,13 @@ class QueryParserContext
      * Set sign for next entry
      *
      * @param integer $sign
+     *
      * @throws \ZendSearch\Lucene\Search\Exception\QueryParserException
      * @throws \ZendSearch\Lucene\Exception\UnexpectedValueException
+     *
+     * @return void
      */
-    public function setNextEntrySign($sign)
+    public function setNextEntrySign($sign): void
     {
         if ($this->_mode === self::GM_BOOLEAN) {
             throw new QueryParserException('It\'s not allowed to mix boolean and signs styles in the same subquery.');
@@ -150,8 +155,10 @@ class QueryParserContext
      * Add entry to a query
      *
      * @param \ZendSearch\Lucene\Search\QueryEntry\AbstractQueryEntry $entry
+     *
+     * @return void
      */
-    public function addEntry(QueryEntry\AbstractQueryEntry $entry)
+    public function addEntry(QueryEntry\AbstractQueryEntry $entry): void
     {
         if ($this->_mode !== self::GM_BOOLEAN) {
             $this->_signs[] = $this->_nextEntrySign;
@@ -168,8 +175,10 @@ class QueryParserContext
      * Process fuzzy search or proximity search modifier
      *
      * @throws \ZendSearch\Lucene\Search\Exception\QueryParserException
+     *
+     * @return void
      */
-    public function processFuzzyProximityModifier($parameter = null)
+    public function processFuzzyProximityModifier($parameter = null): void
     {
         // Check, that modifier has came just after word or phrase
         if ($this->_nextEntryField !== null  ||  $this->_nextEntrySign !== null) {
@@ -192,9 +201,12 @@ class QueryParserContext
      * Set boost factor to the entry
      *
      * @param float $boostFactor
+     *
      * @throws \ZendSearch\Lucene\Search\Exception\QueryParserException
+     *
+     * @return void
      */
-    public function boost($boostFactor)
+    public function boost($boostFactor): void
     {
         // Check, that modifier has came just after word or phrase
         if ($this->_nextEntryField !== null  ||  $this->_nextEntrySign !== null) {
@@ -217,9 +229,12 @@ class QueryParserContext
      * Process logical operator
      *
      * @param integer $operator
+     *
      * @throws \ZendSearch\Lucene\Search\Exception\QueryParserException
+     *
+     * @return void
      */
-    public function addLogicalOperator($operator)
+    public function addLogicalOperator($operator): void
     {
         if ($this->_mode === self::GM_SIGNS) {
             throw new QueryParserException('It\'s not allowed to mix boolean and signs styles in the same subquery.');

@@ -49,8 +49,10 @@ class LockManager
      * Release exclusive write lock
      *
      * @param \ZendSearch\Lucene\Storage\Directory $lockDirectory
+     *
+     * @return void
      */
-    public static function releaseWriteLock(Directory $lockDirectory)
+    public static function releaseWriteLock(Directory $lockDirectory): void
     {
         $lock = $lockDirectory->getFileObject(self::WRITE_LOCK_FILE);
         $lock->unlock();
@@ -96,8 +98,10 @@ class LockManager
      * on GFS (and potentially other) mounted filesystems.
      *
      * @param \ZendSearch\Lucene\Storage\Directory $lockDirectory
+     *
+     * @return void
      */
-    private static function _stopReadLockProcessing(Directory $lockDirectory)
+    private static function _stopReadLockProcessing(Directory $lockDirectory): void
     {
         $lock = $lockDirectory->getFileObject(self::READ_LOCK_PROCESSING_LOCK_FILE);
         $lock->unlock();
@@ -126,8 +130,10 @@ class LockManager
      * Release shared read lock
      *
      * @param \ZendSearch\Lucene\Storage\Directory $lockDirectory
+     *
+     * @return void
      */
-    public static function releaseReadLock(Directory $lockDirectory)
+    public static function releaseReadLock(Directory $lockDirectory): void
     {
         $lock = $lockDirectory->getFileObject(self::READ_LOCK_FILE);
         $lock->unlock();
@@ -181,8 +187,10 @@ class LockManager
      * De-escalate Read lock to shared level
      *
      * @param \ZendSearch\Lucene\Storage\Directory $lockDirectory
+     *
+     * @return void
      */
-    public static function deEscalateReadLock(Directory $lockDirectory)
+    public static function deEscalateReadLock(Directory $lockDirectory): void
     {
         $lock = $lockDirectory->getFileObject(self::READ_LOCK_FILE);
         $lock->lock(LOCK_SH);
@@ -209,8 +217,10 @@ class LockManager
      * Release exclusive optimization lock
      *
      * @param \ZendSearch\Lucene\Storage\Directory $lockDirectory
+     *
+     * @return void
      */
-    public static function releaseOptimizationLock(Directory $lockDirectory)
+    public static function releaseOptimizationLock(Directory $lockDirectory): void
     {
         $lock = $lockDirectory->getFileObject(self::OPTIMIZATION_LOCK_FILE);
         $lock->unlock();

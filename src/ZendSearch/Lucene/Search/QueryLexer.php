@@ -371,8 +371,10 @@ class QueryLexer extends Lucene\AbstractFSM
      * Add query syntax lexeme
      *
      * @throws \ZendSearch\Lucene\Search\Exception\QueryParserException
+     *
+     * @return void
      */
-    public function addQuerySyntaxLexeme()
+    public function addQuerySyntaxLexeme(): void
     {
         $lexeme = $this->_queryString[$this->_queryStringPosition];
 
@@ -412,8 +414,10 @@ class QueryLexer extends Lucene\AbstractFSM
 
     /**
      * Add lexeme modifier
+     *
+     * @return void
      */
-    public function addLexemeModifier()
+    public function addLexemeModifier(): void
     {
         $this->_lexemes[] = new QueryToken(
             QueryToken::TC_SYNTAX_ELEMENT,
@@ -425,8 +429,10 @@ class QueryLexer extends Lucene\AbstractFSM
 
     /**
      * Add lexeme
+     *
+     * @return void
      */
-    public function addLexeme()
+    public function addLexeme(): void
     {
         $this->_lexemes[] = new QueryToken(
             QueryToken::TC_WORD,
@@ -439,8 +445,10 @@ class QueryLexer extends Lucene\AbstractFSM
 
     /**
      * Add quoted lexeme
+     *
+     * @return void
      */
-    public function addQuotedLexeme()
+    public function addQuotedLexeme(): void
     {
         $this->_lexemes[] = new QueryToken(
             QueryToken::TC_PHRASE,
@@ -453,8 +461,10 @@ class QueryLexer extends Lucene\AbstractFSM
 
     /**
      * Add number lexeme
+     *
+     * @return void
      */
-    public function addNumberLexeme()
+    public function addNumberLexeme(): void
     {
         $this->_lexemes[] = new QueryToken(
             QueryToken::TC_NUMBER,
@@ -466,8 +476,10 @@ class QueryLexer extends Lucene\AbstractFSM
 
     /**
      * Extend lexeme by one char
+     *
+     * @return void
      */
-    public function addLexemeChar()
+    public function addLexemeChar(): void
     {
         $this->_currentLexeme .= $this->_queryString[$this->_queryStringPosition];
     }
@@ -487,15 +499,15 @@ class QueryLexer extends Lucene\AbstractFSM
     /*********************************************************************
      * Syntax errors actions
      *********************************************************************/
-    public function lexModifierErrException()
+    public function lexModifierErrException(): void
     {
         throw new QueryParserException('Lexeme modifier character can be followed only by number, white space or query syntax element. ' . $this->_positionMsg());
     }
-    public function quoteWithinLexemeErrException()
+    public function quoteWithinLexemeErrException(): void
     {
         throw new QueryParserException('Quote within lexeme must be escaped by \'\\\' char. ' . $this->_positionMsg());
     }
-    public function wrongNumberErrException()
+    public function wrongNumberErrException(): void
     {
         throw new QueryParserException('Wrong number syntax.' . $this->_positionMsg());
     }

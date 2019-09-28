@@ -186,8 +186,10 @@ class HTML extends Document
      * Set exclude nofollow links flag
      *
      * @param boolean $newValue
+     *
+     * @return void
      */
-    public static function setExcludeNoFollowLinks($newValue)
+    public static function setExcludeNoFollowLinks($newValue): void
     {
         self::$_excludeNoFollowLinks = $newValue;
     }
@@ -209,8 +211,10 @@ class HTML extends Document
      *
      * @param \DOMNode $node
      * @param string &$text
+     *
+     * @return void
      */
-    private function _retrieveNodeText(\DOMNode $node, &$text)
+    private function _retrieveNodeText(\DOMNode $node, &$text): void
     {
         if ($node->nodeType == XML_TEXT_NODE) {
             $text .= $node->nodeValue;
@@ -278,9 +282,12 @@ class HTML extends Document
      * @param array   $wordsToHighlight
      * @param callback $callback   Callback method, used to transform (highlighting) text.
      * @param array    $params     Array of additionall callback parameters (first non-optional parameter is a text to transform)
+     *
      * @throws \ZendSearch\Lucene\Exception\RuntimeException
+     *
+     * @return void
      */
-    protected function _highlightTextNode(\DOMText $node, $wordsToHighlight, $callback, $params)
+    protected function _highlightTextNode(\DOMText $node, $wordsToHighlight, $callback, $params): void
     {
         $analyzer = Analyzer\Analyzer::getDefault();
         $analyzer->setInput($node->nodeValue, 'UTF-8');
@@ -346,8 +353,10 @@ class HTML extends Document
      * @param array $wordsToHighlight
      * @param callback $callback   Callback method, used to transform (highlighting) text.
      * @param array    $params     Array of additionall callback parameters (first non-optional parameter is a text to transform)
+     *
+     * @return void
      */
-    protected function _highlightNodeRecursive(\DOMNode $contextNode, $wordsToHighlight, $callback, $params)
+    protected function _highlightNodeRecursive(\DOMNode $contextNode, $wordsToHighlight, $callback, $params): void
     {
         $textNodes = array();
 

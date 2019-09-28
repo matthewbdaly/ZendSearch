@@ -80,8 +80,10 @@ class SegmentMerger
      * Add segmnet to a collection of segments to be merged
      *
      * @param \ZendSearch\Lucene\Index\SegmentInfo $segment
+     *
+     * @return void
      */
-    public function addSource(SegmentInfo $segmentInfo)
+    public function addSource(SegmentInfo $segmentInfo): void
     {
         $this->_segmentInfos[$segmentInfo->getName()] = $segmentInfo;
     }
@@ -120,8 +122,10 @@ class SegmentMerger
 
     /**
      * Merge fields information
+     *
+     * @return void
      */
-    private function _mergeFields()
+    private function _mergeFields(): void
     {
         foreach ($this->_segmentInfos as $segName => $segmentInfo) {
             foreach ($segmentInfo->getFieldInfos() as $fieldInfo) {
@@ -132,8 +136,10 @@ class SegmentMerger
 
     /**
      * Merge field's normalization factors
+     *
+     * @return void
      */
-    private function _mergeNorms()
+    private function _mergeNorms(): void
     {
         foreach ($this->_writer->getFieldInfos() as $fieldInfo) {
             if ($fieldInfo->isIndexed) {
@@ -158,8 +164,10 @@ class SegmentMerger
 
     /**
      * Merge fields information
+     *
+     * @return void
      */
-    private function _mergeStoredFields()
+    private function _mergeStoredFields(): void
     {
         $this->_docCount = 0;
 
@@ -210,8 +218,10 @@ class SegmentMerger
 
     /**
      * Merge fields information
+     *
+     * @return void
      */
-    private function _mergeTerms()
+    private function _mergeTerms(): void
     {
         $segmentInfoQueue = new TermsPriorityQueue();
 

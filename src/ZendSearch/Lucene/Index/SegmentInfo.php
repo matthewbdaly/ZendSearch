@@ -731,7 +731,7 @@ class SegmentInfo implements TermsStreamInterface
      */
     private $_termInfoCache = array();
 
-    private function _cleanUpTermInfoCache()
+    private function _cleanUpTermInfoCache(): void
     {
         // Clean 256 term infos
         foreach ($this->_termInfoCache as $key => $termInfo) {
@@ -748,8 +748,10 @@ class SegmentInfo implements TermsStreamInterface
      * Load terms dictionary index
      *
      * @throws \ZendSearch\Lucene\Exception\ExceptionInterface
+     *
+     * @return void
      */
-    private function _loadDictionaryIndex()
+    private function _loadDictionaryIndex(): void
     {
         // Check, if index is already serialized
         if ($this->_directory->fileExists($this->_name . '.sti')) {
@@ -1323,9 +1325,12 @@ class SegmentInfo implements TermsStreamInterface
      * Load normalizatin factors from an index file
      *
      * @param integer $fieldNum
+     *
      * @throws \ZendSearch\Lucene\Exception\InvalidFileFormatException
+     *
+     * @return void
      */
-    private function _loadNorm($fieldNum)
+    private function _loadNorm($fieldNum): void
     {
         if ($this->_hasSingleNormFile) {
             $normfFile = $this->openCompoundFile('.nrm');
@@ -1433,8 +1438,10 @@ class SegmentInfo implements TermsStreamInterface
      * $id is an internal document id
      *
      * @param integer
+     *
+     * @return void
      */
-    public function delete($id)
+    public function delete($id): void
     {
         $this->_deletedDirty = true;
 
@@ -1510,10 +1517,13 @@ class SegmentInfo implements TermsStreamInterface
      * This method must be invoked only from the Writer _updateSegments() method,
      * so index Write lock has to be already obtained.
      *
-     * @internal
+     * @internal 
+     *
      * @throws ZendSearch\Lucene\Exception\RuntimeException
+     *
+     * @return void
      */
-    public function writeChanges()
+    public function writeChanges(): void
     {
         // Get new generation number
         $latestDelGen = $this->_detectLatestDelGen();
@@ -1822,6 +1832,8 @@ class SegmentInfo implements TermsStreamInterface
      * Prefix contains fully specified field info and portion of searched term
      *
      * @param \ZendSearch\Lucene\Index\Term $prefix
+     *
+     * @return void
      */
     public function skipTo(Term $prefix)
     {
@@ -2055,6 +2067,8 @@ class SegmentInfo implements TermsStreamInterface
      * Close terms stream
      *
      * Should be used for resources clean up if stream is not read up to the end
+     *
+     * @return void
      */
     public function closeTermsStream()
     {

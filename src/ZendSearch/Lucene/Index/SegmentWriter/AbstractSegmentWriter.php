@@ -207,8 +207,10 @@ abstract class AbstractSegmentWriter
      * Add stored fields information
      *
      * @param array $storedFields array of \ZendSearch\Lucene\Document\Field objects
+     *
+     * @return void
      */
-    public function addStoredFields($storedFields)
+    public function addStoredFields($storedFields): void
     {
         if (!isset($this->_fdxFile)) {
             $this->_fdxFile = $this->_directory->createFile($this->_name . '.fdx');
@@ -259,8 +261,10 @@ abstract class AbstractSegmentWriter
 
     /**
      * Dump Field Info (.fnm) segment file
+     *
+     * @return void
      */
-    protected function _dumpFNM()
+    protected function _dumpFNM(): void
     {
         $fnmFile = $this->_directory->createFile($this->_name . '.fnm');
         $fnmFile->writeVInt(count($this->_fields));
@@ -366,8 +370,10 @@ abstract class AbstractSegmentWriter
 
     /**
      * Create dicrionary, frequency and positions files and write necessary headers
+     *
+     * @return void
      */
-    public function initializeDictionaryFiles()
+    public function initializeDictionaryFiles(): void
     {
         $this->_tisFile = $this->_directory->createFile($this->_name . '.tis');
         $this->_tisFile->writeInt((int)0xFFFFFFFD);
@@ -416,8 +422,10 @@ abstract class AbstractSegmentWriter
      *
      * @param \ZendSearch\Lucene\Index\Term $termEntry
      * @param array $termDocs
+     *
+     * @return void
      */
-    public function addTerm($termEntry, $termDocs)
+    public function addTerm($termEntry, $termDocs): void
     {
         $freqPointer = $this->_frqFile->tell();
         $proxPointer = $this->_prxFile->tell();
@@ -467,8 +475,10 @@ abstract class AbstractSegmentWriter
 
     /**
      * Close dictionary
+     *
+     * @return void
      */
-    public function closeDictionaryFiles()
+    public function closeDictionaryFiles(): void
     {
         $this->_tisFile->seek(4);
         $this->_tisFile->writeLong($this->_termCount);
@@ -488,6 +498,8 @@ abstract class AbstractSegmentWriter
      * @param \ZendSearch\Lucene\Index\Term $term
      * @param \ZendSearch\Lucene\Index\TermInfo $prevTermInfo
      * @param \ZendSearch\Lucene\Index\TermInfo $termInfo
+     *
+     * @return void
      */
     protected function _dumpTermDictEntry(
         File\FileInterface $dicFile,
@@ -495,7 +507,7 @@ abstract class AbstractSegmentWriter
         Index\Term     $term,
         &$prevTermInfo,
         Index\TermInfo $termInfo
-    ) {
+    ): void {
         if (isset($prevTerm) && $prevTerm->field == $term->field) {
             $matchedBytes = 0;
             $maxBytes = min(strlen($prevTerm->text), strlen($term->text));
@@ -568,8 +580,10 @@ abstract class AbstractSegmentWriter
 
     /**
      * Generate compound index file
+     *
+     * @return void
      */
-    protected function _generateCFS()
+    protected function _generateCFS(): void
     {
         $cfsFile = $this->_directory->createFile($this->_name . '.cfs');
         $cfsFile->writeVInt(count($this->_files));

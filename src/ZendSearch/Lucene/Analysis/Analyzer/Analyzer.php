@@ -32,8 +32,10 @@ class Analyzer
      * Set the default AnalyzerInterface implementation used by indexing code.
      *
      * @param \ZendSearch\Lucene\Analysis\Analyzer\AnalyzerInterface $analyzer
+     *
+     * @return void
      */
-    public static function setDefault(LuceneAnalyzer $analyzer)
+    public static function setDefault(LuceneAnalyzer $analyzer): void
     {
         self::$_defaultImpl = $analyzer;
     }

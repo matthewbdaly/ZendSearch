@@ -53,8 +53,10 @@ class MultiSearcher implements SearchIndexInterface
      * Add index for searching.
      *
      * @param \ZendSearch\Lucene\SearchIndexInterface $index
+     *
+     * @return void
      */
-    public function addIndex(SearchIndexInterface $index)
+    public function addIndex(SearchIndexInterface $index): void
     {
         $this->_indices[] = $index;
     }
@@ -103,6 +105,8 @@ class MultiSearcher implements SearchIndexInterface
      * Index is converted to this format at the nearest upfdate time
      *
      * @param int $formatVersion
+     *
+     * @return void
      */
     public function setFormatVersion($formatVersion)
     {
@@ -225,6 +229,8 @@ class MultiSearcher implements SearchIndexInterface
      * Default value is 10
      *
      * @param integer $maxBufferedDocs
+     *
+     * @return void
      */
     public function setMaxBufferedDocs($maxBufferedDocs)
     {
@@ -274,6 +280,8 @@ class MultiSearcher implements SearchIndexInterface
      * Default value is PHP_INT_MAX
      *
      * @param integer $maxMergeDocs
+     *
+     * @return void
      */
     public function setMaxMergeDocs($maxMergeDocs)
     {
@@ -333,6 +341,8 @@ class MultiSearcher implements SearchIndexInterface
      * Default value is 10
      *
      * @param integer $maxMergeDocs
+     *
+     * @return void
      */
     public function setMergeFactor($mergeFactor)
     {
@@ -646,7 +656,10 @@ class MultiSearcher implements SearchIndexInterface
      * $id is an internal document id
      *
      * @param integer|\ZendSearch\Lucene\Search\QueryHit $id
+     *
      * @throws \ZendSearch\Lucene\Exception\OutOfRangeException
+     *
+     * @return void
      */
     public function delete($id)
     {
@@ -681,9 +694,12 @@ class MultiSearcher implements SearchIndexInterface
      * Set callback for choosing target index.
      *
      * @param callback $callback
+     *
      * @throws \ZendSearch\Lucene\Exception\InvalidArgumentException
+     *
+     * @return void
      */
-    public function setDocumentDistributorCallback($callback)
+    public function setDocumentDistributorCallback($callback): void
     {
         if ($callback !== null  &&  !is_callable($callback)) {
             throw new InvalidArgumentException('$callback parameter must be a valid callback.');
@@ -706,6 +722,8 @@ class MultiSearcher implements SearchIndexInterface
      * Adds a document to this index.
      *
      * @param \ZendSearch\Lucene\Document $document
+     *
+     * @return void
      */
     public function addDocument(Document $document)
     {
@@ -720,6 +738,8 @@ class MultiSearcher implements SearchIndexInterface
 
     /**
      * Commit changes resulting from delete() or undeleteAll() operations.
+     *
+     * @return void
      */
     public function commit()
     {
@@ -732,6 +752,8 @@ class MultiSearcher implements SearchIndexInterface
      * Optimize index.
      *
      * Merges all segments into one
+     *
+     * @return void
      */
     public function optimize()
     {
@@ -766,6 +788,8 @@ class MultiSearcher implements SearchIndexInterface
 
     /**
      * Reset terms stream.
+     *
+     * @return void
      */
     public function resetTermsStream()
     {
@@ -782,6 +806,8 @@ class MultiSearcher implements SearchIndexInterface
      * Prefix contains fully specified field info and portion of searched term
      *
      * @param \ZendSearch\Lucene\Index\Term $prefix
+     *
+     * @return void
      */
     public function skipTo(Index\Term $prefix)
     {
@@ -812,6 +838,8 @@ class MultiSearcher implements SearchIndexInterface
      * Close terms stream
      *
      * Should be used for resources clean up if stream is not read up to the end
+     *
+     * @return void
      */
     public function closeTermsStream()
     {
@@ -822,6 +850,8 @@ class MultiSearcher implements SearchIndexInterface
 
     /**
      * Undeletes all documents currently marked as deleted in this index.
+     *
+     * @return void
      */
     public function undeleteAll()
     {

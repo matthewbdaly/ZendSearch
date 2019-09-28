@@ -52,8 +52,10 @@ abstract class AbstractQuery
      * Sets the boost for this query clause to $boost.
      *
      * @param float $boost
+     *
+     * @return void
      */
-    public function setBoost($boost)
+    public function setBoost($boost): void
     {
         $this->_boost = $boost;
     }
@@ -133,8 +135,10 @@ abstract class AbstractQuery
     /**
      * Reset query, so it can be reused within other queries or
      * with other indeces
+     *
+     * @return void
      */
-    public function reset()
+    public function reset(): void
     {
         $this->_weight = null;
     }

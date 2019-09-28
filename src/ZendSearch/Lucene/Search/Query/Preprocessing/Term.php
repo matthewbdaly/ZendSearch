@@ -222,6 +222,8 @@ class Term extends AbstractPreprocessing
      * Query specific matches highlighting
      *
      * @param Highlighter $highlighter  Highlighter object (also contains doc for highlighting)
+     *
+     * @return void
      */
     protected function _highlightMatches(Highlighter $highlighter)
     {

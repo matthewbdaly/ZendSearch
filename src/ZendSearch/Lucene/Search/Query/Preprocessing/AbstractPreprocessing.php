@@ -66,7 +66,10 @@ abstract class AbstractPreprocessing extends Query\AbstractQuery
      *
      * @param \ZendSearch\Lucene\SearchIndexInterface $reader
      * @param \ZendSearch\Lucene\Index\DocsFilter|null $docsFilter
+     *
      * @throws \ZendSearch\Lucene\Exception\UnsupportedMethodCallException
+     *
+     * @return void
      */
     public function execute(Lucene\SearchIndexInterface $reader, $docsFilter = null)
     {

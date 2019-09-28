@@ -63,6 +63,8 @@ class Term extends AbstractQueryEntry
      * Process modifier ('~')
      *
      * @param mixed $parameter
+     *
+     * @return void
      */
     public function processFuzzyProximityModifier($parameter = null)
     {

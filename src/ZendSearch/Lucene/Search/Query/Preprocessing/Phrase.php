@@ -87,8 +87,10 @@ class Phrase extends AbstractPreprocessing
      * Set slop
      *
      * @param integer $slop
+     *
+     * @return void
      */
-    public function setSlop($slop)
+    public function setSlop($slop): void
     {
         $this->_slop = $slop;
     }
@@ -192,6 +194,8 @@ class Phrase extends AbstractPreprocessing
      * Query specific matches highlighting
      *
      * @param Highlighter $highlighter  Highlighter object (also contains doc for highlighting)
+     *
+     * @return void
      */
     protected function _highlightMatches(Highlighter $highlighter)
     {

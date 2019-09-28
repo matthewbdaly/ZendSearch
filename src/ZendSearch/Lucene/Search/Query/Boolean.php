@@ -459,8 +459,10 @@ class Boolean extends AbstractQuery
     /**
      * Calculate result vector for Conjunction query
      * (like '<subquery1> AND <subquery2> AND <subquery3>')
+     *
+     * @return void
      */
-    private function _calculateConjunctionResult()
+    private function _calculateConjunctionResult(): void
     {
         $this->_resVector = null;
 
@@ -519,8 +521,10 @@ class Boolean extends AbstractQuery
     /**
      * Calculate result vector for non Conjunction query
      * (like '<subquery1> AND <subquery2> AND NOT <subquery3> OR <subquery4>')
+     *
+     * @return void
      */
-    private function _calculateNonConjunctionResult()
+    private function _calculateNonConjunctionResult(): void
     {
         $requiredVectors      = array();
         $requiredVectorsSizes = array();
@@ -679,6 +683,8 @@ class Boolean extends AbstractQuery
      *
      * @param \ZendSearch\Lucene\SearchIndexInterface $reader
      * @param \ZendSearch\Lucene\Index\DocsFilter|null $docsFilter
+     *
+     * @return void
      */
     public function execute(Lucene\SearchIndexInterface $reader, $docsFilter = null)
     {
@@ -762,6 +768,8 @@ class Boolean extends AbstractQuery
      * Query specific matches highlighting
      *
      * @param Highlighter $highlighter  Highlighter object (also contains doc for highlighting)
+     *
+     * @return void
      */
     protected function _highlightMatches(Highlighter $highlighter)
     {

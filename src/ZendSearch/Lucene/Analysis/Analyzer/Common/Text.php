@@ -28,6 +28,8 @@ class Text extends AbstractCommon
 
     /**
      * Reset token stream
+     *
+     * @return void
      */
     public function reset()
     {

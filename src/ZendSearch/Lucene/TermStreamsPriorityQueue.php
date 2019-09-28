@@ -53,6 +53,8 @@ class TermStreamsPriorityQueue implements Index\TermsStreamInterface
 
     /**
      * Reset terms stream.
+     *
+     * @return void
      */
     public function resetTermsStream()
     {
@@ -76,6 +78,8 @@ class TermStreamsPriorityQueue implements Index\TermsStreamInterface
      * Prefix contains fully specified field info and portion of searched term
      *
      * @param \ZendSearch\Lucene\Index\Term $prefix
+     *
+     * @return void
      */
     public function skipTo(Index\Term $prefix)
     {
@@ -144,6 +148,8 @@ class TermStreamsPriorityQueue implements Index\TermsStreamInterface
      * Close terms stream
      *
      * Should be used for resources clean up if stream is not read up to the end
+     *
+     * @return void
      */
     public function closeTermsStream()
     {

@@ -85,8 +85,10 @@ class Token
      * positionIncrement setter
      *
      * @param integer $positionIncrement
+     *
+     * @return void
      */
-    public function setPositionIncrement($positionIncrement)
+    public function setPositionIncrement($positionIncrement): void
     {
         $this->_positionIncrement = $positionIncrement;
     }

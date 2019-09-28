@@ -50,6 +50,8 @@ class DefaultHighlighter implements HighlighterInterface
      * Set document for highlighting.
      *
      * @param \ZendSearch\Lucene\Document\HTML $document
+     *
+     * @return void
      */
     public function setDocument(Document\HTML $document)
     {
@@ -70,6 +72,8 @@ class DefaultHighlighter implements HighlighterInterface
      * Highlight specified words
      *
      * @param string|array $words  Words to highlight. They could be organized using the array or string.
+     *
+     * @return void
      */
     public function highlight($words)
     {

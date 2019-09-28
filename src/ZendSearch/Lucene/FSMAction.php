@@ -45,7 +45,7 @@ class FSMAction
         $this->_method = $method;
     }
 
-    public function doAction()
+    public function doAction(): void
     {
         $methodName = $this->_method;
         $this->_object->$methodName();

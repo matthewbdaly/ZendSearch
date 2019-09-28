@@ -121,8 +121,10 @@ class Phrase extends AbstractQuery
      * Set slop
      *
      * @param integer $slop
+     *
+     * @return void
      */
-    public function setSlop($slop)
+    public function setSlop($slop): void
     {
         $this->_slop = $slop;
     }
@@ -146,9 +148,12 @@ class Phrase extends AbstractQuery
      *
      * @param \ZendSearch\Lucene\Index\Term $term
      * @param integer $position
+     *
      * @throws \ZendSearch\Lucene\Exception\InvalidArgumentException
+     *
+     * @return void
      */
-    public function addTerm(Index\Term $term, $position = null)
+    public function addTerm(Index\Term $term, $position = null): void
     {
         if ((count($this->_terms) != 0)&&(end($this->_terms)->field != $term->field)) {
             throw new InvalidArgumentException('All phrase terms must be in the same field: ' .
@@ -246,8 +251,10 @@ class Phrase extends AbstractQuery
      *
      * @param integer $num
      * @param \ZendSearch\Lucene\Search\Weight\Term $weight
+     *
+     * @return void
      */
-    public function setWeight($num, $weight)
+    public function setWeight($num, $weight): void
     {
         $this->_weights[$num] = $weight;
     }
@@ -392,6 +399,8 @@ class Phrase extends AbstractQuery
      *
      * @param \ZendSearch\Lucene\SearchIndexInterface $reader
      * @param \ZendSearch\Lucene\Index\DocsFilter|null $docsFilter
+     *
+     * @return void
      */
     public function execute(Lucene\SearchIndexInterface $reader, $docsFilter = null)
     {
@@ -510,6 +519,8 @@ class Phrase extends AbstractQuery
      * Query specific matches highlighting
      *
      * @param Highlighter $highlighter  Highlighter object (also contains doc for highlighting)
+     *
+     * @return void
      */
     protected function _highlightMatches(Highlighter $highlighter)
     {

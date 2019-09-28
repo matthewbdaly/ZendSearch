@@ -59,6 +59,8 @@ abstract class AbstractFile implements FileInterface
      *
      * @param string $data
      * @param integer $num
+     *
+     * @return void
      */
     public function writeBytes($data, $num = null)
     {
@@ -87,6 +89,8 @@ abstract class AbstractFile implements FileInterface
      * Writes an integer to the end of file.
      *
      * @param integer $value
+     *
+     * @return void
      */
     public function writeInt($value)
     {
@@ -130,6 +134,8 @@ abstract class AbstractFile implements FileInterface
      * Writes long integer to the end of file
      *
      * @param integer $value
+     *
+     * @return void
      */
     public function writeLong($value)
     {
@@ -195,7 +201,10 @@ abstract class AbstractFile implements FileInterface
      * Writes long integer to the end of file (32-bit platforms implementation)
      *
      * @param integer|float $value
+     *
      * @throws \ZendSearch\Lucene\Exception\RuntimeException
+     *
+     * @return void
      */
     protected function _writeLong32Bit($value)
     {
@@ -246,6 +255,8 @@ abstract class AbstractFile implements FileInterface
      * Writes a variable-length integer to the end of file.
      *
      * @param integer $value
+     *
+     * @return void
      */
     public function writeVInt($value)
     {
@@ -319,7 +330,10 @@ abstract class AbstractFile implements FileInterface
      * Writes a string to the end of file.
      *
      * @param string $str
+     *
      * @throws \ZendSearch\Lucene\Exception\InvalidArgumentException
+     *
+     * @return void
      */
     public function writeString($str)
     {

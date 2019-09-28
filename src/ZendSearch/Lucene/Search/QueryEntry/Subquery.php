@@ -38,7 +38,10 @@ class Subquery extends AbstractQueryEntry
      * Process modifier ('~')
      *
      * @param mixed $parameter
+     *
      * @throws \ZendSearch\Lucene\Search\Exception\QueryParserException
+     *
+     * @return void
      */
     public function processFuzzyProximityModifier($parameter = null)
     {

@@ -126,8 +126,10 @@ class Memory extends AbstractFile
      *
      * @param string $data
      * @param integer $length
+     *
+     * @return void
      */
-    protected function _fwrite($data, $length = null)
+    protected function _fwrite($data, $length = null): void
     {
         // We do not need to check if file position points to the end of "file".
         // Only append operation is supported now
@@ -159,6 +161,8 @@ class Memory extends AbstractFile
 
     /**
      * Unlock file
+     *
+     * @return void
      */
     public function unlock()
     {
@@ -181,6 +185,8 @@ class Memory extends AbstractFile
      * Writes a byte to the end of the file.
      *
      * @param integer $byte
+     *
+     * @return int
      */
     public function writeByte($byte)
     {
@@ -214,6 +220,8 @@ class Memory extends AbstractFile
      *
      * @param string $data
      * @param integer $num
+     *
+     * @return void
      */
     public function writeBytes($data, $num = null)
     {
@@ -252,6 +260,8 @@ class Memory extends AbstractFile
      * Writes an integer to the end of file.
      *
      * @param integer $value
+     *
+     * @return void
      */
     public function writeInt($value)
     {
@@ -301,6 +311,8 @@ class Memory extends AbstractFile
      * Writes long integer to the end of file
      *
      * @param integer $value
+     *
+     * @return void
      */
     public function writeLong($value)
     {
@@ -371,7 +383,10 @@ class Memory extends AbstractFile
      * Writes long integer to the end of file (32-bit platforms implementation)
      *
      * @param integer|float $value
+     *
      * @throws \ZendSearch\Lucene\Exception\RuntimeException
+     *
+     * @return void
      */
     protected function _writeLong32Bit($value)
     {
@@ -421,6 +436,8 @@ class Memory extends AbstractFile
      * Writes a variable-length integer to the end of file.
      *
      * @param integer $value
+     *
+     * @return void
      */
     public function writeVInt($value)
     {
@@ -501,7 +518,10 @@ class Memory extends AbstractFile
      * Writes a string to the end of file.
      *
      * @param string $str
+     *
      * @throws \ZendSearch\Lucene\Exception\InvalidArgumentException
+     *
+     * @return void
      */
     public function writeString($str)
     {

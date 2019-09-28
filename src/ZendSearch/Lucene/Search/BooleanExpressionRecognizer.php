@@ -135,8 +135,10 @@ class BooleanExpressionRecognizer extends Lucene\AbstractFSM
      * Operators are defined by class constants: IN_AND_OPERATOR, IN_OR_OPERATOR and IN_NOT_OPERATOR
      *
      * @param integer $operator
+     *
+     * @return void
      */
-    public function processOperator($operator)
+    public function processOperator($operator): void
     {
         $this->process($operator);
     }
@@ -145,8 +147,10 @@ class BooleanExpressionRecognizer extends Lucene\AbstractFSM
      * Process expression literal.
      *
      * @param integer $operator
+     *
+     * @return void
      */
-    public function processLiteral($literal)
+    public function processLiteral($literal): void
     {
         $this->_literal = $literal;
 
@@ -198,8 +202,10 @@ class BooleanExpressionRecognizer extends Lucene\AbstractFSM
 
     /**
      * default (omitted) operator processing
+     *
+     * @return void
      */
-    public function emptyOperatorAction()
+    public function emptyOperatorAction(): void
     {
         if (QueryParser::getDefaultOperator() == QueryParser::B_AND) {
             // Do nothing
@@ -213,8 +219,10 @@ class BooleanExpressionRecognizer extends Lucene\AbstractFSM
 
     /**
      * default (omitted) + NOT operator processing
+     *
+     * @return void
      */
-    public function emptyNotOperatorAction()
+    public function emptyNotOperatorAction(): void
     {
         if (QueryParser::getDefaultOperator() == QueryParser::B_AND) {
             // Do nothing
@@ -229,8 +237,10 @@ class BooleanExpressionRecognizer extends Lucene\AbstractFSM
 
     /**
      * NOT operator processing
+     *
+     * @return void
      */
-    public function notOperatorAction()
+    public function notOperatorAction(): void
     {
         $this->_negativeLiteral = true;
     }
@@ -238,8 +248,10 @@ class BooleanExpressionRecognizer extends Lucene\AbstractFSM
     /**
      * OR operator processing
      * Close current conjunction
+     *
+     * @return void
      */
-    public function orOperatorAction()
+    public function orOperatorAction(): void
     {
         $this->_conjunctions[]     = $this->_currentConjunction;
         $this->_currentConjunction = array();
@@ -247,8 +259,10 @@ class BooleanExpressionRecognizer extends Lucene\AbstractFSM
 
     /**
      * Literal processing
+     *
+     * @return void
      */
-    public function literalAction()
+    public function literalAction(): void
     {
         // Add literal to the current conjunction
         $this->_currentConjunction[] = array($this->_literal, !$this->_negativeLiteral);

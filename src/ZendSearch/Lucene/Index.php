@@ -203,7 +203,10 @@ class Index implements SearchIndexInterface
      * Index is converted to this format at the nearest upfdate time
      *
      * @param int $formatVersion
+     *
      * @throws \ZendSearch\Lucene\Exception\InvalidArgumentException
+     *
+     * @return void
      */
     public function setFormatVersion($formatVersion)
     {
@@ -220,8 +223,10 @@ class Index implements SearchIndexInterface
      * Read segments file for pre-2.1 Lucene index format
      *
      * @throws \ZendSearch\Lucene\Exception\InvalidFileFormatException
+     *
+     * @return void
      */
-    private function _readPre21SegmentsFile()
+    private function _readPre21SegmentsFile(): void
     {
         $segmentsFile = $this->_directory->getFileObject('segments');
 
@@ -263,8 +268,10 @@ class Index implements SearchIndexInterface
      *
      * @throws \ZendSearch\Lucene\Exception\InvalidFileFormatException
      * @throws \ZendSearch\Lucene\Exception\RuntimeException
+     *
+     * @return void
      */
-    private function _readSegmentsFile()
+    private function _readSegmentsFile(): void
     {
         $segmentsFile = $this->_directory->getFileObject(self::getSegmentFileName($this->_generation));
 
@@ -564,6 +571,8 @@ class Index implements SearchIndexInterface
      * Default value is 10
      *
      * @param integer $maxBufferedDocs
+     *
+     * @return void
      */
     public function setMaxBufferedDocs($maxBufferedDocs)
     {
@@ -598,6 +607,8 @@ class Index implements SearchIndexInterface
      * Default value is PHP_INT_MAX
      *
      * @param integer $maxMergeDocs
+     *
+     * @return void
      */
     public function setMaxMergeDocs($maxMergeDocs)
     {
@@ -642,6 +653,8 @@ class Index implements SearchIndexInterface
      * Default value is 10
      *
      * @param integer $maxMergeDocs
+     *
+     * @return void
      */
     public function setMergeFactor($mergeFactor)
     {
@@ -1110,7 +1123,10 @@ class Index implements SearchIndexInterface
      * $id is an internal document id
      *
      * @param integer|\ZendSearch\Lucene\Search\QueryHit $id
+     *
      * @throws \ZendSearch\Lucene\Exception\OutOfRangeException
+     *
+     * @return void
      */
     public function delete($id)
     {
@@ -1142,6 +1158,8 @@ class Index implements SearchIndexInterface
      * Adds a document to this index.
      *
      * @param \ZendSearch\Lucene\Document $document
+     *
+     * @return void
      */
     public function addDocument(Document $document)
     {
@@ -1154,8 +1172,10 @@ class Index implements SearchIndexInterface
 
     /**
      * Update document counter
+     *
+     * @return void
      */
-    private function _updateDocCount()
+    private function _updateDocCount(): void
     {
         $this->_docCount = 0;
         foreach ($this->_segmentInfos as $segInfo) {
@@ -1167,6 +1187,8 @@ class Index implements SearchIndexInterface
      * Commit changes resulting from delete() or undeleteAll() operations.
      *
      * @todo undeleteAll processing.
+     *
+     * @return void
      */
     public function commit()
     {
@@ -1184,6 +1206,8 @@ class Index implements SearchIndexInterface
      * Optimize index.
      *
      * Merges all segments into one
+     *
+     * @return void
      */
     public function optimize()
     {
@@ -1244,6 +1268,8 @@ class Index implements SearchIndexInterface
 
     /**
      * Reset terms stream.
+     *
+     * @return void
      */
     public function resetTermsStream()
     {
@@ -1260,6 +1286,8 @@ class Index implements SearchIndexInterface
      * Prefix contains fully specified field info and portion of searched term
      *
      * @param \ZendSearch\Lucene\Index\Term $prefix
+     *
+     * @return void
      */
     public function skipTo(Index\Term $prefix)
     {
@@ -1290,6 +1318,8 @@ class Index implements SearchIndexInterface
      * Close terms stream
      *
      * Should be used for resources clean up if stream is not read up to the end
+     *
+     * @return void
      */
     public function closeTermsStream()
     {
@@ -1305,6 +1335,8 @@ class Index implements SearchIndexInterface
      * Undeletes all documents currently marked as deleted in this index.
      *
      * @todo Implementation
+     *
+     * @return void
      */
     public function undeleteAll()
     {

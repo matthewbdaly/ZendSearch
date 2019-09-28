@@ -38,8 +38,10 @@ abstract class AbstractCommon extends Analysis\Analyzer\AbstractAnalyzer
      * Add Token filter to the AnalyzerInterface
      *
      * @param \ZendSearch\Lucene\Analysis\TokenFilter\TokenFilterInterface $filter
+     *
+     * @return void
      */
-    public function addFilter(TokenFilterInterface $filter)
+    public function addFilter(TokenFilterInterface $filter): void
     {
         $this->_filters[] = $filter;
     }

@@ -255,8 +255,10 @@ class QueryParser extends Lucene\AbstractFSM
      * Set query string default encoding
      *
      * @param string $encoding
+     *
+     * @return void
      */
-    public static function setDefaultEncoding($encoding)
+    public static function setDefaultEncoding($encoding): void
     {
         self::_getInstance()->_defaultEncoding = $encoding;
     }
@@ -275,8 +277,10 @@ class QueryParser extends Lucene\AbstractFSM
      * Set default boolean operator
      *
      * @param integer $operator
+     *
+     * @return void
      */
-    public static function setDefaultOperator($operator)
+    public static function setDefaultOperator($operator): void
     {
         self::_getInstance()->_defaultOperator = $operator;
     }
@@ -293,15 +297,19 @@ class QueryParser extends Lucene\AbstractFSM
 
     /**
      * Turn on 'suppress query parser exceptions' mode.
+     *
+     * @return void
      */
-    public static function suppressQueryParsingExceptions()
+    public static function suppressQueryParsingExceptions(): void
     {
         self::_getInstance()->_suppressQueryParsingExceptions = true;
     }
     /**
      * Turn off 'suppress query parser exceptions' mode.
+     *
+     * @return void
      */
-    public static function dontSuppressQueryParsingExceptions()
+    public static function dontSuppressQueryParsingExceptions(): void
     {
         self::_getInstance()->_suppressQueryParsingExceptions = false;
     }
@@ -403,8 +411,10 @@ class QueryParser extends Lucene\AbstractFSM
 
     /**
      * Add term to a query
+     *
+     * @return void
      */
-    public function addTermEntry()
+    public function addTermEntry(): void
     {
         $entry = new QueryEntry\Term($this->_currentToken->text, $this->_context->getField());
         $this->_context->addEntry($entry);
@@ -412,8 +422,10 @@ class QueryParser extends Lucene\AbstractFSM
 
     /**
      * Add phrase to a query
+     *
+     * @return void
      */
-    public function addPhraseEntry()
+    public function addPhraseEntry(): void
     {
         $entry = new QueryEntry\Phrase($this->_currentToken->text, $this->_context->getField());
         $this->_context->addEntry($entry);
@@ -421,16 +433,20 @@ class QueryParser extends Lucene\AbstractFSM
 
     /**
      * Set entry field
+     *
+     * @return void
      */
-    public function setField()
+    public function setField(): void
     {
         $this->_context->setNextEntryField($this->_currentToken->text);
     }
 
     /**
      * Set entry sign
+     *
+     * @return void
      */
-    public function setSign()
+    public function setSign(): void
     {
         $this->_context->setNextEntrySign($this->_currentToken->type);
     }
@@ -438,8 +454,10 @@ class QueryParser extends Lucene\AbstractFSM
 
     /**
      * Process fuzzy search/proximity modifier - '~'
+     *
+     * @return void
      */
-    public function processFuzzyProximityModifier()
+    public function processFuzzyProximityModifier(): void
     {
         $this->_context->processFuzzyProximityModifier();
     }
@@ -449,8 +467,10 @@ class QueryParser extends Lucene\AbstractFSM
      *
      * @throws \ZendSearch\Lucene\Search\Exception\QueryParserException
      * @throws \ZendSearch\Lucene\Exception\RuntimeException
+     *
+     * @return void
      */
-    public function processModifierParameter()
+    public function processModifierParameter(): void
     {
         if ($this->_lastToken === null) {
             throw new QueryParserException('Lexeme modifier parameter must follow lexeme modifier. Char position 0.');
@@ -474,8 +494,10 @@ class QueryParser extends Lucene\AbstractFSM
 
     /**
      * Start subquery
+     *
+     * @return void
      */
-    public function subqueryStart()
+    public function subqueryStart(): void
     {
         $this->_contextStack[] = $this->_context;
         $this->_context        = new QueryParserContext($this->_encoding, $this->_context->getField());
@@ -483,8 +505,10 @@ class QueryParser extends Lucene\AbstractFSM
 
     /**
      * End subquery
+     *
+     * @return void
      */
-    public function subqueryEnd()
+    public function subqueryEnd(): void
     {
         if (count($this->_contextStack) == 0) {
             throw new QueryParserException('Syntax Error: mismatched parentheses, every opening must have closing. Char position ' . $this->_currentToken->position . '.');
@@ -498,16 +522,20 @@ class QueryParser extends Lucene\AbstractFSM
 
     /**
      * Process logical operator
+     *
+     * @return void
      */
-    public function logicalOperator()
+    public function logicalOperator(): void
     {
         $this->_context->addLogicalOperator($this->_currentToken->type);
     }
 
     /**
      * Process first range query term (opened interval)
+     *
+     * @return void
      */
-    public function openedRQFirstTerm()
+    public function openedRQFirstTerm(): void
     {
         $this->_rqFirstTerm = $this->_currentToken->text;
     }
@@ -516,8 +544,10 @@ class QueryParser extends Lucene\AbstractFSM
      * Process last range query term (opened interval)
      *
      * @throws \ZendSearch\Lucene\Search\Exception\QueryParserException
+     *
+     * @return void
      */
-    public function openedRQLastTerm()
+    public function openedRQLastTerm(): void
     {
         $tokens = Analyzer\Analyzer::getDefault()->tokenize($this->_rqFirstTerm, $this->_encoding);
         if (count($tokens) > 1) {
@@ -548,8 +578,10 @@ class QueryParser extends Lucene\AbstractFSM
 
     /**
      * Process first range query term (closed interval)
+     *
+     * @return void
      */
-    public function closedRQFirstTerm()
+    public function closedRQFirstTerm(): void
     {
         $this->_rqFirstTerm = $this->_currentToken->text;
     }
@@ -558,8 +590,10 @@ class QueryParser extends Lucene\AbstractFSM
      * Process last range query term (closed interval)
      *
      * @throws \ZendSearch\Lucene\Search\Exception\QueryParserException
+     *
+     * @return void
      */
-    public function closedRQLastTerm()
+    public function closedRQLastTerm(): void
     {
         $tokens = Analyzer\Analyzer::getDefault()->tokenize($this->_rqFirstTerm, $this->_encoding);
         if (count($tokens) > 1) {
